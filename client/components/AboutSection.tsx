@@ -2,7 +2,7 @@ import { CheckCircle } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image */}
@@ -24,7 +24,7 @@ export function AboutSection() {
           {/* Content */}
           <div className="order-1 md:order-2">
             <h2 className="text-3xl md:text-5xl font-futura font-bold text-primary mb-6">
-              L'univers Luxence
+              Rejoignez l'univers Luxence
             </h2>
 
             <p className="text-lg text-muted-foreground font-roboto mb-6 leading-relaxed">

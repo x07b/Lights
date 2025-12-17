@@ -2,12 +2,34 @@ import "./global.css";
 
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import Index from "./pages/Index";
+import Products from "./pages/Products";
+import Collections from "./pages/Collections";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex flex-col min-h-screen">
+    <Header />
+    <main className="flex-1">
+      {children}
+    </main>
+    <Footer />
+  </div>
+);
 
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Index />} />
+      <Route path="/" element={<Layout><Index /></Layout>} />
+      <Route path="/products" element={<Layout><Products /></Layout>} />
+      <Route path="/collections" element={<Layout><Collections /></Layout>} />
+      <Route path="/about" element={<Layout><About /></Layout>} />
+      <Route path="/contact" element={<Layout><Contact /></Layout>} />
+      <Route path="*" element={<Layout><NotFound /></Layout>} />
     </Routes>
   </BrowserRouter>
 );

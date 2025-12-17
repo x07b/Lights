@@ -2,7 +2,6 @@ import { HeroSection } from "../components/HeroSection";
 import { CategoriesSection } from "../components/CategoriesSection";
 import { FeaturedProductsSection } from "../components/FeaturedProductsSection";
 import { AboutSection } from "../components/AboutSection";
-import { CollectionsSection } from "../components/CollectionsSection";
 import { NewsletterSection } from "../components/NewsletterSection";
 
 export default function Index() {
@@ -12,7 +11,6 @@ export default function Index() {
       <CategoriesSection />
       <FeaturedProductsSection />
       <AboutSection />
-      <CollectionsSection />
       <NewsletterSection />
     </div>
   );

@@ -92,7 +92,7 @@ export function HeroSection() {
           {/* Image Carousel */}
           <div className="relative animate-slide-up group">
             {/* Carousel Container */}
-            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-square rounded-xl overflow-hidden shadow-xl">
               {/* Slides */}
               {slides.map((slide, index) => (
                 <div
@@ -115,30 +115,30 @@ export function HeroSection() {
               {/* Navigation Buttons */}
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
                 aria-label="Previous slide"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
 
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
                 aria-label="Next slide"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5" />
               </button>
 
               {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
                 {slides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => goToSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
                       index === currentSlide
-                        ? 'bg-accent w-8'
-                        : 'bg-white/50 hover:bg-white/75 w-2'
+                        ? 'bg-accent w-6'
+                        : 'bg-white/50 hover:bg-white/75 w-1.5'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -146,12 +146,12 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Floating accent elements */}
-            <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-accent/20 rounded-full blur-3xl -z-10 animate-pulse" />
-            <div className="absolute -top-6 -right-6 w-48 h-48 bg-accent/15 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }} />
+            {/* Floating accent elements - reduced size */}
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-full blur-2xl -z-10 animate-pulse" />
+            <div className="absolute -top-4 -right-4 w-40 h-40 bg-accent/15 rounded-full blur-2xl -z-10 animate-pulse" style={{ animationDelay: '1s' }} />
 
             {/* Premium border accent */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-accent/30 to-accent/10 rounded-2xl -z-20 blur-xl" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent/30 to-accent/10 rounded-xl -z-20 blur-lg" />
           </div>
         </div>
       </div>

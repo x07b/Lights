@@ -7,18 +7,13 @@ export function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image */}
           <div className="order-2 md:order-1">
-            <div className="relative rounded-lg overflow-hidden aspect-square">
+            <div className="relative rounded-lg overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80"
-                alt="Luxence showroom"
-                className="w-full h-full object-cover"
+                src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F912ded31f1c040bbb8e059f551179c76?format=webp&width=800"
+                alt="Luxence brand banner"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
             </div>
-
-            {/* Decorative elements */}
-            <div className="absolute top-8 right-8 w-24 h-24 border-2 border-accent rounded-lg opacity-30" />
-            <div className="absolute bottom-8 left-8 w-32 h-32 bg-accent/5 rounded-full blur-2xl" />
           </div>
 
           {/* Content */}

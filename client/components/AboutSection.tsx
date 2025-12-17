@@ -2,29 +2,24 @@ import { CheckCircle } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image */}
           <div className="order-2 md:order-1">
-            <div className="relative rounded-lg overflow-hidden aspect-square">
+            <div className="relative rounded-lg overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80"
-                alt="Luxence showroom"
-                className="w-full h-full object-cover"
+                src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F912ded31f1c040bbb8e059f551179c76?format=webp&width=800"
+                alt="Luxence brand banner"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
             </div>
-
-            {/* Decorative elements */}
-            <div className="absolute top-8 right-8 w-24 h-24 border-2 border-accent rounded-lg opacity-30" />
-            <div className="absolute bottom-8 left-8 w-32 h-32 bg-accent/5 rounded-full blur-2xl" />
           </div>
 
           {/* Content */}
           <div className="order-1 md:order-2">
             <h2 className="text-3xl md:text-5xl font-futura font-bold text-primary mb-6">
-              L'univers Luxence
+              Rejoignez l'univers Luxence
             </h2>
 
             <p className="text-lg text-muted-foreground font-roboto mb-6 leading-relaxed">

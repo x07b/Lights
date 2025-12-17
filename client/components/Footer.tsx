@@ -3,23 +3,33 @@ import { Facebook, Instagram, Share2, Linkedin } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-primary to-primary/95 text-primary-foreground border-t border-primary-foreground/10">
-      <div className="container mx-auto px-4">
+    <footer className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/98 to-primary/95 text-primary-foreground border-t border-primary-foreground/20">
+      {/* Luxury background accent */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative container mx-auto px-4">
         {/* Main Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 py-20 md:py-28">
           {/* Brand */}
           <div className="space-y-4 animate-fade-in">
-            <h3 className="text-3xl font-bold font-futura">Luxence</h3>
-            <p className="text-sm text-primary-foreground/80 font-roboto leading-relaxed">
-              Des luminaires élégants et artistiques conçus pour sublimer les
-              intérieurs sophistiqués avec performance et style.
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-8 bg-gradient-to-b from-accent to-accent/60 rounded-full" />
+              <h3 className="text-4xl font-bold font-futura bg-gradient-to-r from-primary-foreground to-accent bg-clip-text text-transparent">Luxence</h3>
+            </div>
+            <p className="text-sm text-primary-foreground/75 font-roboto leading-relaxed max-w-xs">
+              Luminaires d'art conçus pour sublimer vos intérieurs avec design et excellence.
             </p>
-            <div className="flex gap-2 pt-4">
-              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center group hover:bg-accent hover:scale-110 transition-all duration-300 cursor-pointer">
-                <span className="text-accent group-hover:text-white transition-colors duration-300">
-                  ✦
-                </span>
-              </div>
+            <div className="flex gap-3 pt-4">
+              <a
+                href="#"
+                className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center hover:bg-accent hover:scale-110 transition-all duration-300 group"
+                aria-label="Accueil"
+              >
+                <span className="text-accent group-hover:text-white transition-colors duration-300 text-lg">✦</span>
+              </a>
             </div>
           </div>
 
@@ -136,11 +146,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-primary-foreground/10 py-8 md:py-12">
+        <div className="border-t border-primary-foreground/20 py-8 md:py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Copyright */}
             <p className="text-sm text-primary-foreground/70 font-roboto">
-              © 2024 Luxence. Tous droits réservés.
+              © 2025 Luxence. Tous droits réservés.
             </p>
 
             {/* Social Links */}

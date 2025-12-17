@@ -85,12 +85,25 @@ export function ProductCard({
         </div>
 
         {/* Action Icons */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-3 pt-4 space-y-0">
+          {/* Add to Cart Icon Button */}
+          <button
+            onClick={handleAddToCart}
+            title={isAdded ? "Ajouté !" : "Ajouter au panier"}
+            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center font-futura font-semibold ${
+              isAdded
+                ? "bg-accent/90 scale-95 text-white"
+                : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
+            }`}
+          >
+            <ShoppingCart className="w-5 h-5" />
+          </button>
+
           {/* View Product Icon Button */}
           <button
             onClick={handleViewProduct}
             title="Voir le produit"
-            className="py-3 px-4 rounded-lg border-2 border-foreground text-foreground hover:bg-foreground hover:text-white transition-all duration-300 flex items-center justify-center font-futura font-semibold shadow-sm hover:shadow-md active:scale-95"
+            className="flex-1 py-3 px-4 rounded-lg border-2 border-foreground text-foreground hover:bg-foreground hover:text-white transition-all duration-300 flex items-center justify-center font-futura font-semibold shadow-sm hover:shadow-md active:scale-95"
           >
             <Eye className="w-5 h-5" />
           </button>

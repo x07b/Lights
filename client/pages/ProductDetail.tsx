@@ -99,85 +99,93 @@ export default function ProductDetail() {
   ];
 
   return (
-    <div className="bg-[#FFF8F9] min-h-screen">
+    <div className="bg-gradient-to-b from-white via-white to-gray-50 min-h-screen">
       {/* Back Button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="bg-white border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 py-6">
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors font-roboto font-semibold"
+            className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-all duration-300 font-roboto font-semibold group"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
             Retour aux produits
           </Link>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="py-12 px-4 sm:py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+      <section className="py-16 px-4 sm:py-20 md:py-28">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Product Image */}
-            <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-auto max-w-md object-cover rounded-lg"
-              />
+            <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg hover:shadow-2xl transition-all duration-500 border border-border animate-fade-in">
+              <div className="relative w-full">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-auto max-w-md object-cover rounded-lg hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />
+              </div>
             </div>
 
             {/* Product Info */}
-            <div className="space-y-6">
-              <div>
-                <p className="font-roboto text-sm uppercase tracking-widest text-[#F97338] mb-2">
+            <div className="space-y-8 animate-slide-up">
+              <div className="space-y-4">
+                <p className="font-roboto text-sm uppercase tracking-widest text-accent font-semibold">
                   {product.category}
                 </p>
-                <h1 className="font-futura text-4xl sm:text-5xl font-bold text-[#15203C] mb-4">
+                <h1 className="font-futura text-5xl md:text-6xl font-bold text-foreground leading-tight">
                   {product.name}
                 </h1>
-                <p className="font-roboto text-lg text-gray-700 leading-relaxed">
+                <p className="font-roboto text-lg text-muted-foreground leading-relaxed">
                   {product.description}
                 </p>
               </div>
 
-              <div className="border-t border-b border-[#F97338] py-6 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="font-roboto text-gray-600">Puissance</span>
-                  <span className="font-roboto font-semibold text-[#15203C]">
+              {/* Specs */}
+              <div className="border-t border-b border-border py-8 space-y-4">
+                <div className="flex justify-between items-center group">
+                  <span className="font-roboto text-muted-foreground">Puissance</span>
+                  <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
                     {product.specifications.find((s) => s.label === "Puissance")?.value}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-roboto text-gray-600">Type</span>
-                  <span className="font-roboto font-semibold text-[#15203C]">
+                <div className="flex justify-between items-center group">
+                  <span className="font-roboto text-muted-foreground">Type</span>
+                  <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
                     {product.specifications.find((s) => s.label === "Type")?.value}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-roboto text-gray-600">
-                    Flux lumineux
-                  </span>
-                  <span className="font-roboto font-semibold text-[#15203C]">
+                <div className="flex justify-between items-center group">
+                  <span className="font-roboto text-muted-foreground">Flux lumineux</span>
+                  <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
                     {product.specifications.find((s) => s.label === "Flux lumineux")?.value}
                   </span>
                 </div>
-                <div className="flex justify-between items-center text-lg">
-                  <span className="font-roboto font-bold text-[#15203C]">
-                    Prix
-                  </span>
-                  <span className="font-futura font-bold text-[#F97338] text-2xl">
+                <div className="flex justify-between items-center pt-4 border-t border-border">
+                  <span className="font-roboto font-bold text-foreground">Prix</span>
+                  <span className="font-futura font-bold text-accent text-3xl">
                     {product.price.toFixed(2)} TND
                   </span>
                 </div>
               </div>
 
-              <Button
-                onClick={handleDownloadPDF}
-                className="w-full bg-[#F97338] hover:bg-[#e66428] text-white font-roboto font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
-              >
-                <Download className="w-5 h-5" />
-                Télécharger la fiche technique
-              </Button>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button
+                  onClick={handleDownloadPDF}
+                  className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+                >
+                  <Download className="w-5 h-5" />
+                  Télécharger la fiche technique
+                </button>
+                <button
+                  className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95"
+                >
+                  Ajouter au panier
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -38,70 +38,72 @@ export function ProductCard({
   };
 
   return (
-    <div className="group cursor-pointer h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
       {/* Image Container */}
-      <div className="relative overflow-hidden bg-gray-200 p-6 flex items-center justify-center h-72">
+      <div className="relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 p-8 flex items-center justify-center h-72">
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-300"
+          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out"
         />
+        {/* Overlay gradient on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Content Container */}
       <div className="flex flex-col flex-1 p-6 space-y-4">
         {/* Category */}
         {category && (
-          <p className="text-xs text-[#F97338] uppercase tracking-widest font-roboto font-semibold">
+          <p className="text-xs text-accent uppercase tracking-widest font-roboto font-semibold opacity-80">
             {category}
           </p>
         )}
 
         {/* Title */}
         {slug ? (
-          <Link to={`/product/${slug}`}>
-            <h3 className="text-xl font-futura font-bold text-[#15203C] line-clamp-2 group-hover:text-[#F97338] transition-colors duration-300 cursor-pointer">
+          <Link to={`/product/${slug}`} className="group/title">
+            <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover/title:text-accent transition-colors duration-300 cursor-pointer">
               {name}
             </h3>
           </Link>
         ) : (
-          <h3 className="text-xl font-futura font-bold text-[#15203C] line-clamp-2 group-hover:text-[#F97338] transition-colors duration-300">
+          <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover:text-accent transition-colors duration-300">
             {name}
           </h3>
         )}
 
         {/* Description */}
-        <p className="text-sm text-gray-600 font-roboto line-clamp-1 flex-grow">
+        <p className="text-sm text-muted-foreground font-roboto line-clamp-2 flex-grow leading-relaxed">
           {description}
         </p>
 
         {/* Price */}
-        <div className="pt-2">
-          <span className="text-2xl font-futura font-bold text-[#15203C]">
+        <div className="pt-2 border-t border-border">
+          <span className="text-2xl font-futura font-bold text-accent">
             {price.toFixed(2)} TND
           </span>
         </div>
 
         {/* Action Icons */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-3 pt-4 space-y-0">
           {/* Add to Cart Icon Button */}
           <button
             onClick={handleAddToCart}
             title={isAdded ? "Ajouté !" : "Ajouter au panier"}
-            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center ${
+            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center font-futura font-semibold ${
               isAdded
-                ? "bg-[#e66428] scale-95"
-                : "bg-[#F97338] hover:bg-[#e66428] active:scale-95"
+                ? "bg-accent/90 scale-95 text-white"
+                : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
             }`}
           >
-            <ShoppingCart className="w-5 h-5 text-white" />
+            <ShoppingCart className="w-5 h-5" />
           </button>
 
           {/* View Product Icon Button */}
           <button
             onClick={handleViewProduct}
             title="Voir le produit"
-            className="flex-1 py-3 px-4 rounded-lg border-2 border-[#15203C] text-[#15203C] hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center"
+            className="flex-1 py-3 px-4 rounded-lg border-2 border-foreground text-foreground hover:bg-foreground hover:text-white transition-all duration-300 flex items-center justify-center font-futura font-semibold shadow-sm hover:shadow-md active:scale-95"
           >
             <Eye className="w-5 h-5" />
           </button>

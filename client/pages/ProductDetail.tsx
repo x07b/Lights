@@ -217,14 +217,20 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-4">
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-4">
                 <button
                   onClick={handleDownloadPDF}
-                  title="Télécharger la fiche technique"
-                  className="bg-accent hover:bg-accent/90 text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95 hover:scale-110"
+                  className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
                 >
-                  <Download className="w-6 h-6" />
+                  <Download className="w-5 h-5" />
+                  Télécharger la fiche technique
+                </button>
+                <button
+                  title="Ajouter au panier"
+                  className="bg-accent hover:bg-accent/90 text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95"
+                >
+                  <ShoppingCart className="w-5 h-5" />
                 </button>
               </div>
             </div>

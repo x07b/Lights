@@ -7,6 +7,7 @@ import {
   Trash2,
   Leaf,
   CheckCircle,
+  ShoppingCart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useParams, Link } from "react-router-dom";

@@ -132,4 +132,57 @@
     overflow-x: auto;
     white-space: pre;
   }
+
+  /* Premium Typography */
+  h1 {
+    @apply font-futura font-bold text-foreground tracking-tight;
+  }
+
+  h2 {
+    @apply font-futura font-bold text-foreground;
+  }
+
+  h3 {
+    @apply font-futura font-semibold text-foreground;
+  }
+
+  /* Premium Buttons Base Style */
+  button {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Premium Links */
+  a {
+    @apply transition-colors duration-300;
+  }
+}
+
+@layer components {
+  /* Premium Card Component */
+  .luxury-card {
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300;
+  }
+
+  /* Premium Button */
+  .luxury-button {
+    @apply px-6 py-3 rounded-lg font-futura font-semibold transition-all duration-300 ease-out hover:shadow-lg active:scale-95;
+  }
+
+  .luxury-button-primary {
+    @apply luxury-button bg-accent text-accent-foreground hover:bg-accent/90;
+  }
+
+  .luxury-button-secondary {
+    @apply luxury-button border-2 border-foreground text-foreground hover:bg-foreground/5;
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-16 md:py-24 px-4;
+  }
+
+  /* Premium Container */
+  .premium-container {
+    @apply max-w-7xl mx-auto;
+  }
 }

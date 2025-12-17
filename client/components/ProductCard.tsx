@@ -1,6 +1,3 @@
-import { ShoppingCart } from "lucide-react";
-import { useState } from "react";
-
 interface ProductCardProps {
   id: string;
   name: string;
@@ -18,15 +15,8 @@ export function ProductCard({
   image,
   category,
 }: ProductCardProps) {
-  const [isAdded, setIsAdded] = useState(false);
-
-  const handleAddToCart = () => {
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
-  };
-
   return (
-    <div className="group">
+    <div className="group cursor-pointer h-full">
       <div className="relative overflow-hidden rounded-lg bg-secondary mb-4">
         <img
           src={image}
@@ -51,19 +41,8 @@ export function ProductCard({
 
         <div className="flex items-center justify-between">
           <span className="text-xl font-futura font-bold text-primary">
-            €{price.toFixed(2)}
+            {price.toFixed(2)} TND
           </span>
-          <button
-            onClick={handleAddToCart}
-            className={`p-2 rounded-lg transition-all duration-300 ${
-              isAdded
-                ? "bg-accent text-white"
-                : "bg-primary text-primary-foreground hover:bg-accent"
-            }`}
-            title="Ajouter au panier"
-          >
-            <ShoppingCart className="w-5 h-5" />
-          </button>
         </div>
       </div>
     </div>

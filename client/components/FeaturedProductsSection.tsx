@@ -23,21 +23,22 @@ export function FeaturedProductsSection() {
             Nos luminaires emblématiques
           </h2>
           <p className="text-lg text-muted-foreground font-roboto max-w-2xl mx-auto">
-            Découvrez notre sélection des luminaires les plus prisés
+            Découvrez notre sélection de luminaires les plus prisés
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-2xl mx-auto">
           {products.map((product, index) => (
-            <div
+            <Link
               key={product.id}
+              to={`/product/${product.slug}`}
               className="animate-fade-in"
               style={{
                 animationDelay: `${index * 100}ms`,
               }}
             >
               <ProductCard {...product} />
-            </div>
+            </Link>
           ))}
         </div>
       </div>

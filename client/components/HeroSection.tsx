@@ -49,40 +49,40 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-primary via-primary to-primary/95 text-primary-foreground py-24 md:py-40 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-primary via-primary to-primary/95 text-primary-foreground py-12 md:py-20 overflow-hidden">
       {/* Premium background decorations */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl -z-10 animate-pulse" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-white/5 rounded-full blur-2xl -z-10" />
+      <div className="absolute top-0 right-0 w-72 h-72 bg-accent/15 rounded-full blur-3xl -z-10 animate-pulse" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-1/2 right-1/4 w-56 h-56 bg-white/5 rounded-full blur-2xl -z-10" />
 
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Text Content */}
-          <div className="animate-fade-in space-y-8">
-            <div className="space-y-6">
-              <p className="text-accent font-roboto text-sm font-semibold uppercase tracking-widest animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.2s forwards' }}>
-                Collection Luxury Lighting
+          <div className="animate-fade-in space-y-6">
+            <div className="space-y-3">
+              <p className="text-accent font-roboto text-xs font-semibold uppercase tracking-widest animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.2s forwards' }}>
+                Luxury Lighting
               </p>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-futura font-bold mb-4 leading-tight animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.3s forwards' }}>
-                Illuminez vos espaces avec l'essence du luxe
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-futura font-bold leading-tight animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.3s forwards' }}>
+                Illuminez vos espaces
               </h1>
             </div>
 
-            <p className="text-lg md:text-xl text-primary-foreground/85 font-roboto max-w-lg leading-relaxed animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.4s forwards' }}>
-              Des luminaires élégants et artistiques conçus pour sublimer les intérieurs sophistiqués. Chaque pièce représente l'excellence en matière de design et de performance lumineuse.
+            <p className="text-sm md:text-base text-primary-foreground/85 font-roboto leading-relaxed animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.4s forwards' }}>
+              Des luminaires élégants pour sublimer vos intérieurs.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.5s forwards' }}>
+            <div className="flex flex-col sm:flex-row gap-3 pt-2 animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.5s forwards' }}>
               <Link
                 to="/products"
-                className="inline-flex items-center justify-center gap-3 bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-futura font-bold transition-all duration-300 hover:shadow-lg hover:gap-4 group active:scale-95"
+                className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg group active:scale-95"
               >
-                Découvrir la collection
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                Découvrir
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
               <Link
                 to="/about"
-                className="inline-flex items-center justify-center gap-3 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-8 py-4 rounded-lg font-futura font-bold transition-all duration-300 hover:shadow-lg active:scale-95"
+                className="inline-flex items-center justify-center gap-2 border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg active:scale-95"
               >
                 En savoir plus
               </Link>

@@ -6,7 +6,8 @@ const products = [
     name: "Suspension Minimaliste",
     description: "Design épuré en métal brossé et verre",
     price: 249.99,
-    image: "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
     category: "Suspensions",
   },
   {
@@ -14,7 +15,8 @@ const products = [
     name: "Lampadaire Signature",
     description: "Pied en marbre blanc, abat-jour en lin",
     price: 349.99,
-    image: "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
     category: "Lampadaires",
   },
   {
@@ -22,7 +24,8 @@ const products = [
     name: "Lampe de Table Élégante",
     description: "Base en laiton doré, diffuseur en soie",
     price: 189.99,
-    image: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&q=80",
     category: "Lampes de table",
   },
   {
@@ -30,7 +33,8 @@ const products = [
     name: "Applique Murale Moderne",
     description: "Géométrique en acier noir mat",
     price: 159.99,
-    image: "https://images.unsplash.com/photo-1578500494198-246f612d782f?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1578500494198-246f612d782f?w=400&q=80",
     category: "Appliques",
   },
   {
@@ -38,7 +42,8 @@ const products = [
     name: "Lustre Artistique",
     description: "Cristal taillé, armature en laiton",
     price: 449.99,
-    image: "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
     category: "Suspensions",
   },
   {
@@ -46,7 +51,8 @@ const products = [
     name: "Lampe Architecte",
     description: "Articulée, variateur intégré",
     price: 219.99,
-    image: "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
     category: "Lampes de table",
   },
 ];
@@ -66,9 +72,13 @@ export function FeaturedProductsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {products.map((product, index) => (
-            <div key={product.id} className="animate-fade-in" style={{
-              animationDelay: `${index * 100}ms`,
-            }}>
+            <div
+              key={product.id}
+              className="animate-fade-in"
+              style={{
+                animationDelay: `${index * 100}ms`,
+              }}
+            >
               <ProductCard {...product} />
             </div>
           ))}

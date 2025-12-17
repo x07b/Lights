@@ -20,11 +20,14 @@ export function NewsletterSection() {
             Rejoignez l'univers Luxence
           </h2>
           <p className="text-lg text-muted-foreground font-roboto mb-8">
-            Recevez nos nouveautés, inspirations et offres exclusives directement
-            dans votre boîte mail.
+            Recevez nos nouveautés, inspirations et offres exclusives
+            directement dans votre boîte mail.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3"
+          >
             <input
               type="email"
               placeholder="Votre adresse email"
@@ -49,7 +52,8 @@ export function NewsletterSection() {
           )}
 
           <p className="text-xs text-muted-foreground font-roboto mt-6">
-            Nous respectons votre confidentialité. Désinscrivez-vous à tout moment.
+            Nous respectons votre confidentialité. Désinscrivez-vous à tout
+            moment.
           </p>
         </div>
       </div>

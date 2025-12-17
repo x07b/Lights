@@ -30,7 +30,9 @@ export default function Contact() {
               <div className="flex justify-center mb-4">
                 <Phone className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="font-futura font-bold text-primary mb-2">Téléphone</h3>
+              <h3 className="font-futura font-bold text-primary mb-2">
+                Téléphone
+              </h3>
               <p className="text-muted-foreground font-roboto text-sm">
                 +33 (0) 1 23 45 67 89
               </p>
@@ -40,7 +42,9 @@ export default function Contact() {
               <div className="flex justify-center mb-4">
                 <MapPin className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="font-futura font-bold text-primary mb-2">Adresse</h3>
+              <h3 className="font-futura font-bold text-primary mb-2">
+                Adresse
+              </h3>
               <p className="text-muted-foreground font-roboto text-sm">
                 Paris, France
               </p>
@@ -49,8 +53,9 @@ export default function Contact() {
 
           <div className="bg-white rounded-lg border border-border p-12 text-center">
             <p className="text-muted-foreground font-roboto mb-6">
-              La page de contact est en cours de développement. N'hésitez pas à nous
-              contacter directement via les informations de contact affichées ci-dessus.
+              La page de contact est en cours de développement. N'hésitez pas à
+              nous contacter directement via les informations de contact
+              affichées ci-dessus.
             </p>
             <Link
               to="/"

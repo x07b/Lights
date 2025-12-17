@@ -15,8 +15,8 @@ export default function Collections() {
 
           <div className="bg-white rounded-lg border border-border p-12">
             <p className="text-muted-foreground font-roboto mb-6">
-              La page des collections est en cours de développement. Découvrez nos
-              collections thématiques directement depuis la page d'accueil.
+              La page des collections est en cours de développement. Découvrez
+              nos collections thématiques directement depuis la page d'accueil.
             </p>
             <Link
               to="/"

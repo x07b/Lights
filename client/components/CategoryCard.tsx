@@ -31,7 +31,9 @@ export function CategoryCard({
           {name}
         </h3>
         {description && (
-          <p className="text-sm text-white/80 font-roboto mb-4">{description}</p>
+          <p className="text-sm text-white/80 font-roboto mb-4">
+            {description}
+          </p>
         )}
         <div className="flex items-center gap-2 text-white font-roboto text-sm group-hover:gap-3 transition-all">
           Voir la collection

@@ -14,9 +14,7 @@ import NotFound from "./pages/NotFound";
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col min-h-screen">
     <Header />
-    <main className="flex-1">
-      {children}
-    </main>
+    <main className="flex-1">{children}</main>
     <Footer />
   </div>
 );
@@ -24,12 +22,54 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Layout><Index /></Layout>} />
-      <Route path="/products" element={<Layout><Products /></Layout>} />
-      <Route path="/collections" element={<Layout><Collections /></Layout>} />
-      <Route path="/about" element={<Layout><About /></Layout>} />
-      <Route path="/contact" element={<Layout><Contact /></Layout>} />
-      <Route path="*" element={<Layout><NotFound /></Layout>} />
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <Index />
+          </Layout>
+        }
+      />
+      <Route
+        path="/products"
+        element={
+          <Layout>
+            <Products />
+          </Layout>
+        }
+      />
+      <Route
+        path="/collections"
+        element={
+          <Layout>
+            <Collections />
+          </Layout>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <Layout>
+            <About />
+          </Layout>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <Layout>
+            <Contact />
+          </Layout>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <NotFound />
+          </Layout>
+        }
+      />
     </Routes>
   </BrowserRouter>
 );

@@ -15,8 +15,9 @@ export default function About() {
 
           <div className="bg-white rounded-lg border border-border p-12">
             <p className="text-muted-foreground font-roboto mb-6">
-              La page "À propos" est en cours de développement. Apprenez-en davantage
-              sur Luxence et notre vision dans la section À propos de la page d'accueil.
+              La page "À propos" est en cours de développement. Apprenez-en
+              davantage sur Luxence et notre vision dans la section À propos de
+              la page d'accueil.
             </p>
             <Link
               to="/"

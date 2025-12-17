@@ -15,8 +15,9 @@ export default function Products() {
 
           <div className="bg-white rounded-lg border border-border p-12">
             <p className="text-muted-foreground font-roboto mb-6">
-              La page des produits est en cours de développement. Continuez à explorer
-              nos collections et découvrez nos luminaires emblématiques sur la page d'accueil.
+              La page des produits est en cours de développement. Continuez à
+              explorer nos collections et découvrez nos luminaires emblématiques
+              sur la page d'accueil.
             </p>
             <Link
               to="/"

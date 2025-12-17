@@ -263,11 +263,20 @@ export default function ProductDetail() {
       </section>
 
       {/* Compliance Icons Section */}
-      <section className="py-12 md:py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-futura text-3xl sm:text-4xl font-bold text-[#15203C] mb-12 text-center">
-            Certifications et conformité
-          </h2>
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 md:mb-20 space-y-4 animate-fade-in">
+            <p className="text-accent font-roboto text-sm font-semibold uppercase tracking-widest">
+              Normes & Standards
+            </p>
+            <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+              Certifications et conformité
+            </h2>
+            <p className="text-lg text-muted-foreground font-roboto max-w-2xl mx-auto">
+              Tous nos produits respectent les normes les plus strictes en matière de qualité et d'environnement
+            </p>
+          </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               {
@@ -287,9 +296,16 @@ export default function ProductDetail() {
                 label: "Ne pas jeter",
               },
             ].map((cert, index) => (
-              <div key={index} className="flex flex-col items-center gap-3 p-6">
-                <div className="text-[#F97338]">{cert.icon}</div>
-                <p className="font-roboto text-sm font-semibold text-[#15203C] text-center">
+              <div
+                key={index}
+                className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border group animate-fade-in opacity-0"
+                style={{
+                  animation: `fade-in 0.6s ease-out forwards`,
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <div className="text-accent group-hover:scale-110 transition-transform duration-300">{cert.icon}</div>
+                <p className="font-roboto text-sm font-semibold text-foreground text-center group-hover:text-accent transition-colors duration-300">
                   {cert.label}
                 </p>
               </div>

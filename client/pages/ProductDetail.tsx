@@ -33,8 +33,8 @@ const productsDatabase = [
       { label: "Indice de protection", value: "IP20" },
       { label: "Pays d'origine", value: "Fabriqué en Chine" },
     ],
-    pdfFile: "/fiche-technique-led-panel.pdf",
-    pdfFilename: "Luxence-LED-Panel-Light-Fiche-Technique.pdf",
+    pdfFile: "/Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
+    pdfFilename: "Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
   },
 ];
 

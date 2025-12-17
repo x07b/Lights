@@ -229,7 +229,7 @@ export default function ProductDetail() {
                 </button>
                 <button
                   title="Ajouter au panier"
-                  className="bg-accent hover:bg-accent/90 text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95"
+                  className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95"
                 >
                   <ShoppingCart className="w-5 h-5" />
                 </button>

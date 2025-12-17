@@ -1,50 +1,161 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
+  const slides = [
+    {
+      id: 1,
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
+      alt: "Luxence Brand Banner 1",
+    },
+    {
+      id: 2,
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
+      alt: "Luxence Brand Banner 2",
+    },
+  ];
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (!isAutoPlay) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay, slides.length]);
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
   return (
-    <section className="relative bg-primary text-primary-foreground py-20 md:py-32 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl -z-10" />
+    <section className="relative w-full h-screen min-h-screen overflow-hidden">
+      {/* Background Image Carousel */}
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={`absolute inset-0 transition-all duration-700 ease-out ${
+            index === currentSlide
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-105"
+          }`}
+        >
+          <img
+            src={slide.image}
+            alt={slide.alt}
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+      ))}
 
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
-          <div className="animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-futura font-bold mb-6 leading-tight">
-              Illuminez vos espaces avec l'essence du luxe
-            </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/90 font-roboto mb-8 max-w-lg">
-              Des luminaires élégants et artistiques conçus pour sublimer les
-              intérieurs sophistiqués.
-            </p>
-
-            <Link
-              to="/products"
-              className="inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-futura font-bold transition-all duration-300 hover:gap-4 group"
-            >
-              Découvrir la collection
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          {/* Image */}
-          <div className="relative animate-slide-up">
-            <div className="relative aspect-square rounded-lg overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=800&q=80"
-                alt="Premium lighting fixture"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+      {/* Text Content Overlay */}
+      <div className="absolute inset-0 flex items-center justify-start z-10">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="max-w-lg animate-fade-in space-y-6">
+            <div className="space-y-4">
+              <p
+                className="text-accent font-roboto text-xs font-semibold uppercase tracking-widest animate-slide-up opacity-0"
+                style={{ animation: "slide-up 0.6s ease-out 0.2s forwards" }}
+              >
+                Luxury Lighting
+              </p>
+              <h1
+                className="text-4xl md:text-5xl lg:text-6xl font-futura font-bold leading-tight text-white animate-slide-up opacity-0"
+                style={{ animation: "slide-up 0.6s ease-out 0.3s forwards" }}
+              >
+                Illuminez vos espaces
+              </h1>
             </div>
 
-            {/* Floating elements */}
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
-            <div className="absolute -top-4 -right-4 w-40 h-40 bg-accent/5 rounded-full blur-3xl" />
+            <p
+              className="text-sm md:text-base text-white/90 font-roboto leading-relaxed animate-slide-up opacity-0"
+              style={{ animation: "slide-up 0.6s ease-out 0.4s forwards" }}
+            >
+              Des luminaires élégants pour sublimer vos intérieurs.
+            </p>
+
+            <div
+              className="flex flex-col sm:flex-row gap-3 pt-4 animate-slide-up opacity-0"
+              style={{ animation: "slide-up 0.6s ease-out 0.5s forwards" }}
+            >
+              <Link
+                to="/products"
+                className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg group active:scale-95"
+              >
+                Découvrir
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
+              <Link
+                to="/about"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg active:scale-95"
+              >
+                En savoir plus
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? "bg-accent w-8"
+                : "bg-white/50 hover:bg-white/75 w-2"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <div className="text-white/60 text-xs font-roboto">Scroll</div>
       </div>
     </section>
   );

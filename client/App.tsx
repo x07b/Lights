@@ -64,7 +64,7 @@ const App = () => (
         }
       />
       <Route
-        path="/product/led-frameless-panel"
+        path="/product/:slug"
         element={
           <Layout>
             <ProductDetail />

@@ -1,7 +1,53 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
+  const slides = [
+    {
+      id: 1,
+      image: "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
+      alt: "Luxence Brand Banner 1"
+    },
+    {
+      id: 2,
+      image: "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
+      alt: "Luxence Brand Banner 2"
+    }
+  ];
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (!isAutoPlay) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay, slides.length]);
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setIsAutoPlay(false);
+    setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
   return (
     <section className="relative bg-gradient-to-br from-primary via-primary to-primary/95 text-primary-foreground py-24 md:py-40 overflow-hidden">
       {/* Premium background decorations */}
@@ -43,15 +89,61 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Image */}
-          <div className="relative animate-slide-up">
+          {/* Image Carousel */}
+          <div className="relative animate-slide-up group">
+            {/* Carousel Container */}
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=800&q=80"
-                alt="Premium lighting fixture"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
+              {/* Slides */}
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className={`absolute inset-0 transition-all duration-700 ease-out ${
+                    index === currentSlide
+                      ? 'opacity-100 scale-100'
+                      : 'opacity-0 scale-95'
+                  }`}
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.alt}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
+                </div>
+              ))}
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 active:scale-95"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Slide Indicators */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? 'bg-accent w-8'
+                        : 'bg-white/50 hover:bg-white/75 w-2'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Floating accent elements */}

@@ -1,4 +1,13 @@
-import { Download, Zap, Sun, Lightbulb, RotateCcw, Trash2, Leaf, CheckCircle } from "lucide-react";
+import {
+  Download,
+  Zap,
+  Sun,
+  Lightbulb,
+  RotateCcw,
+  Trash2,
+  Leaf,
+  CheckCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ProductDetail() {
@@ -72,26 +81,39 @@ export default function ProductDetail() {
                   LED Frameless Panel Light
                 </h1>
                 <p className="font-roboto text-lg text-gray-700 leading-relaxed">
-                  Panneau LED encastrable, design discret et performance lumineuse optimale.
+                  Panneau LED encastrable, design discret et performance
+                  lumineuse optimale.
                 </p>
               </div>
 
               <div className="border-t border-b border-[#F97338] py-6 space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="font-roboto text-gray-600">Puissance</span>
-                  <span className="font-roboto font-semibold text-[#15203C]">10W</span>
+                  <span className="font-roboto font-semibold text-[#15203C]">
+                    10W
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="font-roboto text-gray-600">Type</span>
-                  <span className="font-roboto font-semibold text-[#15203C]">Encastré</span>
+                  <span className="font-roboto font-semibold text-[#15203C]">
+                    Encastré
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-roboto text-gray-600">Flux lumineux</span>
-                  <span className="font-roboto font-semibold text-[#15203C]">1200 lm</span>
+                  <span className="font-roboto text-gray-600">
+                    Flux lumineux
+                  </span>
+                  <span className="font-roboto font-semibold text-[#15203C]">
+                    1200 lm
+                  </span>
                 </div>
                 <div className="flex justify-between items-center text-lg">
-                  <span className="font-roboto font-bold text-[#15203C]">Prix</span>
-                  <span className="font-futura font-bold text-[#F97338] text-2xl">49,00 TND</span>
+                  <span className="font-roboto font-bold text-[#15203C]">
+                    Prix
+                  </span>
+                  <span className="font-futura font-bold text-[#F97338] text-2xl">
+                    49,00 TND
+                  </span>
                 </div>
               </div>
 
@@ -124,7 +146,9 @@ export default function ProductDetail() {
                 <h3 className="font-futura text-xl font-bold text-[#15203C]">
                   {advantage.title}
                 </h3>
-                <p className="font-roboto text-gray-600">{advantage.description}</p>
+                <p className="font-roboto text-gray-600">
+                  {advantage.description}
+                </p>
               </div>
             ))}
           </div>
@@ -199,7 +223,8 @@ export default function ProductDetail() {
             Prêt à améliorer votre éclairage ?
           </h2>
           <p className="font-roboto text-lg text-gray-100">
-            Découvrez la performance et l'élégance du panneau LED Luxence Frameless
+            Découvrez la performance et l'élégance du panneau LED Luxence
+            Frameless
           </p>
           <Button className="bg-[#F97338] hover:bg-[#e66428] text-white font-roboto font-semibold py-3 px-8 rounded-lg inline-flex items-center gap-2">
             Nous contacter

@@ -6,8 +6,9 @@ const products = [
   {
     id: "led-panel-light",
     name: "LED Frameless Panel Light",
-    description: "Panneau LED encastrable, design minimaliste et haute performance lumineuse.",
-    price: 49.00,
+    description:
+      "Panneau LED encastrable, design minimaliste et haute performance lumineuse.",
+    price: 49.0,
     image:
       "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F51c4ee0b186648aaa95eea0393361312?format=webp&width=800",
     category: "Panneaux LED",

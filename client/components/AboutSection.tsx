@@ -26,18 +26,29 @@ export function AboutSection() {
               <div className="h-1 w-20 bg-gradient-to-r from-accent to-accent/50 rounded-full" />
             </div>
 
-            <p className="text-sm md:text-base text-muted-foreground font-roboto leading-relaxed animate-fade-in" style={{ animationDelay: "100ms" }}>
-              Depuis vingt ans, Luxence crée des luminaires d'exception en fusionnant design artistique et excellence fonctionnelle.
+            <p
+              className="text-sm md:text-base text-muted-foreground font-roboto leading-relaxed animate-fade-in"
+              style={{ animationDelay: "100ms" }}
+            >
+              Depuis vingt ans, Luxence crée des luminaires d'exception en
+              fusionnant design artistique et excellence fonctionnelle.
             </p>
 
-            <div className="space-y-2 animate-fade-in" style={{ animationDelay: "200ms" }}>
+            <div
+              className="space-y-2 animate-fade-in"
+              style={{ animationDelay: "200ms" }}
+            >
               <div className="flex items-start gap-2 group">
                 <div className="flex-shrink-0 w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 mt-0.5">
                   <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
                 </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">Design artistique</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">Œuvres conçues par des designers renommés</p>
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
+                    Design artistique
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Œuvres conçues par des designers renommés
+                  </p>
                 </div>
               </div>
 
@@ -46,8 +57,12 @@ export function AboutSection() {
                   <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
                 </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">Matériaux premium</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">Sélection de matériaux nobles</p>
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
+                    Matériaux premium
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Sélection de matériaux nobles
+                  </p>
                 </div>
               </div>
 
@@ -56,8 +71,12 @@ export function AboutSection() {
                   <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
                 </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">Excellence lumière</h3>
-                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">Esthétique et performance</p>
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
+                    Excellence lumière
+                  </h3>
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Esthétique et performance
+                  </p>
                 </div>
               </div>
             </div>

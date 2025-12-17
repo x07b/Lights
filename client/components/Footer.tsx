@@ -17,10 +17,13 @@ export function Footer() {
           <div className="space-y-4 animate-fade-in">
             <div className="flex items-center gap-2">
               <div className="w-2 h-8 bg-gradient-to-b from-accent to-accent/60 rounded-full" />
-              <h3 className="text-4xl font-bold font-futura bg-gradient-to-r from-primary-foreground to-accent bg-clip-text text-transparent">Luxence</h3>
+              <h3 className="text-4xl font-bold font-futura bg-gradient-to-r from-primary-foreground to-accent bg-clip-text text-transparent">
+                Luxence
+              </h3>
             </div>
             <p className="text-sm text-primary-foreground/75 font-roboto leading-relaxed max-w-xs">
-              Luminaires d'art conçus pour sublimer vos intérieurs avec design et excellence.
+              Luminaires d'art conçus pour sublimer vos intérieurs avec design
+              et excellence.
             </p>
             <div className="flex gap-3 pt-4">
               <a
@@ -28,7 +31,9 @@ export function Footer() {
                 className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center hover:bg-accent hover:scale-110 transition-all duration-300 group"
                 aria-label="Accueil"
               >
-                <span className="text-accent group-hover:text-white transition-colors duration-300 text-lg">✦</span>
+                <span className="text-accent group-hover:text-white transition-colors duration-300 text-lg">
+                  ✦
+                </span>
               </a>
             </div>
           </div>

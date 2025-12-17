@@ -100,6 +100,19 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-[#FFF8F9] min-h-screen">
+      {/* Back Button */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 text-primary hover:text-accent transition-colors font-roboto font-semibold"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Retour aux produits
+          </Link>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="py-12 px-4 sm:py-16 md:py-20">
         <div className="max-w-6xl mx-auto">

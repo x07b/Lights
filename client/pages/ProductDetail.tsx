@@ -18,8 +18,10 @@ const productsDatabase = [
     slug: "led-frameless-panel",
     name: "LED Frameless Panel Light",
     category: "Panneaux LED",
-    description: "Panneau LED encastrable, design discret et performance lumineuse optimale.",
-    image: "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800",
+    description:
+      "Panneau LED encastrable, design discret et performance lumineuse optimale.",
+    image:
+      "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800",
     price: 49.0,
     specifications: [
       { label: "Puissance", value: "10W" },
@@ -146,25 +148,44 @@ export default function ProductDetail() {
               {/* Specs */}
               <div className="border-t border-b border-border py-8 space-y-4">
                 <div className="flex justify-between items-center group">
-                  <span className="font-roboto text-muted-foreground">Puissance</span>
+                  <span className="font-roboto text-muted-foreground">
+                    Puissance
+                  </span>
                   <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
-                    {product.specifications.find((s) => s.label === "Puissance")?.value}
+                    {
+                      product.specifications.find(
+                        (s) => s.label === "Puissance",
+                      )?.value
+                    }
                   </span>
                 </div>
                 <div className="flex justify-between items-center group">
-                  <span className="font-roboto text-muted-foreground">Type</span>
+                  <span className="font-roboto text-muted-foreground">
+                    Type
+                  </span>
                   <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
-                    {product.specifications.find((s) => s.label === "Type")?.value}
+                    {
+                      product.specifications.find((s) => s.label === "Type")
+                        ?.value
+                    }
                   </span>
                 </div>
                 <div className="flex justify-between items-center group">
-                  <span className="font-roboto text-muted-foreground">Flux lumineux</span>
+                  <span className="font-roboto text-muted-foreground">
+                    Flux lumineux
+                  </span>
                   <span className="font-roboto font-semibold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
-                    {product.specifications.find((s) => s.label === "Flux lumineux")?.value}
+                    {
+                      product.specifications.find(
+                        (s) => s.label === "Flux lumineux",
+                      )?.value
+                    }
                   </span>
                 </div>
                 <div className="flex justify-between items-center pt-4 border-t border-border">
-                  <span className="font-roboto font-bold text-foreground">Prix</span>
+                  <span className="font-roboto font-bold text-foreground">
+                    Prix
+                  </span>
                   <span className="font-futura font-bold text-accent text-3xl">
                     {product.price.toFixed(2)} TND
                   </span>
@@ -180,9 +201,7 @@ export default function ProductDetail() {
                   <Download className="w-5 h-5" />
                   Télécharger la fiche technique
                 </button>
-                <button
-                  className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95"
-                >
+                <button className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95">
                   Ajouter au panier
                 </button>
               </div>
@@ -248,9 +267,14 @@ export default function ProductDetail() {
           <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg border border-border overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
               {specifications.map((spec, index) => (
-                <div key={index} className="p-8 hover:bg-accent/2 transition-colors duration-300 group">
+                <div
+                  key={index}
+                  className="p-8 hover:bg-accent/2 transition-colors duration-300 group"
+                >
                   <div className="flex justify-between items-center md:flex-col md:items-start gap-4">
-                    <p className="font-roboto text-muted-foreground font-medium">{spec.label}</p>
+                    <p className="font-roboto text-muted-foreground font-medium">
+                      {spec.label}
+                    </p>
                     <p className="font-roboto font-bold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
                       {spec.value}
                     </p>
@@ -273,7 +297,8 @@ export default function ProductDetail() {
               Certifications et conformité
             </h2>
             <p className="text-lg text-muted-foreground font-roboto max-w-2xl mx-auto">
-              Tous nos produits respectent les normes les plus strictes en matière de qualité et d'environnement
+              Tous nos produits respectent les normes les plus strictes en
+              matière de qualité et d'environnement
             </p>
           </div>
 
@@ -304,7 +329,9 @@ export default function ProductDetail() {
                   animationDelay: `${index * 100}ms`,
                 }}
               >
-                <div className="text-accent group-hover:scale-110 transition-transform duration-300">{cert.icon}</div>
+                <div className="text-accent group-hover:scale-110 transition-transform duration-300">
+                  {cert.icon}
+                </div>
                 <p className="font-roboto text-sm font-semibold text-foreground text-center group-hover:text-accent transition-colors duration-300">
                   {cert.label}
                 </p>
@@ -321,7 +348,8 @@ export default function ProductDetail() {
             Prêt à illuminer vos espaces avec style ?
           </h2>
           <p className="font-roboto text-lg text-white/85 leading-relaxed">
-            Découvrez la performance et l'élégance du {product.name}. Notre équipe d'experts est prête à vous conseiller.
+            Découvrez la performance et l'élégance du {product.name}. Notre
+            équipe d'experts est prête à vous conseiller.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Link
@@ -329,8 +357,18 @@ export default function ProductDetail() {
               className="inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accent/90 text-white font-roboto font-bold rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95 group"
             >
               Nous contacter
-              <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <svg
+                className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </Link>
             <Link

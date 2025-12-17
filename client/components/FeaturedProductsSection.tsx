@@ -27,7 +27,8 @@ export function FeaturedProductsSection() {
             Nos luminaires emblématiques
           </h2>
           <p className="text-lg text-muted-foreground font-roboto max-w-2xl mx-auto leading-relaxed">
-            Découvrez notre sélection de luminaires les plus prisés, conçus pour transformer vos espaces
+            Découvrez notre sélection de luminaires les plus prisés, conçus pour
+            transformer vos espaces
           </p>
         </div>
 
@@ -52,14 +53,30 @@ export function FeaturedProductsSection() {
         </div>
 
         {/* CTA Button */}
-        <div className="flex justify-center mt-12 animate-fade-in opacity-0" style={{ animation: `fade-in 0.6s ease-out forwards`, animationDelay: `${products.length * 150 + 200}ms` }}>
+        <div
+          className="flex justify-center mt-12 animate-fade-in opacity-0"
+          style={{
+            animation: `fade-in 0.6s ease-out forwards`,
+            animationDelay: `${products.length * 150 + 200}ms`,
+          }}
+        >
           <a
             href="/products"
             className="inline-flex items-center justify-center px-8 py-4 bg-foreground text-white font-futura font-bold rounded-lg hover:bg-foreground/90 transition-all duration-300 hover:shadow-lg active:scale-95 group"
           >
             Voir tous nos produits
-            <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <svg
+              className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
             </svg>
           </a>
         </div>

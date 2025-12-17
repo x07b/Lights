@@ -9,14 +9,16 @@ export function HeroSection() {
   const slides = [
     {
       id: 1,
-      image: "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
-      alt: "Luxence Brand Banner 1"
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
+      alt: "Luxence Brand Banner 1",
     },
     {
       id: 2,
-      image: "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
-      alt: "Luxence Brand Banner 2"
-    }
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
+      alt: "Luxence Brand Banner 2",
+    },
   ];
 
   // Auto-play carousel
@@ -56,8 +58,8 @@ export function HeroSection() {
           key={slide.id}
           className={`absolute inset-0 transition-all duration-700 ease-out ${
             index === currentSlide
-              ? 'opacity-100 scale-100'
-              : 'opacity-0 scale-105'
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-105"
           }`}
         >
           <img
@@ -75,19 +77,31 @@ export function HeroSection() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-lg animate-fade-in space-y-6">
             <div className="space-y-4">
-              <p className="text-accent font-roboto text-xs font-semibold uppercase tracking-widest animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.2s forwards' }}>
+              <p
+                className="text-accent font-roboto text-xs font-semibold uppercase tracking-widest animate-slide-up opacity-0"
+                style={{ animation: "slide-up 0.6s ease-out 0.2s forwards" }}
+              >
                 Luxury Lighting
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-futura font-bold leading-tight text-white animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.3s forwards' }}>
+              <h1
+                className="text-4xl md:text-5xl lg:text-6xl font-futura font-bold leading-tight text-white animate-slide-up opacity-0"
+                style={{ animation: "slide-up 0.6s ease-out 0.3s forwards" }}
+              >
                 Illuminez vos espaces
               </h1>
             </div>
 
-            <p className="text-sm md:text-base text-white/90 font-roboto leading-relaxed animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.4s forwards' }}>
+            <p
+              className="text-sm md:text-base text-white/90 font-roboto leading-relaxed animate-slide-up opacity-0"
+              style={{ animation: "slide-up 0.6s ease-out 0.4s forwards" }}
+            >
               Des luminaires élégants pour sublimer vos intérieurs.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 animate-slide-up opacity-0" style={{ animation: 'slide-up 0.6s ease-out 0.5s forwards' }}>
+            <div
+              className="flex flex-col sm:flex-row gap-3 pt-4 animate-slide-up opacity-0"
+              style={{ animation: "slide-up 0.6s ease-out 0.5s forwards" }}
+            >
               <Link
                 to="/products"
                 className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg group active:scale-95"
@@ -131,8 +145,8 @@ export function HeroSection() {
             onClick={() => goToSlide(index)}
             className={`h-2 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? 'bg-accent w-8'
-                : 'bg-white/50 hover:bg-white/75 w-2'
+                ? "bg-accent w-8"
+                : "bg-white/50 hover:bg-white/75 w-2"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

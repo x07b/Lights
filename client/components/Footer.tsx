@@ -11,17 +11,23 @@ export function Footer() {
           <div className="space-y-4 animate-fade-in">
             <h3 className="text-3xl font-bold font-futura">Luxence</h3>
             <p className="text-sm text-primary-foreground/80 font-roboto leading-relaxed">
-              Des luminaires élégants et artistiques conçus pour sublimer les intérieurs sophistiqués avec performance et style.
+              Des luminaires élégants et artistiques conçus pour sublimer les
+              intérieurs sophistiqués avec performance et style.
             </p>
             <div className="flex gap-2 pt-4">
               <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center group hover:bg-accent hover:scale-110 transition-all duration-300 cursor-pointer">
-                <span className="text-accent group-hover:text-white transition-colors duration-300">✦</span>
+                <span className="text-accent group-hover:text-white transition-colors duration-300">
+                  ✦
+                </span>
               </div>
             </div>
           </div>
 
           {/* À propos */}
-          <div className="space-y-4 animate-fade-in" style={{ animationDelay: '100ms' }}>
+          <div
+            className="space-y-4 animate-fade-in"
+            style={{ animationDelay: "100ms" }}
+          >
             <h4 className="font-futura font-bold text-lg">À propos</h4>
             <ul className="space-y-3 font-roboto text-sm">
               <li>
@@ -55,7 +61,10 @@ export function Footer() {
           </div>
 
           {/* Support Client */}
-          <div className="space-y-4 animate-fade-in" style={{ animationDelay: '200ms' }}>
+          <div
+            className="space-y-4 animate-fade-in"
+            style={{ animationDelay: "200ms" }}
+          >
             <h4 className="font-futura font-bold text-lg">Support client</h4>
             <ul className="space-y-3 font-roboto text-sm">
               <li>
@@ -89,7 +98,10 @@ export function Footer() {
           </div>
 
           {/* Catégories */}
-          <div className="space-y-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
+          <div
+            className="space-y-4 animate-fade-in"
+            style={{ animationDelay: "300ms" }}
+          >
             <h4 className="font-futura font-bold text-lg">Catégories</h4>
             <ul className="space-y-3 font-roboto text-sm">
               <li>

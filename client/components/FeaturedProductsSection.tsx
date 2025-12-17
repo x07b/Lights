@@ -8,7 +8,7 @@ const products = [
     description: "Panneau LED encastrable, design minimaliste et haute performance lumineuse.",
     price: 49.00,
     image:
-      "https://images.unsplash.com/photo-1578500494198-246f612d782f?w=600&q=80",
+      "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800",
     category: "Panneaux LED",
     slug: "led-frameless-panel",
   },

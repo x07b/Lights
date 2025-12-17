@@ -65,6 +65,9 @@ export default function ProductDetail() {
             {/* Product Info */}
             <div className="space-y-6">
               <div>
+                <p className="font-roboto text-sm uppercase tracking-widest text-[#F97338] mb-2">
+                  Panneaux LED
+                </p>
                 <h1 className="font-futura text-4xl sm:text-5xl font-bold text-[#15203C] mb-4">
                   LED Frameless Panel Light
                 </h1>
@@ -85,6 +88,10 @@ export default function ProductDetail() {
                 <div className="flex justify-between items-center">
                   <span className="font-roboto text-gray-600">Flux lumineux</span>
                   <span className="font-roboto font-semibold text-[#15203C]">1200 lm</span>
+                </div>
+                <div className="flex justify-between items-center text-lg">
+                  <span className="font-roboto font-bold text-[#15203C]">Prix</span>
+                  <span className="font-futura font-bold text-[#F97338] text-2xl">49,00 TND</span>
                 </div>
               </div>
 

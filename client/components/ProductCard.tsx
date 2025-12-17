@@ -1,5 +1,6 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Eye } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;
@@ -8,6 +9,7 @@ interface ProductCardProps {
   price: number;
   image: string;
   category?: string;
+  slug?: string;
 }
 
 export function ProductCard({
@@ -17,8 +19,10 @@ export function ProductCard({
   price,
   image,
   category,
+  slug,
 }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -26,10 +30,17 @@ export function ProductCard({
     setTimeout(() => setIsAdded(false), 2000);
   };
 
+  const handleViewProduct = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (slug) {
+      navigate(`/product/${slug}`);
+    }
+  };
+
   return (
     <div className="group cursor-pointer h-full flex flex-col bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       {/* Image Container */}
-      <div className="relative overflow-hidden bg-[#FFF8F9] p-6 flex items-center justify-center h-72">
+      <div className="relative overflow-hidden bg-gray-200 p-6 flex items-center justify-center h-72">
         <img
           src={image}
           alt={name}
@@ -63,29 +74,28 @@ export function ProductCard({
           </span>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col gap-3 pt-4">
-          {/* Primary Button - Add to Cart */}
+        {/* Action Icons */}
+        <div className="flex gap-3 pt-4">
+          {/* Add to Cart Icon Button */}
           <button
             onClick={handleAddToCart}
-            className={`w-full py-3 px-4 rounded-lg font-roboto font-semibold text-white transition-all duration-300 flex items-center justify-center gap-2 ${
+            title={isAdded ? "Ajouté !" : "Ajouter au panier"}
+            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center ${
               isAdded
                 ? "bg-[#e66428] scale-95"
                 : "bg-[#F97338] hover:bg-[#e66428] active:scale-95"
             }`}
           >
-            <ShoppingCart className="w-5 h-5" />
-            {isAdded ? "Ajouté !" : "Ajouter au panier"}
+            <ShoppingCart className="w-5 h-5 text-white" />
           </button>
 
-          {/* Secondary Button - View Product */}
+          {/* View Product Icon Button */}
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            className="w-full py-3 px-4 rounded-lg font-roboto font-semibold text-[#15203C] border-2 border-[#15203C] hover:bg-[#FFF8F9] transition-colors duration-300"
+            onClick={handleViewProduct}
+            title="Voir le produit"
+            className="flex-1 py-3 px-4 rounded-lg border-2 border-[#15203C] text-[#15203C] hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center"
           >
-            Voir le produit
+            <Eye className="w-5 h-5" />
           </button>
         </div>
       </div>

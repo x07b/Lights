@@ -234,20 +234,24 @@ export default function ProductDetail() {
       </section>
 
       {/* Technical Specifications Section */}
-      <section className="py-12 md:py-16 px-4 bg-[#FFF8F9]">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-futura text-3xl sm:text-4xl font-bold text-[#15203C] mb-8 text-center">
-            Caractéristiques techniques
-          </h2>
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+      <section className="py-20 md:py-28 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 md:mb-20 space-y-4 animate-fade-in">
+            <p className="text-accent font-roboto text-sm font-semibold uppercase tracking-widest">
+              Détails techniques
+            </p>
+            <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+              Caractéristiques techniques
+            </h2>
+          </div>
+
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg border border-border overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
               {specifications.map((spec, index) => (
-                <div key={index} className="p-6 flex items-center">
-                  <div className="w-1/2">
-                    <p className="font-roboto text-gray-600">{spec.label}</p>
-                  </div>
-                  <div className="w-1/2 text-right">
-                    <p className="font-roboto font-semibold text-[#15203C] text-lg">
+                <div key={index} className="p-8 hover:bg-accent/2 transition-colors duration-300 group">
+                  <div className="flex justify-between items-center md:flex-col md:items-start gap-4">
+                    <p className="font-roboto text-muted-foreground font-medium">{spec.label}</p>
+                    <p className="font-roboto font-bold text-foreground text-lg group-hover:text-accent transition-colors duration-300">
                       {spec.value}
                     </p>
                   </div>

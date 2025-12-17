@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        futura: ["Futura PT", "Futura", "sans-serif"],
+        futura: ["Poppins", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
       },
       colors: {

@@ -38,6 +38,31 @@ const productsDatabase = [
     pdfFile: "/Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
     pdfFilename: "Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
   },
+  {
+    id: "led-panel-light-round",
+    slug: "led-panel-light-round",
+    name: "LED Panel Light Round",
+    category: "Panneaux LED",
+    description:
+      "Panneau LED encastrable rond haute performance, longue durée de vie et économie d'énergie.",
+    image:
+      "https://cdn.builder.io/api/v1/image/assets%2Fcbe2eec5db404214a3a4db1cb75a5758%2Fb16ebe3730ac4e5f9a4fb71cf3ee89d5?format=webp&width=800",
+    price: 49.0,
+    specifications: [
+      { label: "Puissance", value: "18W" },
+      { label: "Forme", value: "Ronde" },
+      { label: "Type", value: "Encastré" },
+      { label: "Couleur", value: "Blanc" },
+      { label: "Température de couleur", value: "3000K" },
+      { label: "Flux lumineux", value: "1800 lm" },
+      { label: "Durée de vie", value: "30000 heures" },
+      { label: "Certification", value: "CE" },
+      { label: "Indice de protection", value: "IP20" },
+      { label: "Pays d'origine", value: "Fabriqué en Chine" },
+    ],
+    pdfFile: "/Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
+    pdfFilename: "Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
+  },
 ];
 
 export default function ProductDetail() {

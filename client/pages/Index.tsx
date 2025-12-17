@@ -1,9 +1,7 @@
 export default function Index() {
   return (
-    <div className="w-full">
-      <div className="bg-red-500 p-8">
-        <h1>Test</h1>
-      </div>
+    <div style={{ width: '100%', height: '100vh', backgroundColor: 'red' }}>
+      <h1 style={{ color: 'white' }}>Hello World</h1>
     </div>
   );
 }

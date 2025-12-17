@@ -58,9 +58,17 @@ export function ProductCard({
         )}
 
         {/* Title */}
-        <h3 className="text-xl font-futura font-bold text-[#15203C] line-clamp-2 group-hover:text-[#F97338] transition-colors duration-300">
-          {name}
-        </h3>
+        {slug ? (
+          <Link to={`/product/${slug}`}>
+            <h3 className="text-xl font-futura font-bold text-[#15203C] line-clamp-2 group-hover:text-[#F97338] transition-colors duration-300 cursor-pointer">
+              {name}
+            </h3>
+          </Link>
+        ) : (
+          <h3 className="text-xl font-futura font-bold text-[#15203C] line-clamp-2 group-hover:text-[#F97338] transition-colors duration-300">
+            {name}
+          </h3>
+        )}
 
         {/* Description */}
         <p className="text-sm text-gray-600 font-roboto line-clamp-1 flex-grow">

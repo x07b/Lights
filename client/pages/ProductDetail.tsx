@@ -56,9 +56,9 @@ export default function ProductDetail() {
             {/* Product Image */}
             <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F0bc9663708b249c284ad3e3433883b4b?format=webp&width=800"
+                src="https://images.unsplash.com/photo-1578500494198-246f612d782f?w=600&q=80"
                 alt="LED Frameless Panel Light"
-                className="w-full h-auto max-w-md object-contain"
+                className="w-full h-auto max-w-md object-cover rounded-lg"
               />
             </div>
 

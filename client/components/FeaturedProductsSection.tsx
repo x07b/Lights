@@ -30,16 +30,15 @@ export function FeaturedProductsSection() {
         <div className="flex justify-center">
           <div className="w-full max-w-sm">
             {products.map((product, index) => (
-              <Link
+              <div
                 key={product.id}
-                to={`/product/${product.slug}`}
-                className="animate-fade-in block"
+                className="animate-fade-in"
                 style={{
                   animationDelay: `${index * 100}ms`,
                 }}
               >
                 <ProductCard {...product} />
-              </Link>
+              </div>
             ))}
           </div>
         </div>

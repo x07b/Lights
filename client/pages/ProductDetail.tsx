@@ -7,6 +7,7 @@ import {
   Trash2,
   Leaf,
   CheckCircle,
+  ShoppingCart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useParams, Link } from "react-router-dom";
@@ -37,6 +38,31 @@ const productsDatabase = [
     ],
     pdfFile: "/Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
     pdfFilename: "Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
+  },
+  {
+    id: "led-panel-light-round",
+    slug: "led-panel-light-round",
+    name: "LED Panel Light Round",
+    category: "Panneaux LED",
+    description:
+      "Panneau LED encastrable rond haute performance, longue durée de vie et économie d'énergie.",
+    image:
+      "https://cdn.builder.io/api/v1/image/assets%2Fcbe2eec5db404214a3a4db1cb75a5758%2Fb16ebe3730ac4e5f9a4fb71cf3ee89d5?format=webp&width=800",
+    price: 49.0,
+    specifications: [
+      { label: "Puissance", value: "18W" },
+      { label: "Forme", value: "Ronde" },
+      { label: "Type", value: "Encastré" },
+      { label: "Couleur", value: "Blanc" },
+      { label: "Température de couleur", value: "3000K" },
+      { label: "Flux lumineux", value: "1800 lm" },
+      { label: "Durée de vie", value: "30000 heures" },
+      { label: "Certification", value: "CE" },
+      { label: "Indice de protection", value: "IP20" },
+      { label: "Pays d'origine", value: "Fabriqué en Chine" },
+    ],
+    pdfFile: "/Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
+    pdfFilename: "Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
   },
 ];
 
@@ -193,7 +219,7 @@ export default function ProductDetail() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex items-center gap-3 pt-4">
                 <button
                   onClick={handleDownloadPDF}
                   className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
@@ -201,8 +227,11 @@ export default function ProductDetail() {
                   <Download className="w-5 h-5" />
                   Télécharger la fiche technique
                 </button>
-                <button className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95">
-                  Ajouter au panier
+                <button
+                  title="Ajouter au panier"
+                  className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95"
+                >
+                  <ShoppingCart className="w-5 h-5" />
                 </button>
               </div>
             </div>

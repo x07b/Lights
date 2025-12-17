@@ -2,77 +2,84 @@ import { CheckCircle } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-12 md:py-16 bg-gradient-to-br from-background via-background to-accent/5 min-h-screen md:min-h-auto flex items-center">
+      <div className="container mx-auto px-4 w-full">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image */}
           <div className="order-2 md:order-1">
-            <div className="relative rounded-lg overflow-hidden">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-80 md:h-96">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F912ded31f1c040bbb8e059f551179c76?format=webp&width=800"
                 alt="Luxence brand banner"
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           </div>
 
           {/* Content */}
-          <div className="order-1 md:order-2">
-            <h2 className="text-3xl md:text-5xl font-futura font-bold text-primary mb-6">
-              Rejoignez l'univers Luxence
-            </h2>
+          <div className="order-1 md:order-2 space-y-5">
+            <div className="space-y-2 animate-fade-in">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-futura font-bold text-primary leading-tight">
+                Rejoignez l'univers <span className="text-accent">Luxence</span>
+              </h2>
+              <div className="h-1 w-20 bg-gradient-to-r from-accent to-accent/50 rounded-full" />
+            </div>
 
-            <p className="text-lg text-muted-foreground font-roboto mb-6 leading-relaxed">
-              Depuis plus de deux décennies, Luxence se distingue par son
-              approche unique de l'éclairage haut de gamme. Nous combinons le
-              design artistique avec la fonctionnalité pour créer des luminaires
-              qui transcendent le simple éclairage.
+            <p
+              className="text-sm md:text-base text-muted-foreground font-roboto leading-relaxed animate-fade-in"
+              style={{ animationDelay: "100ms" }}
+            >
+              Depuis vingt ans, Luxence crée des luminaires d'exception en
+              fusionnant design artistique et excellence fonctionnelle.
             </p>
 
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
+            <div
+              className="space-y-2 animate-fade-in"
+              style={{ animationDelay: "200ms" }}
+            >
+              <div className="flex items-start gap-2 group">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 mt-0.5">
+                  <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
+                </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary mb-1">
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
                     Design artistique
                   </h3>
-                  <p className="text-muted-foreground font-roboto text-sm">
-                    Chaque luminaire est une œuvre d'art conçue par des
-                    designers renommés
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Œuvres conçues par des designers renommés
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
+              <div className="flex items-start gap-2 group">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 mt-0.5">
+                  <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
+                </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary mb-1">
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
                     Matériaux premium
                   </h3>
-                  <p className="text-muted-foreground font-roboto text-sm">
-                    Sélection rigoureuse des matériaux nobles et durables
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Sélection de matériaux nobles
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
+              <div className="flex items-start gap-2 group">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300 mt-0.5">
+                  <CheckCircle className="w-4 h-4 text-accent group-hover:text-white" />
+                </div>
                 <div>
-                  <h3 className="font-futura font-bold text-primary mb-1">
-                    Équilibre fonctionnel
+                  <h3 className="font-futura font-bold text-primary text-sm md:text-base">
+                    Excellence lumière
                   </h3>
-                  <p className="text-muted-foreground font-roboto text-sm">
-                    Esthétique et performance lumineuse en parfaite harmonie
+                  <p className="text-xs md:text-sm text-muted-foreground font-roboto">
+                    Esthétique et performance
                   </p>
                 </div>
               </div>
             </div>
-
-            <p className="text-muted-foreground font-roboto">
-              L'expérience Luxence est bien plus qu'un achat: c'est un voyage
-              dans l'univers du design lumière, où chaque détail compte pour
-              créer l'ambiance parfaite de votre intérieur.
-            </p>
           </div>
         </div>
       </div>

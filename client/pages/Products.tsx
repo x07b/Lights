@@ -14,6 +14,17 @@ const products = [
     category: "Panneaux LED",
     slug: "led-frameless-panel",
   },
+  {
+    id: "led-panel-light-round",
+    name: "LED Panel Light Round",
+    description:
+      "Panneau LED encastrable rond, longue durée de vie et économe en énergie.",
+    price: 49.0,
+    image:
+      "https://cdn.builder.io/api/v1/image/assets%2Fcbe2eec5db404214a3a4db1cb75a5758%2Fb16ebe3730ac4e5f9a4fb71cf3ee89d5?format=webp&width=800",
+    category: "Panneaux LED",
+    slug: "led-panel-light-round",
+  },
 ];
 
 export default function Products() {

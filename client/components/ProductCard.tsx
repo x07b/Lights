@@ -1,6 +1,6 @@
 import { ShoppingCart, Eye } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;

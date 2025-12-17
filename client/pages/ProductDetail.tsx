@@ -44,19 +44,19 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-[#FFF8F9] min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <h1 className="font-futura text-4xl font-bold text-[#15203C]">
+      <div className="bg-gradient-to-br from-white to-gray-50 min-h-screen flex items-center justify-center px-4">
+        <div className="text-center space-y-8 animate-fade-in">
+          <h1 className="font-futura text-5xl font-bold text-foreground">
             Produit non trouvé
           </h1>
-          <p className="font-roboto text-gray-600">
+          <p className="font-roboto text-lg text-muted-foreground">
             Le produit que vous recherchez n'existe pas.
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-[#F97338] hover:bg-[#e66428] text-white font-roboto font-semibold py-3 px-6 rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-8 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95 group"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
             Retour aux produits
           </Link>
         </div>

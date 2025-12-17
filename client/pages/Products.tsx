@@ -38,13 +38,9 @@ export default function Products() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
-            <Link
-              key={product.id}
-              to={`/product/${product.slug}`}
-              className="block"
-            >
+            <div key={product.id}>
               <ProductCard {...product} />
-            </Link>
+            </div>
           ))}
         </div>
       </div>

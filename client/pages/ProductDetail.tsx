@@ -192,23 +192,39 @@ export default function ProductDetail() {
       </section>
 
       {/* Key Advantages Section */}
-      <section className="py-12 md:py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-futura text-3xl sm:text-4xl font-bold text-[#15203C] mb-12 text-center">
-            Avantages clés
-          </h2>
+      <section className="py-20 md:py-28 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 md:mb-20 space-y-4 animate-fade-in">
+            <p className="text-accent font-roboto text-sm font-semibold uppercase tracking-widest">
+              Caractéristiques
+            </p>
+            <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+              Avantages clés
+            </h2>
+            <p className="text-lg text-muted-foreground font-roboto max-w-2xl mx-auto">
+              Découvrez ce qui fait l'excellence de ce luminaire
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {advantages.map((advantage, index) => (
-              <div key={index} className="text-center space-y-4">
+              <div
+                key={index}
+                className="group text-center space-y-6 p-8 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border animate-fade-in opacity-0"
+                style={{
+                  animation: `fade-in 0.6s ease-out forwards`,
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
                 <div className="flex justify-center">
-                  <div className="w-16 h-16 bg-[#FFF8F9] rounded-full flex items-center justify-center text-[#F97338]">
+                  <div className="w-20 h-20 bg-gradient-to-br from-accent/10 to-accent/5 rounded-full flex items-center justify-center text-accent group-hover:bg-accent/20 transition-all duration-300">
                     {advantage.icon}
                   </div>
                 </div>
-                <h3 className="font-futura text-xl font-bold text-[#15203C]">
+                <h3 className="font-futura text-xl font-bold text-foreground">
                   {advantage.title}
                 </h3>
-                <p className="font-roboto text-gray-600">
+                <p className="font-roboto text-muted-foreground leading-relaxed">
                   {advantage.description}
                 </p>
               </div>

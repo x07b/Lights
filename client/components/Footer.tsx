@@ -145,7 +145,7 @@ export function Footer() {
                 className="p-2 hover:bg-primary-foreground/10 rounded-lg transition-colors"
                 aria-label="LinkedIn"
               >
-                <LinkedIn className="w-5 h-5" />
+                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>

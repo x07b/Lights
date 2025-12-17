@@ -9,12 +9,65 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useParams, Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+
+const productsDatabase = [
+  {
+    id: "led-panel-light",
+    slug: "led-frameless-panel",
+    name: "LED Frameless Panel Light",
+    category: "Panneaux LED",
+    description: "Panneau LED encastrable, design discret et performance lumineuse optimale.",
+    image: "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800",
+    price: 49.0,
+    specifications: [
+      { label: "Puissance", value: "10W" },
+      { label: "Forme", value: "Ronde" },
+      { label: "Type", value: "Encastré" },
+      { label: "Couleur", value: "Blanc" },
+      { label: "Température de couleur", value: "6500K" },
+      { label: "Flux lumineux", value: "1200 lm" },
+      { label: "Durée de vie", value: "3000 heures" },
+      { label: "Certification", value: "CE" },
+      { label: "Indice de protection", value: "IP20" },
+      { label: "Pays d'origine", value: "Fabriqué en Chine" },
+    ],
+    pdfFile: "/fiche-technique-led-panel.pdf",
+    pdfFilename: "Luxence-LED-Panel-Light-Fiche-Technique.pdf",
+  },
+];
 
 export default function ProductDetail() {
+  const { slug } = useParams<{ slug: string }>();
+  const product = productsDatabase.find((p) => p.slug === slug);
+
+  if (!product) {
+    return (
+      <div className="bg-[#FFF8F9] min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-6">
+          <h1 className="font-futura text-4xl font-bold text-[#15203C]">
+            Produit non trouvé
+          </h1>
+          <p className="font-roboto text-gray-600">
+            Le produit que vous recherchez n'existe pas.
+          </p>
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 bg-[#F97338] hover:bg-[#e66428] text-white font-roboto font-semibold py-3 px-6 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Retour aux produits
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const handleDownloadPDF = () => {
     const link = document.createElement("a");
-    link.href = "/fiche-technique-led-panel.pdf";
-    link.download = "Luxence-LED-Panel-Light-Fiche-Technique.pdf";
+    link.href = product.pdfFile;
+    link.download = product.pdfFilename;
     link.click();
   };
 

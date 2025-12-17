@@ -71,18 +71,7 @@ export default function ProductDetail() {
     link.click();
   };
 
-  const specifications = [
-    { label: "Puissance", value: "10W" },
-    { label: "Forme", value: "Ronde" },
-    { label: "Type", value: "Encastré" },
-    { label: "Couleur", value: "Blanc" },
-    { label: "Température de couleur", value: "6500K" },
-    { label: "Flux lumineux", value: "1200 lm" },
-    { label: "Durée de vie", value: "3000 heures" },
-    { label: "Certification", value: "CE" },
-    { label: "Indice de protection", value: "IP20" },
-    { label: "Pays d'origine", value: "Fabriqué en Chine" },
-  ];
+  const specifications = product.specifications;
 
   const certifications = [
     { icon: "RoHS", label: "RoHS" },

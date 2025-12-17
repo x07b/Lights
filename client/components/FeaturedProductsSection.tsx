@@ -1,59 +1,16 @@
+import { Link } from "react-router-dom";
 import { ProductCard } from "./ProductCard";
 
 const products = [
   {
-    id: "1",
-    name: "Suspension Minimaliste",
-    description: "Design épuré en métal brossé et verre",
-    price: 249.99,
-    image:
-      "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
-    category: "Suspensions",
-  },
-  {
-    id: "2",
-    name: "Lampadaire Signature",
-    description: "Pied en marbre blanc, abat-jour en lin",
-    price: 349.99,
-    image:
-      "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
-    category: "Lampadaires",
-  },
-  {
-    id: "3",
-    name: "Lampe de Table Élégante",
-    description: "Base en laiton doré, diffuseur en soie",
-    price: 189.99,
-    image:
-      "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&q=80",
-    category: "Lampes de table",
-  },
-  {
-    id: "4",
-    name: "Applique Murale Moderne",
-    description: "Géométrique en acier noir mat",
-    price: 159.99,
+    id: "led-panel-light",
+    name: "LED Frameless Panel Light",
+    description: "Panneau LED encastrable, design minimaliste et haute performance lumineuse.",
+    price: 49.00,
     image:
       "https://images.unsplash.com/photo-1578500494198-246f612d782f?w=400&q=80",
-    category: "Appliques",
-  },
-  {
-    id: "5",
-    name: "Lustre Artistique",
-    description: "Cristal taillé, armature en laiton",
-    price: 449.99,
-    image:
-      "https://images.unsplash.com/photo-1565636192335-14e9b763bd21?w=400&q=80",
-    category: "Suspensions",
-  },
-  {
-    id: "6",
-    name: "Lampe Architecte",
-    description: "Articulée, variateur intégré",
-    price: 219.99,
-    image:
-      "https://images.unsplash.com/photo-1584622614875-2f38dd7aaf60?w=400&q=80",
-    category: "Lampes de table",
+    category: "Panneaux LED",
+    slug: "led-frameless-panel",
   },
 ];
 

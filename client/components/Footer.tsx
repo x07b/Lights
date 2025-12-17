@@ -136,9 +136,9 @@ export function Footer() {
               <a
                 href="#"
                 className="p-2 hover:bg-primary-foreground/10 rounded-lg transition-colors"
-                aria-label="Pinterest"
+                aria-label="Share"
               >
-                <Pinterest className="w-5 h-5" />
+                <Share2 className="w-5 h-5" />
               </a>
               <a
                 href="#"

@@ -107,8 +107,8 @@ export default function ProductDetail() {
             {/* Product Image */}
             <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800"
-                alt="LED Frameless Panel Light"
+                src={product.image}
+                alt={product.name}
                 className="w-full h-auto max-w-md object-cover rounded-lg"
               />
             </div>
@@ -117,14 +117,13 @@ export default function ProductDetail() {
             <div className="space-y-6">
               <div>
                 <p className="font-roboto text-sm uppercase tracking-widest text-[#F97338] mb-2">
-                  Panneaux LED
+                  {product.category}
                 </p>
                 <h1 className="font-futura text-4xl sm:text-5xl font-bold text-[#15203C] mb-4">
-                  LED Frameless Panel Light
+                  {product.name}
                 </h1>
                 <p className="font-roboto text-lg text-gray-700 leading-relaxed">
-                  Panneau LED encastrable, design discret et performance
-                  lumineuse optimale.
+                  {product.description}
                 </p>
               </div>
 
@@ -132,13 +131,13 @@ export default function ProductDetail() {
                 <div className="flex justify-between items-center">
                   <span className="font-roboto text-gray-600">Puissance</span>
                   <span className="font-roboto font-semibold text-[#15203C]">
-                    10W
+                    {product.specifications.find((s) => s.label === "Puissance")?.value}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="font-roboto text-gray-600">Type</span>
                   <span className="font-roboto font-semibold text-[#15203C]">
-                    Encastré
+                    {product.specifications.find((s) => s.label === "Type")?.value}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -146,7 +145,7 @@ export default function ProductDetail() {
                     Flux lumineux
                   </span>
                   <span className="font-roboto font-semibold text-[#15203C]">
-                    1200 lm
+                    {product.specifications.find((s) => s.label === "Flux lumineux")?.value}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-lg">
@@ -154,7 +153,7 @@ export default function ProductDetail() {
                     Prix
                   </span>
                   <span className="font-futura font-bold text-[#F97338] text-2xl">
-                    49,00 TND
+                    {product.price.toFixed(2)} TND
                   </span>
                 </div>
               </div>

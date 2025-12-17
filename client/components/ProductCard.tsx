@@ -80,6 +80,9 @@ export function ProductCard({
 
           {/* Secondary Button - View Product */}
           <button
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             className="w-full py-3 px-4 rounded-lg font-roboto font-semibold text-[#15203C] border-2 border-[#15203C] hover:bg-[#FFF8F9] transition-colors duration-300"
           >
             Voir le produit

@@ -92,11 +92,16 @@ export default function Admin() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="products">Products</TabsTrigger>
+        <Tabs defaultValue="orders" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="orders">Commandes</TabsTrigger>
+            <TabsTrigger value="products">Produits</TabsTrigger>
             <TabsTrigger value="collections">Collections</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="orders" className="space-y-4">
+            <OrdersManager />
+          </TabsContent>
 
           <TabsContent value="products" className="space-y-4">
             <ProductsManager />

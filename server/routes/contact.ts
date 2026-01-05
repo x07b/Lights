@@ -25,7 +25,12 @@ const contactFormSchema = z.object({
 export const handleContact: RequestHandler = async (req, res) => {
   try {
     // Validate request body
-    const validatedData = contactFormSchema.parse(req.body);
+    const validatedData = contactFormSchema.parse(req.body) as {
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+    };
 
     // Generate message ID
     const messageId = `msg_${Date.now()}_${Math.random()
@@ -98,7 +103,14 @@ async function sendEmail(data: {
   }
 
   try {
-    const nodemailer = await import("nodemailer");
+    // Dynamically import nodemailer only when needed (optional dependency)
+    // @ts-ignore - nodemailer is optional, type check disabled
+    const nodemailer = await import("nodemailer").catch(() => null);
+    
+    if (!nodemailer) {
+      console.log("nodemailer not available, skipping email send");
+      return false;
+    }
 
     const transporter = nodemailer.default.createTransport({
       host: process.env.SMTP_HOST,

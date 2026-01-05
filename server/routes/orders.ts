@@ -306,7 +306,7 @@ export async function searchOrders(req: any, res: any) {
 };
 
 // Update order status
-export const updateOrderStatus: RequestHandler = async (req, res) => {
+export async function updateOrderStatus(req: any, res: any) {
   try {
     const { id } = req.params;
     const { status } = req.body;

@@ -92,7 +92,7 @@ export const createCollection: RequestHandler = (req, res) => {
 
 export const updateCollection: RequestHandler = (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
   const data = readData();
   const collectionIndex = data.collections.findIndex((c) => c.id === id);
@@ -106,6 +106,7 @@ export const updateCollection: RequestHandler = (req, res) => {
     ...data.collections[collectionIndex],
     name: name || data.collections[collectionIndex].name,
     description: description !== undefined ? description : data.collections[collectionIndex].description,
+    image: image !== undefined ? image : data.collections[collectionIndex].image,
   };
 
   data.collections[collectionIndex] = updatedCollection;

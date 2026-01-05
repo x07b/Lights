@@ -192,7 +192,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Unique Customers */}
-        <Card className="border-blue-500/20">
+        <Card className="border-blue-500/20 hover:shadow-lg transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Clients Uniques

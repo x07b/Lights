@@ -184,10 +184,10 @@ export default function Admin() {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-auto">
-          <div className="p-6">
+        <div className="flex-1 overflow-auto bg-secondary/30">
+          <div className="p-6 md:p-8">
             <Tabs defaultValue="dashboard" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-4 bg-white border border-border rounded-lg p-1 mb-6">
                 <TabsTrigger value="dashboard">Tableau de bord</TabsTrigger>
                 <TabsTrigger value="orders">Commandes</TabsTrigger>
                 <TabsTrigger value="products">Produits</TabsTrigger>

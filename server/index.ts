@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleSendEmail } from "./routes/email";
+import { handleCheckout } from "./routes/checkout";
 
 export function createServer() {
   const app = express();
@@ -22,6 +23,9 @@ export function createServer() {
 
   // Contact form email endpoint
   app.post("/api/send-email", handleSendEmail);
+
+  // Checkout endpoint
+  app.post("/api/checkout", handleCheckout);
 
   return app;
 }

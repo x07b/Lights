@@ -28,7 +28,7 @@ CREATE INDEX IF NOT EXISTS idx_collections_slug ON collections(slug);
 -- ============================================
 CREATE TABLE IF NOT EXISTS products (
   id TEXT PRIMARY KEY,
-  collection_id TEXT NOT NULL REFERENCES collections(id) ON DELETE RESTRICT,
+  collection_id TEXT REFERENCES collections(id) ON DELETE SET NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
   price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
@@ -165,26 +165,32 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Apply triggers to tables with updated_at
+-- Drop existing triggers if they exist, then create new ones
+DROP TRIGGER IF EXISTS update_collections_updated_at ON collections;
 CREATE TRIGGER update_collections_updated_at
   BEFORE UPDATE ON collections
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_products_updated_at ON products;
 CREATE TRIGGER update_products_updated_at
   BEFORE UPDATE ON products
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_orders_updated_at ON orders;
 CREATE TRIGGER update_orders_updated_at
   BEFORE UPDATE ON orders
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_contact_messages_updated_at ON contact_messages;
 CREATE TRIGGER update_contact_messages_updated_at
   BEFORE UPDATE ON contact_messages
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_hero_slides_updated_at ON hero_slides;
 CREATE TRIGGER update_hero_slides_updated_at
   BEFORE UPDATE ON hero_slides
   FOR EACH ROW
@@ -204,22 +210,28 @@ ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE hero_slides ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for collections (products are public)
+-- Drop existing policies if they exist, then create new ones
+DROP POLICY IF EXISTS "Collections are viewable by everyone" ON collections;
 CREATE POLICY "Collections are viewable by everyone"
   ON collections FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Products are viewable by everyone" ON products;
 CREATE POLICY "Products are viewable by everyone"
   ON products FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Product images are viewable by everyone" ON product_images;
 CREATE POLICY "Product images are viewable by everyone"
   ON product_images FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Product specifications are viewable by everyone" ON product_specifications;
 CREATE POLICY "Product specifications are viewable by everyone"
   ON product_specifications FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Hero slides are viewable by everyone" ON hero_slides;
 CREATE POLICY "Hero slides are viewable by everyone"
   ON hero_slides FOR SELECT
   USING (true);

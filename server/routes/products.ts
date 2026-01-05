@@ -165,8 +165,8 @@ export const createProduct: RequestHandler = async (req, res) => {
       specifications,
     } = req.body;
 
-    if (!name || !description || price === undefined || !collectionId) {
-      res.status(400).json({ error: "Missing required fields" });
+    if (!name || !description || price === undefined) {
+      res.status(400).json({ error: "Missing required fields: name, description, and price are required" });
       return;
     }
 
@@ -182,7 +182,7 @@ export const createProduct: RequestHandler = async (req, res) => {
       .from("products")
       .insert({
         id,
-        collection_id: collectionId,
+        collection_id: collectionId || null,
         name,
         description,
         price: parseFloat(price),

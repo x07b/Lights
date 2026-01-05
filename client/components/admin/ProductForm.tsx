@@ -247,15 +247,14 @@ export default function ProductForm({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Collection *</label>
+          <label className="block text-sm font-medium mb-2">Collection (Optional)</label>
           <select
             name="collectionId"
             value={formData.collectionId}
             onChange={handleInputChange}
-            required
             className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
           >
-            <option value="">Select a collection</option>
+            <option value="">None - Will appear in all products</option>
             {collections.map((col) => (
               <option key={col.id} value={col.id}>
                 {col.name}

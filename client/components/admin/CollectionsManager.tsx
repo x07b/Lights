@@ -87,8 +87,32 @@ export default function CollectionsManager() {
     setFormData({
       name: collection.name,
       description: collection.description,
+      image: collection.image || "",
     });
+    setImagePreview(collection.image || "");
     setIsAddingNew(false);
+  };
+
+  const handleAddNew = () => {
+    setIsAddingNew(true);
+    setEditingId(null);
+    setFormData({ name: "", description: "", image: "" });
+    setImagePreview("");
+  };
+
+  const handleCancel = () => {
+    setIsAddingNew(false);
+    setEditingId(null);
+    setFormData({ name: "", description: "", image: "" });
+    setImagePreview("");
+  };
+
+  const handleImageUrlChange = (url: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      image: url,
+    }));
+    setImagePreview(url);
   };
 
   if (loading) {

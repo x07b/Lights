@@ -112,9 +112,17 @@ export function Header() {
             <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md">
               <Search className="w-5 h-5 text-foreground hover:text-accent transition-colors duration-300" />
             </button>
-            <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group">
+            <button
+              onClick={() => navigate("/cart")}
+              className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group"
+              title="Voir le panier"
+            >
               <ShoppingCart className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+              {itemCount > 0 && (
+                <span className="absolute top-1 right-1 w-5 h-5 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold animate-pulse">
+                  {itemCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Button */}

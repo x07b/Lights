@@ -67,10 +67,18 @@ export function Header() {
             <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md">
               <Search className="w-5 h-5 text-foreground hover:text-accent transition-colors duration-300" />
             </button>
-            <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group">
+            <Link
+              to="/checkout"
+              className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group"
+              title="Panier"
+            >
               <ShoppingCart className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            </button>
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 bg-accent text-primary-foreground text-xs font-futura font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
 
             {/* Mobile Menu Button */}
             <button

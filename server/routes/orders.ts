@@ -388,3 +388,136 @@ export const getOrdersByStatus: RequestHandler = async (req, res) => {
     });
   }
 };
+
+// Update order (full update)
+export const updateOrder: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { customer, items, total, status } = req.body;
+
+    // Validate request body
+    const updateData: any = {};
+    if (customer) {
+      const validatedCustomer = customerSchema.parse(customer);
+      updateData.customer_name = validatedCustomer.name;
+      updateData.customer_email = validatedCustomer.email;
+      updateData.customer_phone = validatedCustomer.phone;
+      updateData.customer_address = validatedCustomer.address;
+      updateData.customer_city = validatedCustomer.city;
+      updateData.customer_postal_code = validatedCustomer.postalCode;
+    }
+    if (total !== undefined) updateData.total = parseFloat(total);
+    if (status) {
+      const validStatuses = ["en attente", "en cours", "livré", "annulé"];
+      if (!validStatuses.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid status",
+        });
+      }
+      updateData.status = status;
+    }
+
+    // Check if order exists
+    const { data: existingOrder, error: checkError } = await supabase
+      .from("orders")
+      .select("id")
+      .eq("id", id)
+      .single();
+
+    if (checkError || !existingOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Commande non trouvée",
+      });
+    }
+
+    // Update order
+    const { data: order, error: updateError } = await supabase
+      .from("orders")
+      .update(updateData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (updateError) throw updateError;
+
+    // Update items if provided
+    if (items && Array.isArray(items)) {
+      // Delete existing items
+      await supabase.from("order_items").delete().eq("order_id", id);
+
+      // Insert new items
+      const itemRecords = items.map((item: any) => ({
+        order_id: id,
+        product_id: item.id,
+        name: item.name,
+        price: parseFloat(item.price),
+        quantity: item.quantity,
+      }));
+
+      if (itemRecords.length > 0) {
+        const { error: itemsError } = await supabase
+          .from("order_items")
+          .insert(itemRecords);
+
+        if (itemsError) throw itemsError;
+      }
+    }
+
+    const apiOrder = await dbOrderToApi(order);
+
+    res.status(200).json({
+      success: true,
+      message: "Commande mise à jour",
+      order: apiOrder,
+    });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update order",
+    });
+  }
+};
+
+// Delete order
+export const deleteOrder: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Check if order exists
+    const { data: order, error: checkError } = await supabase
+      .from("orders")
+      .select("id")
+      .eq("id", id)
+      .single();
+
+    if (checkError || !order) {
+      return res.status(404).json({
+        success: false,
+        message: "Commande non trouvée",
+      });
+    }
+
+    // Delete order (cascade will delete order_items)
+    const { error: deleteError } = await supabase
+      .from("orders")
+      .delete()
+      .eq("id", id);
+
+    if (deleteError) throw deleteError;
+
+    res.status(200).json({
+      success: true,
+      message: "Commande supprimée",
+      id,
+    });
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete order",
+    });
+  }
+};

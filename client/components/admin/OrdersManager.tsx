@@ -7,8 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Search, Eye, Filter } from "lucide-react";
+import { Search, Eye, Filter, Trash2, Edit2 } from "lucide-react";
 import OrderDetail from "./OrderDetail";
+import OrderEditModal from "./OrderEditModal";
 
 interface Order {
   id: string;
@@ -40,6 +41,8 @@ export default function OrdersManager() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showDetail, setShowDetail] = useState(false);
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     fetchOrders();
@@ -91,6 +94,38 @@ export default function OrdersManager() {
     }
   };
 
+  const handleDelete = async (orderId: string) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette commande ?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        fetchOrders();
+      } else {
+        alert("Erreur lors de la suppression de la commande");
+      }
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      alert("Erreur lors de la suppression de la commande");
+    }
+  };
+
+  const handleEdit = (order: Order) => {
+    setEditingOrder(order);
+    setShowEditModal(true);
+  };
+
+  const handleEditSave = async () => {
+    setShowEditModal(false);
+    setEditingOrder(null);
+    fetchOrders();
+  };
+
   const filteredOrders = orders.filter(
     (order) => statusFilter === "all" || order.status === statusFilter,
   );
@@ -109,6 +144,19 @@ export default function OrdersManager() {
           fetchOrders();
         }}
         onStatusChange={handleStatusChange}
+      />
+    );
+  }
+
+  if (showEditModal && editingOrder) {
+    return (
+      <OrderEditModal
+        order={editingOrder}
+        onSave={handleEditSave}
+        onCancel={() => {
+          setShowEditModal(false);
+          setEditingOrder(null);
+        }}
       />
     );
   }
@@ -332,6 +380,28 @@ export default function OrdersManager() {
                     >
                       <Eye className="w-4 h-4" />
                       Détails
+                    </Button>
+
+                    {/* Edit Button */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEdit(order)}
+                      className="flex items-center gap-2"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Modifier
+                    </Button>
+
+                    {/* Delete Button */}
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(order.id)}
+                      className="flex items-center gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Supprimer
                     </Button>
 
                     {/* Status Change Dropdown */}

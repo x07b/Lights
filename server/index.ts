@@ -33,6 +33,8 @@ import {
   searchOrders,
   updateOrderStatus,
   getOrdersByStatus,
+  updateOrder,
+  deleteOrder,
 } from "./routes/orders";
 
 export function createServer() {
@@ -85,6 +87,8 @@ export function createServer() {
   app.get("/api/orders/:id", getOrderById);
   app.get("/api/orders/search", searchOrders);
   app.put("/api/orders/:id/status", updateOrderStatus);
+  app.put("/api/orders/:id", updateOrder);
+  app.delete("/api/orders/:id", deleteOrder);
   app.get("/api/orders/status/:status", getOrdersByStatus);
 
   return app;

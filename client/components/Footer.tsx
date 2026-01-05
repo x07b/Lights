@@ -15,11 +15,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 py-20 md:py-28">
           {/* Brand */}
           <div className="space-y-4 animate-fade-in">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-8 bg-gradient-to-b from-accent to-accent/60 rounded-full" />
-              <h3 className="text-4xl font-bold font-futura bg-gradient-to-r from-primary-foreground to-accent bg-clip-text text-transparent">
-                Luxence
-              </h3>
+            <div className="flex items-center">
+              <img
+                src="/assets/white-logo.svg"
+                alt="Luxence Logo"
+                className="h-12 object-contain"
+              />
             </div>
             <p className="text-sm text-primary-foreground/75 font-roboto leading-relaxed max-w-xs">
               Luminaires d'art conçus pour sublimer vos intérieurs avec design

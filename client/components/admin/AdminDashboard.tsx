@@ -300,7 +300,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <Card>
+      <Card className="hover:shadow-lg transition-all duration-300">
         <CardHeader>
           <CardTitle>Commandes Récentes</CardTitle>
         </CardHeader>

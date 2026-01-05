@@ -350,7 +350,7 @@ export async function updateOrderStatus(req: any, res: any) {
 };
 
 // Get orders by status
-export const getOrdersByStatus: RequestHandler = async (req, res) => {
+export async function getOrdersByStatus(req: any, res: any) {
   try {
     const { status } = req.params;
 

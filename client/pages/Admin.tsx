@@ -200,7 +200,7 @@ export default function Admin() {
         {/* Content Area */}
         <div className="flex-1 overflow-auto bg-secondary/30">
           <div className="p-6 md:p-8">
-            <Tabs defaultValue="dashboard" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* Removed TabsList - Navigation handled by sidebar */}
 
               <TabsContent value="dashboard" className="space-y-4">

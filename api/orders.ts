@@ -24,16 +24,7 @@ export default async (
   const wrappedRes = wrapResponse(res);
 
   // Enable CORS
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-CSRF-Token,X-Forwarded-Host,X-URL-Scheme,x-middleware-preflight,Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,X-Api-Version"
-  );
+  setupCORS(res);
 
   if (req.method === "OPTIONS") {
     res.statusCode = 200;
@@ -45,14 +36,9 @@ export default async (
     // Parse request body
     req.body = await parseBody(req);
 
-    // Parse query string manually
-    const url = new URL(req.url || "", "http://localhost");
-    const panierCode = url.searchParams.get("panierCode");
-    const id = url.searchParams.get("id");
-    const status = url.searchParams.get("status");
-    const search = url.searchParams.get("search");
-    const query = url.searchParams.get("query");
-    req.query = { panierCode, id, status, search, query };
+    // Parse query string
+    req.query = parseQueryString(req);
+    const { panierCode, id, status, search, query } = req.query;
     req.params = {};
 
     // Route based on method and query parameters

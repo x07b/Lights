@@ -25,9 +25,3 @@ dist-ssr
 
 .config/
 
-# Environment variables
-.env
-.env.local
-.env.*.local
-.vercel
-.env*.local

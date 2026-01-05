@@ -14,6 +14,7 @@ export default function Admin() {
   const [adminPassword, setAdminPassword] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Check if already authenticated

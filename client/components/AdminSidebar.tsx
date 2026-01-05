@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Search, Plus, LogOut } from "lucide-react";
+import { LayoutDashboard, Search, Plus, LogOut, Layers } from "lucide-react";
 
 const navItems = [
   {
@@ -8,14 +8,19 @@ const navItems = [
     icon: LayoutDashboard,
   },
   {
-    label: "Rechercher commandes",
-    href: "/admin/search",
-    icon: Search,
+    label: "Collections",
+    href: "/admin/collections",
+    icon: Layers,
   },
   {
-    label: "Ajouter produit",
+    label: "Produits",
     href: "/admin/add-product",
     icon: Plus,
+  },
+  {
+    label: "Commandes",
+    href: "/admin/search",
+    icon: Search,
   },
 ];
 

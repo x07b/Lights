@@ -21,7 +21,7 @@ const contactFormSchema = z.object({
     .max(5000, "Le message ne doit pas dépasser 5000 caractères"),
 });
 
-export const handleContact: RequestHandler = async (req, res) => {
+export async function handleContact(req: any, res: any) {
   try {
     // Validate request body
     const validatedData = contactFormSchema.parse(req.body) as {

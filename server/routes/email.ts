@@ -73,7 +73,7 @@ export const handleSendEmail: RequestHandler = async (req, res) => {
       } as ContactFormResponse);
     }
 
-    const data: ContactFormData = validationResult.data;
+    const data = validationResult.data as ContactFormData;
 
     // Create transporter
     const transporter = createTransporter();

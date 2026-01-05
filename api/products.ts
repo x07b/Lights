@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import { IncomingMessage, ServerResponse } from "http";
 import {
   getProducts,
   getProductById,
@@ -13,7 +13,10 @@ export const config = {
   runtime: "nodejs",
 };
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+export default async (
+  req: IncomingMessage & { query?: Record<string, any>; body?: any },
+  res: ServerResponse
+) => {
   // Enable CORS
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");

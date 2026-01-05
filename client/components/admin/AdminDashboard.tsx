@@ -261,7 +261,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Order Status List */}
-        <Card>
+        <Card className="hover:shadow-lg transition-all duration-300">
           <CardHeader>
             <CardTitle>Statut des Commandes</CardTitle>
           </CardHeader>

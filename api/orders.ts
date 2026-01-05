@@ -15,6 +15,23 @@ export const config = {
   runtime: "nodejs",
 };
 
+// Helper function to parse request body
+function parseBody(req: IncomingMessage): Promise<any> {
+  return new Promise((resolve) => {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+    req.on("end", () => {
+      try {
+        resolve(body ? JSON.parse(body) : {});
+      } catch {
+        resolve({});
+      }
+    });
+  });
+}
+
 export default async (
   req: IncomingMessage & { query?: Record<string, any>; body?: any },
   res: ServerResponse
@@ -32,12 +49,23 @@ export default async (
   );
 
   if (req.method === "OPTIONS") {
-    res.status(200).end();
+    res.statusCode = 200;
+    res.end();
     return;
   }
 
   try {
-    const { panierCode, id, status, search, query } = req.query;
+    // Parse request body
+    req.body = await parseBody(req);
+
+    // Parse query string manually
+    const url = new URL(req.url || "", "http://localhost");
+    const panierCode = url.searchParams.get("panierCode");
+    const id = url.searchParams.get("id");
+    const status = url.searchParams.get("status");
+    const search = url.searchParams.get("search");
+    const query = url.searchParams.get("query");
+    req.query = { panierCode, id, status, search, query };
 
     // Route based on method and query parameters
     if (req.method === "GET") {

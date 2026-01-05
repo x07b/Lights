@@ -94,6 +94,12 @@ export function createServer() {
   app.delete("/api/orders/:id", deleteOrder);
   app.get("/api/orders/status/:status", getOrdersByStatus);
 
+  // Hero slides routes
+  app.get("/api/slides", getHeroSlides);
+  app.post("/api/slides", createHeroSlide);
+  app.put("/api/slides/:id", updateHeroSlide);
+  app.delete("/api/slides/:id", deleteHeroSlide);
+
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));
 

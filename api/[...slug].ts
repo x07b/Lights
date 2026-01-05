@@ -9,6 +9,7 @@ import { createServer } from "../server";
 const app = createServer();
 
 // Wrap the app with serverless-http
+// serverless-http automatically converts Vercel's event/context to Express req/res
 const handler = serverless(app, {
   binary: ['image/*', 'application/pdf'],
 });

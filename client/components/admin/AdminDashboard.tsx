@@ -324,14 +324,18 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <Card className="hover:shadow-lg transition-all duration-300">
-        <CardHeader>
-          <CardTitle>Commandes Récentes</CardTitle>
+      <Card className="border-0 hover:shadow-xl transition-all duration-300">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-futura">Commandes Récentes</CardTitle>
+          <p className="text-xs text-muted-foreground mt-1">Derniers paiements reçus</p>
         </CardHeader>
         <CardContent>
           {stats.recentOrders.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-sm text-muted-foreground">
+            <div className="text-center py-12">
+              <div className="text-accent/30 mb-3">
+                <ShoppingCart className="w-12 h-12 mx-auto" />
+              </div>
+              <p className="text-sm text-muted-foreground font-roboto">
                 Aucune commande pour le moment
               </p>
             </div>
@@ -339,20 +343,20 @@ export default function AdminDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-3 px-4 font-semibold text-foreground">
+                  <tr className="border-b-2 border-secondary">
+                    <th className="text-left py-4 px-4 font-semibold text-foreground font-roboto">
                       Client
                     </th>
-                    <th className="text-left py-3 px-4 font-semibold text-foreground">
-                      Commande
+                    <th className="text-left py-4 px-4 font-semibold text-foreground font-roboto">
+                      Code Panier
                     </th>
-                    <th className="text-left py-3 px-4 font-semibold text-foreground">
+                    <th className="text-left py-4 px-4 font-semibold text-foreground font-roboto">
                       Date
                     </th>
-                    <th className="text-right py-3 px-4 font-semibold text-foreground">
-                      Total
+                    <th className="text-right py-4 px-4 font-semibold text-foreground font-roboto">
+                      Montant
                     </th>
-                    <th className="text-center py-3 px-4 font-semibold text-foreground">
+                    <th className="text-center py-4 px-4 font-semibold text-foreground font-roboto">
                       Statut
                     </th>
                   </tr>
@@ -361,23 +365,25 @@ export default function AdminDashboard() {
                   {stats.recentOrders.map((order, index) => (
                     <tr
                       key={index}
-                      className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors"
+                      className="border-b border-secondary/50 last:border-0 hover:bg-accent/5 transition-colors duration-200"
                     >
-                      <td className="py-3 px-4 text-foreground">
+                      <td className="py-4 px-4 text-foreground font-medium font-roboto">
                         {order.customerName}
                       </td>
-                      <td className="py-3 px-4 text-muted-foreground font-mono text-xs">
-                        {order.panierCode}
+                      <td className="py-4 px-4 text-muted-foreground font-mono text-xs">
+                        <span className="bg-secondary/50 px-2 py-1 rounded">
+                          {order.panierCode}
+                        </span>
                       </td>
-                      <td className="py-3 px-4 text-muted-foreground">
+                      <td className="py-4 px-4 text-muted-foreground font-roboto">
                         {order.date}
                       </td>
-                      <td className="py-3 px-4 text-right font-bold text-accent">
+                      <td className="py-4 px-4 text-right font-bold text-accent">
                         {order.total.toFixed(2)} TND
                       </td>
-                      <td className="py-3 px-4 text-center">
+                      <td className="py-4 px-4 text-center">
                         <span
-                          className={`text-xs px-3 py-1 rounded-full font-semibold inline-block ${getStatusColor(
+                          className={`text-xs px-3 py-2 rounded-full font-semibold inline-block ${getStatusColor(
                             order.status,
                           )}`}
                         >

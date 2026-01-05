@@ -229,6 +229,9 @@ export function Header() {
           </nav>
         )}
       </div>
+
+      {/* Search Overlay */}
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }

@@ -481,7 +481,7 @@ export async function updateOrder(req: any, res: any) {
 };
 
 // Delete order
-export const deleteOrder: RequestHandler = async (req, res) => {
+export async function deleteOrder(req: any, res: any) {
   try {
     const { id } = req.params;
 

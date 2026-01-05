@@ -96,12 +96,12 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
       <aside
         className={`bg-slate-900 text-white transition-all duration-300 ${
           isSidebarOpen ? "w-64" : "w-20"
-        } flex flex-col`}
+        } flex flex-col shadow-lg`}
       >
         {/* Logo Section */}
         <div className="p-4 border-b border-slate-700">

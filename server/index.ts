@@ -64,5 +64,10 @@ export function createServer() {
   app.put("/api/collections/:id", updateCollection);
   app.delete("/api/collections/:id", deleteCollection);
 
+  // Contact routes
+  app.post("/api/contact", handleContact);
+  app.get("/api/contact/messages", getContactMessages);
+  app.put("/api/contact/messages/:id/read", markMessageAsRead);
+
   return app;
 }

@@ -1,6 +1,8 @@
 import { ShoppingCart, Eye } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
+import { useCart } from "../hooks/useCart";
 
 interface ProductCardProps {
   id: string;
@@ -23,10 +25,18 @@ export function ProductCard({
 }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false);
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+    addItem({
+      id,
+      name,
+      price,
+      image,
+    });
     setIsAdded(true);
+    toast.success(`${name} ajouté au panier!`);
     setTimeout(() => setIsAdded(false), 2000);
   };
 

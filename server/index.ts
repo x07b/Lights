@@ -1,7 +1,9 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import path from "path";
 import { handleDemo } from "./routes/demo";
+import { uploadFile } from "./routes/upload";
 import {
   getProducts,
   getProductById,
@@ -24,8 +26,11 @@ export function createServer() {
 
   // Middleware
   app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({ limit: "50mb" }));
+  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+  // Serve static files from public directory
+  app.use(express.static(path.join(process.cwd(), "public")));
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
@@ -34,6 +39,9 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // File upload route
+  app.post("/api/upload", uploadFile);
 
   // Products routes
   app.get("/api/products", getProducts);

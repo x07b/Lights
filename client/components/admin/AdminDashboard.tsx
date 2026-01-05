@@ -139,20 +139,24 @@ export default function AdminDashboard() {
     }
   };
 
+  // Prepare data for charts
+  const statusData = [
+    { name: "En attente", value: stats.ordersbyStatus.enAttente, color: "#eab308" },
+    { name: "En cours", value: stats.ordersbyStatus.enCours, color: "#3b82f6" },
+    { name: "Livré", value: stats.ordersbyStatus.livre, color: "#22c55e" },
+    { name: "Annulé", value: stats.ordersbyStatus.annule, color: "#ef4444" },
+  ];
+
+  const revenueData = [
+    { name: "Revenu Total", value: stats.totalRevenue },
+  ];
+
   return (
     <div className="space-y-8">
-      {/* Page Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-foreground">Tableau de Bord</h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          Bienvenue dans votre tableau de bord administrateur
-        </p>
-      </div>
-
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Orders */}
-        <Card>
+        <Card className="border-accent/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Commandes Totales
@@ -160,10 +164,10 @@ export default function AdminDashboard() {
             <ShoppingCart className="h-4 w-4 text-accent" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-foreground">
               {stats.totalOrders}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-muted-foreground mt-2">
               {stats.totalOrders > 0
                 ? `Moyenne: ${(stats.totalRevenue / stats.totalOrders).toFixed(2)} TND`
                 : "Aucune commande"}
@@ -172,23 +176,23 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Total Revenue */}
-        <Card>
+        <Card className="border-green-500/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Revenu Total</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-foreground">
               {stats.totalRevenue.toFixed(2)}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-muted-foreground mt-2">
               Tunisian Dinars
             </p>
           </CardContent>
         </Card>
 
         {/* Unique Customers */}
-        <Card>
+        <Card className="border-blue-500/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Clients Uniques
@@ -196,137 +200,174 @@ export default function AdminDashboard() {
             <Users className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-foreground">
               {stats.uniqueCustomers}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {stats.uniqueCustomers > 0
-                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% uniques`
+            <p className="text-xs text-muted-foreground mt-2">
+              {stats.uniqueCustomers > 0 && stats.totalOrders > 0
+                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% du total`
                 : "Aucun client"}
             </p>
           </CardContent>
         </Card>
 
         {/* Total Products */}
-        <Card>
+        <Card className="border-purple-500/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Produits</CardTitle>
             <Package className="h-4 w-4 text-purple-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">
+            <div className="text-3xl font-bold text-foreground">
               {stats.totalProducts}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-muted-foreground mt-2">
               Dans le catalogue
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Orders by Status */}
+      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Status Summary */}
+        {/* Order Status Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Commandes par Statut</CardTitle>
+            <CardTitle>Répartition des Commandes</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <span className="text-sm text-muted-foreground font-roboto">
-                  En attente
-                </span>
-              </div>
-              <span className="text-lg font-bold text-foreground">
-                {stats.ordersbyStatus.enAttente}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                <span className="text-sm text-muted-foreground font-roboto">
-                  En cours
-                </span>
-              </div>
-              <span className="text-lg font-bold text-foreground">
-                {stats.ordersbyStatus.enCours}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="text-sm text-muted-foreground font-roboto">
-                  Livré
-                </span>
-              </div>
-              <span className="text-lg font-bold text-foreground">
-                {stats.ordersbyStatus.livre}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <span className="text-sm text-muted-foreground font-roboto">
-                  Annulé
-                </span>
-              </div>
-              <span className="text-lg font-bold text-foreground">
-                {stats.ordersbyStatus.annule}
-              </span>
+          <CardContent>
+            <div className="w-full h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={statusData.filter((d) => d.value > 0)}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, value }) => `${name}: ${value}`}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Recent Orders */}
+        {/* Order Status List */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Commandes Récentes</CardTitle>
+            <CardTitle>Statut des Commandes</CardTitle>
           </CardHeader>
           <CardContent>
-            {stats.recentOrders.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Aucune commande</p>
-            ) : (
-              <div className="space-y-3">
-                {stats.recentOrders.map((order, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start justify-between gap-3 pb-3 border-b border-border last:border-0 last:pb-0"
-                  >
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        {order.customerName}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {order.panierCode}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {order.date}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-accent">
-                        {order.total.toFixed(2)} TND
-                      </p>
-                      <span
-                        className={`text-xs px-2 py-1 rounded font-semibold mt-1 inline-block ${getStatusColor(
-                          order.status,
-                        )}`}
-                      >
-                        {order.status}
-                      </span>
-                    </div>
+            <div className="space-y-4">
+              {statusData.map((status, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: status.color }}
+                    ></div>
+                    <span className="text-sm text-muted-foreground font-roboto">
+                      {status.name}
+                    </span>
                   </div>
-                ))}
-              </div>
-            )}
+                  <div className="flex items-center gap-3">
+                    <div className="w-32 bg-secondary rounded-full h-2">
+                      <div
+                        className="h-2 rounded-full transition-all"
+                        style={{
+                          width: `${(status.value / Math.max(1, stats.totalOrders)) * 100}%`,
+                          backgroundColor: status.color,
+                        }}
+                      ></div>
+                    </div>
+                    <span className="text-lg font-bold text-foreground w-8 text-right">
+                      {status.value}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Recent Orders */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Commandes Récentes</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {stats.recentOrders.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-sm text-muted-foreground">
+                Aucune commande pour le moment
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-3 px-4 font-semibold text-foreground">
+                      Client
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-foreground">
+                      Commande
+                    </th>
+                    <th className="text-left py-3 px-4 font-semibold text-foreground">
+                      Date
+                    </th>
+                    <th className="text-right py-3 px-4 font-semibold text-foreground">
+                      Total
+                    </th>
+                    <th className="text-center py-3 px-4 font-semibold text-foreground">
+                      Statut
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stats.recentOrders.map((order, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors"
+                    >
+                      <td className="py-3 px-4 text-foreground">
+                        {order.customerName}
+                      </td>
+                      <td className="py-3 px-4 text-muted-foreground font-mono text-xs">
+                        {order.panierCode}
+                      </td>
+                      <td className="py-3 px-4 text-muted-foreground">
+                        {order.date}
+                      </td>
+                      <td className="py-3 px-4 text-right font-bold text-accent">
+                        {order.total.toFixed(2)} TND
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        <span
+                          className={`text-xs px-3 py-1 rounded-full font-semibold inline-block ${getStatusColor(
+                            order.status,
+                          )}`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

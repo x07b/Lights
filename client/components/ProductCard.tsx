@@ -109,6 +109,30 @@ export function ProductCard({
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {currentImageIndex + 1} / {productImages.length}
             </div>
+
+            {/* Image Thumbnails - Show on hover */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 p-3 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {productImages.map((imgUrl, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex(index);
+                  }}
+                  className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                    index === currentImageIndex
+                      ? "border-white scale-105"
+                      : "border-white/50 opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <img
+                    src={imgUrl}
+                    alt={`${name} - ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </>
         )}
       </div>

@@ -15,6 +15,7 @@ import ProductDetail from "./pages/ProductDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminSearch from "./pages/AdminSearch";
 import AdminAddProduct from "./pages/AdminAddProduct";
+import AdminCollections from "./pages/AdminCollections";
 import NotFound from "./pages/NotFound";
 
 const Layout = ({ children }: { children: React.ReactNode }) => (

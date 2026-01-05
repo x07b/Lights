@@ -4,6 +4,12 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { handleSendEmail } from "./routes/email";
 import { handleCheckout } from "./routes/checkout";
+import {
+  handleGetAllOrders,
+  handleSearchOrders,
+  handleGetOrderByCode,
+  handleUpdateOrderStatus,
+} from "./routes/admin";
 
 export function createServer() {
   const app = express();
@@ -26,6 +32,12 @@ export function createServer() {
 
   // Checkout endpoint
   app.post("/api/checkout", handleCheckout);
+
+  // Admin endpoints
+  app.get("/api/admin/orders", handleGetAllOrders);
+  app.get("/api/admin/orders/search", handleSearchOrders);
+  app.get("/api/admin/orders/:code", handleGetOrderByCode);
+  app.patch("/api/admin/orders/:code/status", handleUpdateOrderStatus);
 
   return app;
 }

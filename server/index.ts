@@ -36,6 +36,12 @@ import {
   updateOrder,
   deleteOrder,
 } from "./routes/orders";
+import {
+  getHeroSlides,
+  createHeroSlide,
+  updateHeroSlide,
+  deleteHeroSlide,
+} from "./routes/slides";
 
 export function createServer() {
   const app = express();

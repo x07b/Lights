@@ -27,11 +27,15 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     name: dbProduct.name,
     description: dbProduct.description,
     price: parseFloat(dbProduct.price),
-    images: images.map((img) => img.image_url).sort((a, b) => {
-      const aIndex = images.find((img) => img.image_url === a)?.order_index || 0;
-      const bIndex = images.find((img) => img.image_url === b)?.order_index || 0;
-      return aIndex - bIndex;
-    }),
+    images: images
+      .map((img) => img.image_url)
+      .sort((a, b) => {
+        const aIndex =
+          images.find((img) => img.image_url === a)?.order_index || 0;
+        const bIndex =
+          images.find((img) => img.image_url === b)?.order_index || 0;
+        return aIndex - bIndex;
+      }),
     category: dbProduct.category,
     slug: dbProduct.slug,
     pdfFile: dbProduct.pdf_file || null,
@@ -94,8 +98,8 @@ export async function getProducts(_req: any, res: any) {
       dbProductToApi(
         product,
         imagesByProduct.get(product.id) || [],
-        specsByProduct.get(product.id) || []
-      )
+        specsByProduct.get(product.id) || [],
+      ),
     );
 
     res.json(productsWithRelations);
@@ -140,7 +144,7 @@ export async function getProductById(req: any, res: any) {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -165,7 +169,12 @@ export async function createProduct(req: any, res: any) {
     } = req.body;
 
     if (!name || !description || price === undefined) {
-      res.status(400).json({ error: "Missing required fields: name, description, and price are required" });
+      res
+        .status(400)
+        .json({
+          error:
+            "Missing required fields: name, description, and price are required",
+        });
       return;
     }
 
@@ -222,7 +231,12 @@ export async function createProduct(req: any, res: any) {
     ) {
       const specRecords = specifications
         .filter(
-          (spec: any) => spec && spec.label && spec.value && spec.label.trim() && spec.value.trim()
+          (spec: any) =>
+            spec &&
+            spec.label &&
+            spec.value &&
+            spec.label.trim() &&
+            spec.value.trim(),
         )
         .map((spec: any, index: number) => ({
           product_id: id,
@@ -257,7 +271,7 @@ export async function createProduct(req: any, res: any) {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.status(201).json(productWithRelations);
@@ -352,7 +366,11 @@ export async function updateProduct(req: any, res: any) {
         const specRecords = specifications
           .filter(
             (spec: any) =>
-              spec && spec.label && spec.value && spec.label.trim() && spec.value.trim()
+              spec &&
+              spec.label &&
+              spec.value &&
+              spec.label.trim() &&
+              spec.value.trim(),
           )
           .map((spec: any, index: number) => ({
             product_id: id,
@@ -388,7 +406,7 @@ export async function updateProduct(req: any, res: any) {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -496,7 +514,7 @@ export async function addProductImage(req: any, res: any) {
     const productWithRelations = dbProductToApi(
       productData,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -548,7 +566,7 @@ export async function removeProductImage(req: any, res: any) {
     const productWithRelations = dbProductToApi(
       productData,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);

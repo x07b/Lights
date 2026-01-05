@@ -71,4 +71,4 @@ export async function uploadFile(req: any, res: any) {
     console.error("Upload stream error:", error);
     res.status(500).json({ error: "Upload failed" });
   });
-};
+}

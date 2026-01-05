@@ -105,7 +105,7 @@ async function sendEmail(data: {
     // Dynamically import nodemailer only when needed (optional dependency)
     // @ts-ignore - nodemailer is optional, type check disabled
     const nodemailer = await import("nodemailer").catch(() => null);
-    
+
     if (!nodemailer) {
       console.log("nodemailer not available, skipping email send");
       return false;
@@ -185,7 +185,7 @@ export async function getContactMessages(req: any, res: any) {
     console.error("Error fetching contact messages:", error);
     res.status(500).json({ error: "Failed to fetch contact messages" });
   }
-};
+}
 
 // Mark message as read
 export async function markMessageAsRead(req: any, res: any) {

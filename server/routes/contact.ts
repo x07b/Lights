@@ -30,7 +30,7 @@ export const handleContact: RequestHandler = async (req, res) => {
     // Generate message ID
     const messageId = `msg_${Date.now()}_${Math.random()
       .toString(36)
-      .substr(2, 9)}`;
+      .substring(2, 11)}`;
 
     // Insert message into database
     const { data: message, error: insertError } = await supabase

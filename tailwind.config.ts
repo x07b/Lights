@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import { defineConfig } from 'vite';
+
 
 export default {
   darkMode: ["class"],
@@ -101,5 +103,6 @@ export default {
       },
     },
   },
+  assetsInclude: ['**/*.html'],
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

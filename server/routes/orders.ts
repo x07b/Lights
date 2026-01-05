@@ -89,7 +89,7 @@ export const createOrder: RequestHandler = async (req, res) => {
     // Generate order ID and panier code
     const orderId = `order_${Date.now()}_${Math.random()
       .toString(36)
-      .substr(2, 9)}`;
+      .substring(2, 11)}`;
     const panierCode = generatePanierCode();
 
     // Insert order

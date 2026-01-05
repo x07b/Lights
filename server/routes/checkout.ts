@@ -52,7 +52,7 @@ export const handleCheckout: RequestHandler = async (req, res) => {
       } as CheckoutResponse);
     }
 
-    const data: CheckoutData = validationResult.data;
+    const data = validationResult.data as CheckoutData;
 
     // Generate unique panier code
     const panierCode = generatePanierCode();

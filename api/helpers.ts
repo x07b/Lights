@@ -1,5 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
 
+export interface ResponseWithMethods extends ServerResponse {
+  json?: (data: any) => ResponseWithMethods;
+  status?: (code: number) => ResponseWithMethods;
+}
+
 export function parseBody(req: IncomingMessage): Promise<any> {
   return new Promise((resolve) => {
     let body = "";
@@ -16,22 +21,22 @@ export function parseBody(req: IncomingMessage): Promise<any> {
   });
 }
 
-export function wrapResponse(res: ServerResponse): any {
+export function wrapResponse(res: ServerResponse): ResponseWithMethods {
   let statusCode = 200;
 
-  res.json = function (data: any) {
+  (res as ResponseWithMethods).json = function (data: any) {
     this.setHeader("Content-Type", "application/json");
     this.statusCode = statusCode;
     this.end(JSON.stringify(data));
     return this;
   };
 
-  res.status = function (code: number) {
+  (res as ResponseWithMethods).status = function (code: number) {
     statusCode = code;
     return this;
   };
 
-  return res;
+  return res as ResponseWithMethods;
 }
 
 export function setupCORS(res: ServerResponse) {

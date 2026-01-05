@@ -52,8 +52,7 @@ export function ProductCard({
     }
   };
 
-  const handleViewProduct = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCardClick = () => {
     if (slug) {
       navigate(`/product/${slug}`);
     }

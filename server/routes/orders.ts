@@ -248,7 +248,7 @@ export async function getOrderById(req: any, res: any) {
 };
 
 // Search orders by customer
-export const searchOrders: RequestHandler = async (req, res) => {
+export async function searchOrders(req: any, res: any) {
   try {
     const { query } = req.query;
 

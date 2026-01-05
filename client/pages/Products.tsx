@@ -1,33 +1,51 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { ProductCard } from "../components/ProductCard";
 
-const products = [
-  {
-    id: "led-panel-light",
-    name: "LED Frameless Panel Light",
-    description:
-      "Panneau LED encastrable, design minimaliste et haute performance lumineuse.",
-    price: 49.0,
-    image:
-      "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F51c4ee0b186648aaa95eea0393361312?format=webp&width=800",
-    category: "Panneaux LED",
-    slug: "led-frameless-panel",
-  },
-  {
-    id: "led-panel-light-round",
-    name: "LED Panel Light Round",
-    description:
-      "Panneau LED encastrable rond, longue durée de vie et économe en énergie.",
-    price: 49.0,
-    image:
-      "https://cdn.builder.io/api/v1/image/assets%2Fcbe2eec5db404214a3a4db1cb75a5758%2Fb16ebe3730ac4e5f9a4fb71cf3ee89d5?format=webp&width=800",
-    category: "Panneaux LED",
-    slug: "led-panel-light-round",
-  },
-];
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: string[];
+  category: string;
+  slug: string;
+}
 
 export default function Products() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white via-white to-gray-50 flex items-center justify-center px-4">
+        <div className="text-center space-y-4">
+          <p className="text-lg text-muted-foreground font-roboto">
+            Loading products...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-white to-gray-50">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -56,26 +74,28 @@ export default function Products() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
-          {products.map((product, index) => (
-            <div
-              key={product.id}
-              className="animate-fade-in opacity-0"
-              style={{
-                animation: `fade-in 0.6s ease-out forwards`,
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <ProductCard {...product} />
-            </div>
-          ))}
-        </div>
-
-        {/* Empty State or Additional Info */}
-        {products.length === 0 && (
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+            {products.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-in opacity-0"
+                style={{
+                  animation: `fade-in 0.6s ease-out forwards`,
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <ProductCard {...product} images={product.images} />
+              </div>
+            ))}
+          </div>
+        ) : (
           <div className="text-center py-16">
-            <p className="text-lg text-muted-foreground font-roboto">
+            <p className="text-lg text-muted-foreground font-roboto mb-6">
               Aucun produit disponible pour le moment
+            </p>
+            <p className="text-sm text-muted-foreground font-roboto">
+              Veuillez consulter à nouveau plus tard ou contacter l'administrateur
             </p>
           </div>
         )}

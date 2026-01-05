@@ -1,9 +1,32 @@
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+
+interface Collection {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] = useState(false);
+  const [isMobileCollectionsOpen, setIsMobileCollectionsOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const response = await fetch("/api/collections");
+        const data = await response.json();
+        setCollections(data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      }
+    };
+
+    fetchCollections();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-md transition-shadow duration-300 hover:shadow-lg">
@@ -37,13 +60,34 @@ export function Header() {
               Produits
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link
-              to="/collections"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
-            >
-              Collections
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-            </Link>
+
+            {/* Collections Dropdown */}
+            <div className="relative group">
+              <button
+                className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 flex items-center gap-1"
+                onClick={() => setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)}
+              >
+                Collections
+                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              </button>
+
+              {/* Dropdown Menu */}
+              {collections.length > 0 && (
+                <div className="absolute left-0 mt-2 w-48 bg-white border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  {collections.map((collection) => (
+                    <Link
+                      key={collection.id}
+                      to={`/collections/${collection.slug}`}
+                      className="block px-4 py-2 text-sm font-roboto text-foreground hover:bg-secondary hover:text-accent transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
+                    >
+                      {collection.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <Link
               to="/about"
               className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
@@ -101,13 +145,38 @@ export function Header() {
             >
               Produits
             </Link>
-            <Link
-              to="/collections"
-              className="block py-3 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm font-medium"
-              onClick={() => setIsMenuOpen(false)}
+
+            {/* Mobile Collections Dropdown */}
+            <button
+              onClick={() => setIsMobileCollectionsOpen(!isMobileCollectionsOpen)}
+              className="w-full text-left py-3 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm font-medium flex items-center justify-between"
             >
               Collections
-            </Link>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  isMobileCollectionsOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {isMobileCollectionsOpen && collections.length > 0 && (
+              <div className="pl-4 space-y-1">
+                {collections.map((collection) => (
+                  <Link
+                    key={collection.id}
+                    to={`/collections/${collection.slug}`}
+                    className="block py-2 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsMobileCollectionsOpen(false);
+                    }}
+                  >
+                    {collection.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
             <Link
               to="/about"
               className="block py-3 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm font-medium"

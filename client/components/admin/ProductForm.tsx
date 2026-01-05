@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, Upload, FileText } from "lucide-react";
 
 interface Collection {
   id: string;
@@ -19,6 +19,8 @@ export default function ProductForm({
   onCancel,
 }: ProductFormProps) {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
@@ -26,6 +28,8 @@ export default function ProductForm({
     category: product?.category || "",
     collectionId: product?.collectionId || "",
     images: product?.images || [""],
+    pdfFile: product?.pdfFile || null,
+    pdfFilename: product?.pdfFilename || null,
     specifications: product?.specifications || [{ label: "", value: "" }],
   });
 
@@ -51,6 +55,76 @@ export default function ProductForm({
     }));
   };
 
+  const uploadFileToServer = async (file: File, fileType: "image" | "pdf") => {
+    try {
+      setIsUploading(true);
+      const key = `${fileType}-${Date.now()}`;
+      setUploadProgress((prev) => ({ ...prev, [key]: 0 }));
+
+      const arrayBuffer = await file.arrayBuffer();
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "content-type": "application/octet-stream",
+          "x-filename": file.name,
+        },
+        body: arrayBuffer,
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const result = await response.json();
+      setUploadProgress((prev) => {
+        const newProgress = { ...prev };
+        delete newProgress[key];
+        return newProgress;
+      });
+
+      return result;
+    } catch (error) {
+      console.error("Upload error:", error);
+      setUploadProgress((prev) => {
+        const newProgress = { ...prev };
+        delete newProgress[`${fileType}-${Date.now()}`];
+        return newProgress;
+      });
+      alert("File upload failed. Please try again.");
+      throw error;
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const result = await uploadFileToServer(file, "image");
+      handleImageChange(index, result.url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const handlePDFUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const result = await uploadFileToServer(file, "pdf");
+      setFormData((prev) => ({
+        ...prev,
+        pdfFile: result.url,
+        pdfFilename: file.name,
+      }));
+    } catch (error) {
+      console.error("Error uploading PDF:", error);
+    }
+  };
+
   const handleImageChange = (index: number, value: string) => {
     const newImages = [...formData.images];
     newImages[index] = value;
@@ -71,6 +145,14 @@ export default function ProductForm({
     setFormData((prev) => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const removePDF = () => {
+    setFormData((prev) => ({
+      ...prev,
+      pdfFile: null,
+      pdfFilename: null,
     }));
   };
 
@@ -196,10 +278,15 @@ export default function ProductForm({
         />
       </div>
 
-      {/* Images */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <label className="block text-sm font-medium">Product Images</label>
+      {/* Product Images Upload */}
+      <div className="product-images-section border-2 border-dashed border-border rounded-lg p-6 bg-muted/30">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <label className="block text-sm font-medium">Product Images</label>
+            <p className="text-xs text-muted-foreground mt-1">
+              Upload images from your PC or paste image URLs
+            </p>
+          </div>
           <Button
             type="button"
             variant="outline"
@@ -210,16 +297,45 @@ export default function ProductForm({
             Add Image
           </Button>
         </div>
-        <div className="space-y-2">
+
+        <div className="space-y-3">
           {formData.images.map((image, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="url"
-                value={image}
-                onChange={(e) => handleImageChange(index, e.target.value)}
-                className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm"
-                placeholder="https://example.com/image.jpg"
-              />
+            <div key={index} className="image-upload-row flex gap-2 items-end">
+              <div className="flex-1">
+                <label className="block text-xs font-medium mb-1">
+                  Image {index + 1}
+                </label>
+                <input
+                  type="text"
+                  value={image}
+                  onChange={(e) => handleImageChange(index, e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm"
+                />
+              </div>
+
+              <label className="upload-button relative px-3 py-2 border border-border rounded-lg hover:bg-secondary transition-colors cursor-pointer group">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, index)}
+                  className="hidden"
+                  disabled={isUploading}
+                />
+                <Upload className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+              </label>
+
+              {/* Image Preview */}
+              {image && (
+                <div className="image-preview w-12 h-12 rounded-lg overflow-hidden border border-border">
+                  <img
+                    src={image}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+
               {formData.images.length > 1 && (
                 <button
                   type="button"
@@ -232,6 +348,75 @@ export default function ProductForm({
             </div>
           ))}
         </div>
+
+        {/* Upload Progress */}
+        {Object.keys(uploadProgress).length > 0 && (
+          <div className="mt-4 space-y-2">
+            {Object.entries(uploadProgress).map(([key, progress]) => (
+              <div key={key} className="text-xs">
+                <div className="flex justify-between mb-1">
+                  <span>Uploading...</span>
+                  <span>{Math.round(progress)}%</span>
+                </div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div
+                    className="bg-accent h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* PDF Technical Sheet Upload */}
+      <div className="pdf-section border-2 border-dashed border-border rounded-lg p-6 bg-muted/30">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <label className="block text-sm font-medium flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              Technical Sheet (PDF)
+            </label>
+            <p className="text-xs text-muted-foreground mt-1">
+              Upload a PDF technical sheet for download
+            </p>
+          </div>
+        </div>
+
+        {formData.pdfFile ? (
+          <div className="pdf-preview flex items-center justify-between bg-white border border-border rounded-lg p-4">
+            <div className="flex items-center gap-3">
+              <FileText className="w-6 h-6 text-red-500" />
+              <div>
+                <p className="text-sm font-medium">{formData.pdfFilename}</p>
+                <p className="text-xs text-muted-foreground">Ready to download</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={removePDF}
+              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
+        ) : (
+          <label className="upload-pdf flex flex-col items-center justify-center gap-3 p-8 border-2 border-dashed border-border rounded-lg hover:bg-secondary/30 transition-colors cursor-pointer">
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handlePDFUpload}
+              className="hidden"
+              disabled={isUploading}
+            />
+            <FileText className="w-8 h-8 text-muted-foreground" />
+            <div className="text-center">
+              <p className="text-sm font-medium">Click to upload PDF</p>
+              <p className="text-xs text-muted-foreground">or drag and drop</p>
+            </div>
+          </label>
+        )}
       </div>
 
       {/* Specifications */}
@@ -285,13 +470,18 @@ export default function ProductForm({
 
       {/* Form Actions */}
       <div className="flex gap-3 pt-4 border-t border-border">
-        <Button type="submit" className="flex-1">
-          {product ? "Update Product" : "Create Product"}
+        <Button
+          type="submit"
+          disabled={isUploading}
+          className="flex-1"
+        >
+          {isUploading ? "Uploading..." : product ? "Update Product" : "Create Product"}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={onCancel}
+          disabled={isUploading}
           className="flex-1"
         >
           Cancel

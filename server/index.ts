@@ -20,6 +20,11 @@ import {
   updateCollection,
   deleteCollection,
 } from "./routes/collections";
+import {
+  handleContact,
+  getContactMessages,
+  markMessageAsRead,
+} from "./routes/contact";
 
 export function createServer() {
   const app = express();

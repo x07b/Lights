@@ -231,7 +231,7 @@ export default function AdminDashboard() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Order Status Distribution */}
-        <Card>
+        <Card className="hover:shadow-lg transition-all duration-300">
           <CardHeader>
             <CardTitle>Répartition des Commandes</CardTitle>
           </CardHeader>

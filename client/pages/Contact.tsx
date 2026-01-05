@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { ContactForm } from "../components/ContactForm";
 
 export default function Contact() {
   return (
@@ -15,7 +15,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="bg-white rounded-lg border border-border p-8 text-center">
               <div className="flex justify-center mb-4">
                 <Mail className="w-8 h-8 text-accent" />
@@ -51,19 +51,8 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg border border-border p-12 text-center">
-            <p className="text-muted-foreground font-roboto mb-6">
-              La page de contact est en cours de développement. N'hésitez pas à
-              nous contacter directement via les informations de contact
-              affichées ci-dessus.
-            </p>
-            <Link
-              to="/"
-              className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-futura font-bold transition-all duration-300 hover:gap-4 group"
-            >
-              Retour à l'accueil
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          <div className="bg-white rounded-lg border border-border p-8 md:p-12">
+            <ContactForm />
           </div>
         </div>
       </div>

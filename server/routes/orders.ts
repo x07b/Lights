@@ -215,7 +215,7 @@ export async function getOrderByPanierCode(req: any, res: any) {
 };
 
 // Get order by ID
-export const getOrderById: RequestHandler = async (req, res) => {
+export async function getOrderById(req: any, res: any) {
   try {
     const { id } = req.params;
 

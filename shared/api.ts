@@ -72,3 +72,32 @@ export interface CheckoutResponse {
   panierCode: string;
   message: string;
 }
+
+/**
+ * Collection type
+ */
+export interface Collection {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  slug: string;
+  createdAt: string;
+}
+
+/**
+ * Product with extended details
+ */
+export interface ProductDetails {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  slug: string;
+  collectionId?: string;
+  images: string[];
+  mainImage: string;
+  technicalFile?: string;
+  createdAt: string;
+}

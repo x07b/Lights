@@ -2,6 +2,22 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  addProductImage,
+  removeProductImage,
+} from "./routes/products";
+import {
+  getCollections,
+  getCollectionById,
+  createCollection,
+  updateCollection,
+  deleteCollection,
+} from "./routes/collections";
 
 export function createServer() {
   const app = express();
@@ -18,6 +34,22 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Products routes
+  app.get("/api/products", getProducts);
+  app.get("/api/products/:id", getProductById);
+  app.post("/api/products", createProduct);
+  app.put("/api/products/:id", updateProduct);
+  app.delete("/api/products/:id", deleteProduct);
+  app.post("/api/products/:id/images", addProductImage);
+  app.delete("/api/products/:id/images", removeProductImage);
+
+  // Collections routes
+  app.get("/api/collections", getCollections);
+  app.get("/api/collections/:id", getCollectionById);
+  app.post("/api/collections", createCollection);
+  app.put("/api/collections/:id", updateCollection);
+  app.delete("/api/collections/:id", deleteCollection);
 
   return app;
 }

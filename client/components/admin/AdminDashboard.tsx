@@ -212,7 +212,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Total Products */}
-        <Card className="border-purple-500/20">
+        <Card className="border-purple-500/20 hover:shadow-lg transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Produits</CardTitle>
             <Package className="h-4 w-4 text-purple-500" />

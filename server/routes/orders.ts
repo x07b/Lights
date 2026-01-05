@@ -182,7 +182,7 @@ export async function getOrders(req: any, res: any) {
 };
 
 // Get order by panier code
-export const getOrderByPanierCode: RequestHandler = async (req, res) => {
+export async function getOrderByPanierCode(req: any, res: any) {
   try {
     const { panierCode } = req.params;
 

@@ -14,6 +14,8 @@ export function Header() {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] = useState(false);
   const [isMobileCollectionsOpen, setIsMobileCollectionsOpen] = useState(false);
+  const { itemCount } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCollections = async () => {

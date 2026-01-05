@@ -80,15 +80,15 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation - Icon Based */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center gap-1">
             {/* Home */}
             <Link
               to="/"
-              className="flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 group hover:bg-secondary"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
               title="Accueil"
             >
               <Home className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
                 Accueil
               </span>
             </Link>
@@ -96,11 +96,11 @@ export function Header() {
             {/* Products */}
             <Link
               to="/products"
-              className="flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 group hover:bg-secondary"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
               title="Produits"
             >
               <Package className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
                 Produits
               </span>
             </Link>
@@ -108,11 +108,11 @@ export function Header() {
             {/* Collections Dropdown */}
             <div className="relative group">
               <button
-                className="flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 hover:bg-secondary"
+                className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
                 title="Collections"
               >
                 <Folder className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-                <span className="text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
                   Collections
                 </span>
               </button>
@@ -136,11 +136,11 @@ export function Header() {
             {/* About */}
             <Link
               to="/about"
-              className="flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 group hover:bg-secondary"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
               title="À propos"
             >
               <Info className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
                 À propos
               </span>
             </Link>
@@ -148,11 +148,11 @@ export function Header() {
             {/* Contact */}
             <Link
               to="/contact"
-              className="flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 group hover:bg-secondary"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
               title="Contact"
             >
               <Mail className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
                 Contact
               </span>
             </Link>

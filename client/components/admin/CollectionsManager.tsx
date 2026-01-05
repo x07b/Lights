@@ -255,35 +255,55 @@ export default function CollectionsManager() {
 
       <div className="grid gap-4">
         {collections.map((collection) => (
-          <Card key={collection.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground text-lg">
-                    {collection.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {collection.description || "No description"}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Slug: {collection.slug}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => startEdit(collection)}
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => handleDelete(collection.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+          <Card key={collection.id} className="hover:shadow-lg transition-all overflow-hidden">
+            <CardContent className="p-0">
+              <div className="flex flex-col md:flex-row items-stretch">
+                {/* Image Section */}
+                {collection.image && (
+                  <div className="md:w-40 h-40 bg-secondary/30 flex-shrink-0">
+                    <img
+                      src={collection.image}
+                      alt={collection.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                {/* Content Section */}
+                <div className="flex-1 p-6 flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground text-lg font-futura">
+                      {collection.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+                      {collection.description || "No description"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-3 font-mono bg-secondary/50 px-2 py-1 rounded w-fit">
+                      {collection.slug}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-2 ml-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => startEdit(collection)}
+                      className="whitespace-nowrap"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(collection.id)}
+                      className="whitespace-nowrap"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CardContent>

@@ -154,7 +154,7 @@ export async function createOrder(req: any, res: any) {
 };
 
 // Get all orders (admin only)
-export const getOrders: RequestHandler = async (req, res) => {
+export async function getOrders(req: any, res: any) {
   try {
     const { data: orders, error } = await supabase
       .from("orders")

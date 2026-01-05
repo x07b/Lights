@@ -10,6 +10,13 @@ import {
   handleGetOrderByCode,
   handleUpdateOrderStatus,
 } from "./routes/admin";
+import {
+  handleGetCollections,
+  handleCreateCollection,
+  handleGetCollection,
+  handleUpdateCollection,
+  handleDeleteCollection,
+} from "./routes/collections";
 
 export function createServer() {
   const app = express();

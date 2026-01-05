@@ -30,6 +30,7 @@ export default function Admin() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   useEffect(() => {
     // Check if already authenticated
@@ -37,6 +38,19 @@ export default function Admin() {
     if (auth) {
       setIsAuthenticated(true);
     }
+  }, []);
+
+  useEffect(() => {
+    // Listen for hash changes to update active tab
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && ["dashboard", "orders", "products", "collections"].includes(hash)) {
+        setActiveTab(hash);
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const handleLogin = () => {

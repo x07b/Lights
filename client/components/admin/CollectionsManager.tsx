@@ -129,11 +129,7 @@ export default function CollectionsManager() {
           </p>
         </div>
         <Button
-          onClick={() => {
-            setIsAddingNew(true);
-            setEditingId(null);
-            setFormData({ name: "", description: "" });
-          }}
+          onClick={handleAddNew}
           className="flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />

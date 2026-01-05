@@ -93,8 +93,17 @@ export default function ProductDetail() {
   }
 
   const handleDownloadPDF = () => {
-    // For now, products fetched from API don't have PDF files
-    alert("PDF download not available for this product");
+    if (!product?.pdfFile) {
+      alert("No PDF available for this product");
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = product.pdfFile;
+    link.download = product.pdfFilename || "technical-sheet.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const specifications = product.specifications;
@@ -243,16 +252,20 @@ export default function ProductDetail() {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3 pt-4">
-                <button
-                  onClick={handleDownloadPDF}
-                  className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-                >
-                  <Download className="w-5 h-5" />
-                  Télécharger la fiche technique
-                </button>
+                {product.pdfFile && (
+                  <button
+                    onClick={handleDownloadPDF}
+                    className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+                  >
+                    <Download className="w-5 h-5" />
+                    Télécharger la fiche technique
+                  </button>
+                )}
                 <button
                   title="Ajouter au panier"
-                  className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95"
+                  className={`border-2 border-foreground text-foreground hover:bg-foreground hover:text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95 ${
+                    product.pdfFile ? "" : "flex-1"
+                  }`}
                 >
                   <ShoppingCart className="w-5 h-5" />
                 </button>

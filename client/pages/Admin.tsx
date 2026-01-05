@@ -163,19 +163,19 @@ export default function Admin() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
-        <div className="bg-white border-b border-border sticky top-0 z-40">
+        <div className="bg-white border-b border-border sticky top-0 z-40 shadow-sm">
           <div className="px-6 py-4 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-futura font-bold text-foreground">
                 Admin Panel
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mt-1">
                 Gérez vos produits, commandes et collections
               </p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50/50 rounded-lg transition-colors duration-300"
             >
               <LogOut className="w-5 h-5" />
               Déconnexion

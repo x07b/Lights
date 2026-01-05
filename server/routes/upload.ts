@@ -9,7 +9,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
-export const uploadFile: RequestHandler = (req, res) => {
+export async function uploadFile(req: any, res: any) {
   // Handle file from fetch with FormData
   const contentType = req.get("content-type") || "";
 

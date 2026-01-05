@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
+import { parseBody, wrapResponse, setupCORS, parseQueryString } from "./helpers";
 import {
   createOrder,
   getOrders,
@@ -14,42 +15,6 @@ import {
 export const config = {
   runtime: "nodejs",
 };
-
-// Helper function to parse request body
-function parseBody(req: IncomingMessage): Promise<any> {
-  return new Promise((resolve) => {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString();
-    });
-    req.on("end", () => {
-      try {
-        resolve(body ? JSON.parse(body) : {});
-      } catch {
-        resolve({});
-      }
-    });
-  });
-}
-
-// Helper function to add Express-style methods to ServerResponse
-function wrapResponse(res: ServerResponse): any {
-  let statusCode = 200;
-
-  res.json = function (data: any) {
-    this.setHeader("Content-Type", "application/json");
-    this.statusCode = statusCode;
-    this.end(JSON.stringify(data));
-    return this;
-  };
-
-  res.status = function (code: number) {
-    statusCode = code;
-    return this;
-  };
-
-  return res;
-}
 
 export default async (
   req: IncomingMessage & { query?: Record<string, any>; body?: any; params?: Record<string, any> },

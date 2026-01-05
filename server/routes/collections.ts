@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { supabase } from "../lib/supabase";
 
 interface Collection {

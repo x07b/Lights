@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
+import { SearchOverlay } from "./SearchOverlay";
 
 interface Collection {
   id: string;

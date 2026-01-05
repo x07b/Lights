@@ -253,9 +253,10 @@ export default function AdminDashboard() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Order Status Distribution */}
-        <Card className="hover:shadow-lg transition-all duration-300">
-          <CardHeader>
-            <CardTitle>Répartition des Commandes</CardTitle>
+        <Card className="border-0 hover:shadow-xl transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg font-futura">Répartition des Commandes</CardTitle>
+            <p className="text-xs text-muted-foreground mt-1">Vue d'ensemble des statuts</p>
           </CardHeader>
           <CardContent>
             <div className="w-full h-80">
@@ -283,34 +284,35 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Order Status List */}
-        <Card className="hover:shadow-lg transition-all duration-300">
-          <CardHeader>
-            <CardTitle>Statut des Commandes</CardTitle>
+        <Card className="border-0 hover:shadow-xl transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg font-futura">Statut des Commandes</CardTitle>
+            <p className="text-xs text-muted-foreground mt-1">Détail par statut</p>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {statusData.map((status, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-4 h-4 rounded-full"
+                      className="w-3 h-3 rounded-full shadow-sm"
                       style={{ backgroundColor: status.color }}
                     ></div>
-                    <span className="text-sm text-muted-foreground font-roboto">
+                    <span className="text-sm text-muted-foreground font-roboto font-medium">
                       {status.name}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-32 bg-secondary rounded-full h-2">
+                  <div className="flex items-center gap-4">
+                    <div className="w-40 bg-secondary rounded-full h-2 overflow-hidden">
                       <div
-                        className="h-2 rounded-full transition-all"
+                        className="h-2 rounded-full transition-all duration-500"
                         style={{
                           width: `${(status.value / Math.max(1, stats.totalOrders)) * 100}%`,
                           backgroundColor: status.color,
                         }}
                       ></div>
                     </div>
-                    <span className="text-lg font-bold text-foreground w-8 text-right">
+                    <span className="text-sm font-bold text-foreground w-8 text-right">
                       {status.value}
                     </span>
                   </div>

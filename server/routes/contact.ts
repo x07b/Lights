@@ -160,7 +160,7 @@ function escapeHtml(text: string): string {
 }
 
 // Get all contact messages (admin only)
-export const getContactMessages: RequestHandler = async (req, res) => {
+export async function getContactMessages(req: any, res: any) {
   try {
     const { data: messages, error } = await supabase
       .from("contact_messages")

@@ -1,7 +1,7 @@
 import "./global.css";
 
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import Index from "./pages/Index";
@@ -20,6 +20,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
     <Footer />
   </div>
 );
+
+const RedirectProduct = () => {
+  return <Navigate to="/products" replace />;
+};
 
 const App = () => (
   <BrowserRouter>
@@ -63,6 +67,10 @@ const App = () => (
             <Contact />
           </Layout>
         }
+      />
+      <Route
+        path="/product"
+        element={<RedirectProduct />}
       />
       <Route
         path="/product/:slug"

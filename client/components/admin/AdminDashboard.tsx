@@ -156,7 +156,7 @@ export default function AdminDashboard() {
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Orders */}
-        <Card className="border-accent/20">
+        <Card className="border-accent/20 hover:shadow-lg transition-all duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               Commandes Totales

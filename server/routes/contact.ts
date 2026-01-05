@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
+import { supabase } from "../lib/supabase";
 
 // Validation schema for contact form
 const contactFormSchema = z.object({
@@ -21,32 +22,31 @@ const contactFormSchema = z.object({
     .max(5000, "Le message ne doit pas dépasser 5000 caractères"),
 });
 
-// Store messages in memory (replace with database in production)
-export const contactMessages: Array<{
-  id: string;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  timestamp: Date;
-  status: "new" | "read";
-}> = [];
-
 export const handleContact: RequestHandler = async (req, res) => {
   try {
     // Validate request body
     const validatedData = contactFormSchema.parse(req.body);
 
-    // Create message object with timestamp
-    const message = {
-      id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      ...validatedData,
-      timestamp: new Date(),
-      status: "new" as const,
-    };
+    // Generate message ID
+    const messageId = `msg_${Date.now()}_${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
 
-    // Store the message
-    contactMessages.push(message);
+    // Insert message into database
+    const { data: message, error: insertError } = await supabase
+      .from("contact_messages")
+      .insert({
+        id: messageId,
+        name: validatedData.name,
+        email: validatedData.email,
+        subject: validatedData.subject,
+        message: validatedData.message,
+        status: "new",
+      })
+      .select()
+      .single();
+
+    if (insertError) throw insertError;
 
     // Try to send email if SMTP is configured
     const emailSent = await sendEmail(validatedData);
@@ -57,7 +57,7 @@ export const handleContact: RequestHandler = async (req, res) => {
       message: emailSent
         ? "Message envoyé avec succès et email notification reçue"
         : "Message reçu avec succès (email de notification en attente de configuration)",
-      messageId: message.id,
+      messageId: messageId,
       emailSent: emailSent,
     });
   } catch (error) {
@@ -149,26 +149,61 @@ function escapeHtml(text: string): string {
 }
 
 // Get all contact messages (admin only)
-export const getContactMessages: RequestHandler = (req, res) => {
-  // In production, add proper authentication check
-  res.status(200).json(contactMessages);
+export const getContactMessages: RequestHandler = async (req, res) => {
+  try {
+    const { data: messages, error } = await supabase
+      .from("contact_messages")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    // Convert to API format (matching the old format)
+    const apiMessages = (messages || []).map((msg) => ({
+      id: msg.id,
+      name: msg.name,
+      email: msg.email,
+      subject: msg.subject,
+      message: msg.message,
+      timestamp: new Date(msg.created_at),
+      status: msg.status,
+    }));
+
+    res.status(200).json(apiMessages);
+  } catch (error) {
+    console.error("Error fetching contact messages:", error);
+    res.status(500).json({ error: "Failed to fetch contact messages" });
+  }
 };
 
 // Mark message as read
-export const markMessageAsRead: RequestHandler = (req, res) => {
-  const { id } = req.params;
+export const markMessageAsRead: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const message = contactMessages.find((m) => m.id === id);
-  if (!message) {
-    return res.status(404).json({
+    const { data: message, error } = await supabase
+      .from("contact_messages")
+      .update({ status: "read" })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error || !message) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Message marked as read",
+    });
+  } catch (error) {
+    console.error("Error marking message as read:", error);
+    res.status(500).json({
       success: false,
-      message: "Message not found",
+      message: "Failed to mark message as read",
     });
   }
-
-  message.status = "read";
-  res.status(200).json({
-    success: true,
-    message: "Message marked as read",
-  });
 };

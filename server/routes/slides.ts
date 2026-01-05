@@ -1,8 +1,5 @@
 import { RequestHandler } from "express";
-import fs from "fs";
-import path from "path";
-
-const DATA_FILE = path.join(process.cwd(), "data.json");
+import { supabase } from "../lib/supabase";
 
 export interface HeroSlide {
   id: string;
@@ -11,111 +8,156 @@ export interface HeroSlide {
   order: number;
 }
 
-interface DataFile {
-  heroSlides?: HeroSlide[];
-  collections?: any[];
-  products?: any[];
+// Helper function to convert DB slide to API format
+function dbSlideToApi(dbSlide: any): HeroSlide {
+  return {
+    id: dbSlide.id,
+    image: dbSlide.image,
+    alt: dbSlide.alt || "Hero slide",
+    order: dbSlide.order_index || 0,
+  };
 }
 
-function readData(): DataFile {
+// Helper function to convert API slide to DB format
+function apiSlideToDb(apiSlide: Partial<HeroSlide>): any {
+  const dbSlide: any = {};
+  if (apiSlide.image !== undefined) dbSlide.image = apiSlide.image;
+  if (apiSlide.alt !== undefined) dbSlide.alt = apiSlide.alt;
+  if (apiSlide.order !== undefined) dbSlide.order_index = apiSlide.order;
+  return dbSlide;
+}
+
+export const getHeroSlides: RequestHandler = async (_req, res) => {
   try {
-    const data = fs.readFileSync(DATA_FILE, "utf-8");
-    const parsed = JSON.parse(data);
-    return parsed;
-  } catch {
-    return { heroSlides: [] };
+    const { data: slides, error } = await supabase
+      .from("hero_slides")
+      .select("*")
+      .order("order_index", { ascending: true });
+
+    if (error) throw error;
+
+    const apiSlides = (slides || []).map(dbSlideToApi);
+    res.json(apiSlides);
+  } catch (error) {
+    console.error("Error fetching hero slides:", error);
+    res.status(500).json({ error: "Failed to fetch hero slides" });
   }
-}
-
-function writeData(data: DataFile): void {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-}
-
-export const getHeroSlides: RequestHandler = (_req, res) => {
-  const data = readData();
-  const slides = (data.heroSlides || []).sort((a, b) => a.order - b.order);
-  res.json(slides);
 };
 
-export const createHeroSlide: RequestHandler = (req, res) => {
-  const { image, alt } = req.body;
+export const createHeroSlide: RequestHandler = async (req, res) => {
+  try {
+    const { image, alt, order } = req.body;
 
-  if (!image) {
-    res.status(400).json({ error: "Image URL is required" });
-    return;
+    if (!image) {
+      res.status(400).json({ error: "Image URL is required" });
+      return;
+    }
+
+    // Get current max order_index if order not provided
+    let orderIndex = order;
+    if (orderIndex === undefined) {
+      const { data: existingSlides } = await supabase
+        .from("hero_slides")
+        .select("order_index")
+        .order("order_index", { ascending: false })
+        .limit(1);
+
+      orderIndex =
+        existingSlides && existingSlides.length > 0
+          ? (existingSlides[0].order_index || 0) + 1
+          : 0;
+    }
+
+    const slideId = `slide_${Date.now()}`;
+
+    const { data: slide, error } = await supabase
+      .from("hero_slides")
+      .insert({
+        id: slideId,
+        image,
+        alt: alt || "Hero slide",
+        order_index: orderIndex,
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    const apiSlide = dbSlideToApi(slide);
+    res.status(201).json(apiSlide);
+  } catch (error) {
+    console.error("Error creating hero slide:", error);
+    res.status(500).json({ error: "Failed to create hero slide" });
   }
-
-  const data = readData();
-  if (!data.heroSlides) {
-    data.heroSlides = [];
-  }
-
-  const newSlide: HeroSlide = {
-    id: `slide_${Date.now()}`,
-    image,
-    alt: alt || "Hero slide",
-    order: data.heroSlides.length,
-  };
-
-  data.heroSlides.push(newSlide);
-  writeData(data);
-
-  res.status(201).json(newSlide);
 };
 
-export const updateHeroSlide: RequestHandler = (req, res) => {
-  const { id } = req.params;
-  const { image, alt, order } = req.body;
+export const updateHeroSlide: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { image, alt, order } = req.body;
 
-  const data = readData();
-  if (!data.heroSlides) {
-    data.heroSlides = [];
+    // Check if slide exists
+    const { data: existingSlide, error: checkError } = await supabase
+      .from("hero_slides")
+      .select("id")
+      .eq("id", id)
+      .single();
+
+    if (checkError || !existingSlide) {
+      return res.status(404).json({ error: "Slide not found" });
+    }
+
+    // Prepare update data
+    const updateData: any = {};
+    if (image !== undefined) updateData.image = image;
+    if (alt !== undefined) updateData.alt = alt;
+    if (order !== undefined) updateData.order_index = order;
+
+    const { data: slide, error } = await supabase
+      .from("hero_slides")
+      .update(updateData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    const apiSlide = dbSlideToApi(slide);
+    res.json(apiSlide);
+  } catch (error) {
+    console.error("Error updating hero slide:", error);
+    res.status(500).json({ error: "Failed to update hero slide" });
   }
-
-  const slideIndex = data.heroSlides.findIndex((s) => s.id === id);
-
-  if (slideIndex === -1) {
-    res.status(404).json({ error: "Slide not found" });
-    return;
-  }
-
-  const updatedSlide: HeroSlide = {
-    ...data.heroSlides[slideIndex],
-    image: image || data.heroSlides[slideIndex].image,
-    alt: alt !== undefined ? alt : data.heroSlides[slideIndex].alt,
-    order: order !== undefined ? order : data.heroSlides[slideIndex].order,
-  };
-
-  data.heroSlides[slideIndex] = updatedSlide;
-  writeData(data);
-
-  res.json(updatedSlide);
 };
 
-export const deleteHeroSlide: RequestHandler = (req, res) => {
-  const { id } = req.params;
-  const data = readData();
+export const deleteHeroSlide: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  if (!data.heroSlides) {
-    data.heroSlides = [];
+    // Check if slide exists
+    const { data: existingSlide, error: checkError } = await supabase
+      .from("hero_slides")
+      .select("id")
+      .eq("id", id)
+      .single();
+
+    if (checkError || !existingSlide) {
+      return res.status(404).json({ error: "Slide not found" });
+    }
+
+    const { data: deletedSlide, error: deleteError } = await supabase
+      .from("hero_slides")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (deleteError) throw deleteError;
+
+    const apiSlide = dbSlideToApi(deletedSlide);
+    res.json(apiSlide);
+  } catch (error) {
+    console.error("Error deleting hero slide:", error);
+    res.status(500).json({ error: "Failed to delete hero slide" });
   }
-
-  const slideIndex = data.heroSlides.findIndex((s) => s.id === id);
-
-  if (slideIndex === -1) {
-    res.status(404).json({ error: "Slide not found" });
-    return;
-  }
-
-  const deleted = data.heroSlides.splice(slideIndex, 1);
-
-  // Re-order remaining slides
-  data.heroSlides = data.heroSlides.map((slide, index) => ({
-    ...slide,
-    order: index,
-  }));
-
-  writeData(data);
-
-  res.json(deleted[0]);
 };

@@ -1,8 +1,5 @@
 import { RequestHandler } from "express";
-import fs from "fs";
-import path from "path";
-
-const DATA_FILE = path.join(process.cwd(), "data.json");
+import { supabase } from "../lib/supabase";
 
 interface Collection {
   id: string;
@@ -12,136 +9,201 @@ interface Collection {
   image?: string;
 }
 
-interface DataFile {
-  collections: Collection[];
-  products: Array<{ id: string; collectionId: string; [key: string]: any }>;
+// Helper function to convert DB collection to API format
+function dbCollectionToApi(dbCollection: any): Collection {
+  return {
+    id: dbCollection.id,
+    name: dbCollection.name,
+    slug: dbCollection.slug,
+    description: dbCollection.description || "",
+    image: dbCollection.image || undefined,
+  };
 }
 
-function readData(): DataFile {
+export const getCollections: RequestHandler = async (_req, res) => {
   try {
-    const data = fs.readFileSync(DATA_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return { collections: [], products: [] };
+    const { data: collections, error } = await supabase
+      .from("collections")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const apiCollections = collections?.map(dbCollectionToApi) || [];
+    res.json(apiCollections);
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    res.status(500).json({ error: "Failed to fetch collections" });
   }
-}
-
-function writeData(data: DataFile): void {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-}
-
-export const getCollections: RequestHandler = (_req, res) => {
-  const data = readData();
-  res.json(data.collections);
 };
 
-export const getCollectionById: RequestHandler = (req, res) => {
-  const { id } = req.params;
-  const data = readData();
-  const collection = data.collections.find((c) => c.id === id || c.slug === id);
+export const getCollectionById: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  if (!collection) {
-    res.status(404).json({ error: "Collection not found" });
-    return;
+    // Try to find by id or slug
+    const { data: collection, error: collectionError } = await supabase
+      .from("collections")
+      .select("*")
+      .or(`id.eq.${id},slug.eq.${id}`)
+      .single();
+
+    if (collectionError || !collection) {
+      return res.status(404).json({ error: "Collection not found" });
+    }
+
+    // Get products in this collection
+    const { data: products, error: productsError } = await supabase
+      .from("products")
+      .select("*")
+      .eq("collection_id", collection.id);
+
+    if (productsError) throw productsError;
+
+    const apiCollection = dbCollectionToApi(collection);
+    res.json({ ...apiCollection, products: products || [] });
+  } catch (error) {
+    console.error("Error fetching collection:", error);
+    res.status(500).json({ error: "Failed to fetch collection" });
   }
-
-  // Get products in this collection
-  const products = data.products.filter(
-    (p) => p.collectionId === collection.id,
-  );
-
-  res.json({ ...collection, products });
 };
 
-export const createCollection: RequestHandler = (req, res) => {
-  const { name, description, image } = req.body;
+export const createCollection: RequestHandler = async (req, res) => {
+  try {
+    const { name, description, image } = req.body;
 
-  if (!name) {
-    res.status(400).json({ error: "Collection name is required" });
-    return;
+    if (!name) {
+      res.status(400).json({ error: "Collection name is required" });
+      return;
+    }
+
+    // Generate slug
+    const slug = name
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+    const id = slug;
+
+    // Check if collection already exists
+    const { data: existing } = await supabase
+      .from("collections")
+      .select("id")
+      .eq("id", id)
+      .single();
+
+    if (existing) {
+      return res.status(400).json({ error: "Collection already exists" });
+    }
+
+    // Insert collection
+    const { data: collection, error } = await supabase
+      .from("collections")
+      .insert({
+        id,
+        name,
+        slug,
+        description: description || "",
+        image: image || null,
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    const apiCollection = dbCollectionToApi(collection);
+    res.status(201).json(apiCollection);
+  } catch (error: any) {
+    console.error("Error creating collection:", error);
+    if (error.code === "23505") {
+      // Unique constraint violation
+      return res.status(400).json({ error: "Collection already exists" });
+    }
+    res.status(500).json({ error: "Failed to create collection" });
   }
-
-  const data = readData();
-
-  // Generate slug
-  const slug = name
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
-  const id = slug;
-
-  // Check if collection already exists
-  if (data.collections.some((c) => c.id === id)) {
-    res.status(400).json({ error: "Collection already exists" });
-    return;
-  }
-
-  const newCollection: Collection = {
-    id,
-    name,
-    slug,
-    description: description || "",
-    image: image || undefined,
-  };
-
-  data.collections.push(newCollection);
-  writeData(data);
-
-  res.status(201).json(newCollection);
 };
 
-export const updateCollection: RequestHandler = (req, res) => {
-  const { id } = req.params;
-  const { name, description, image } = req.body;
+export const updateCollection: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, image } = req.body;
 
-  const data = readData();
-  const collectionIndex = data.collections.findIndex((c) => c.id === id);
+    // Check if collection exists
+    const { data: existingCollection, error: checkError } = await supabase
+      .from("collections")
+      .select("id")
+      .eq("id", id)
+      .single();
 
-  if (collectionIndex === -1) {
-    res.status(404).json({ error: "Collection not found" });
-    return;
+    if (checkError || !existingCollection) {
+      return res.status(404).json({ error: "Collection not found" });
+    }
+
+    // Prepare update data (only include fields that are provided)
+    const updateData: any = {};
+    if (name !== undefined) updateData.name = name;
+    if (description !== undefined) updateData.description = description;
+    if (image !== undefined) updateData.image = image || null;
+
+    // Update collection
+    const { data: collection, error } = await supabase
+      .from("collections")
+      .update(updateData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    const apiCollection = dbCollectionToApi(collection);
+    res.json(apiCollection);
+  } catch (error) {
+    console.error("Error updating collection:", error);
+    res.status(500).json({ error: "Failed to update collection" });
   }
-
-  const updatedCollection: Collection = {
-    ...data.collections[collectionIndex],
-    name: name || data.collections[collectionIndex].name,
-    description:
-      description !== undefined
-        ? description
-        : data.collections[collectionIndex].description,
-    image:
-      image !== undefined ? image : data.collections[collectionIndex].image,
-  };
-
-  data.collections[collectionIndex] = updatedCollection;
-  writeData(data);
-
-  res.json(updatedCollection);
 };
 
-export const deleteCollection: RequestHandler = (req, res) => {
-  const { id } = req.params;
-  const data = readData();
+export const deleteCollection: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const collectionIndex = data.collections.findIndex((c) => c.id === id);
+    // Check if collection exists
+    const { data: existingCollection, error: checkError } = await supabase
+      .from("collections")
+      .select("id")
+      .eq("id", id)
+      .single();
 
-  if (collectionIndex === -1) {
-    res.status(404).json({ error: "Collection not found" });
-    return;
+    if (checkError || !existingCollection) {
+      return res.status(404).json({ error: "Collection not found" });
+    }
+
+    // Check if collection has products
+    const { data: products, error: productsError } = await supabase
+      .from("products")
+      .select("id")
+      .eq("collection_id", id)
+      .limit(1);
+
+    if (productsError) throw productsError;
+
+    if (products && products.length > 0) {
+      return res.status(400).json({
+        error:
+          "Cannot delete collection with products. Delete all products first.",
+      });
+    }
+
+    // Delete collection
+    const { error: deleteError } = await supabase
+      .from("collections")
+      .delete()
+      .eq("id", id);
+
+    if (deleteError) throw deleteError;
+
+    res.json({ id, deleted: true });
+  } catch (error) {
+    console.error("Error deleting collection:", error);
+    res.status(500).json({ error: "Failed to delete collection" });
   }
-
-  // Check if collection has products
-  const hasProducts = data.products.some((p) => p.collectionId === id);
-  if (hasProducts) {
-    res.status(400).json({
-      error:
-        "Cannot delete collection with products. Delete all products first.",
-    });
-    return;
-  }
-
-  const deleted = data.collections.splice(collectionIndex, 1);
-  writeData(data);
-
-  res.json(deleted[0]);
 };

@@ -56,26 +56,28 @@ export default function Products() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
-          {products.map((product, index) => (
-            <div
-              key={product.id}
-              className="animate-fade-in opacity-0"
-              style={{
-                animation: `fade-in 0.6s ease-out forwards`,
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <ProductCard {...product} />
-            </div>
-          ))}
-        </div>
-
-        {/* Empty State or Additional Info */}
-        {products.length === 0 && (
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+            {products.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-in opacity-0"
+                style={{
+                  animation: `fade-in 0.6s ease-out forwards`,
+                  animationDelay: `${index * 100}ms`,
+                }}
+              >
+                <ProductCard {...product} images={product.images} />
+              </div>
+            ))}
+          </div>
+        ) : (
           <div className="text-center py-16">
-            <p className="text-lg text-muted-foreground font-roboto">
+            <p className="text-lg text-muted-foreground font-roboto mb-6">
               Aucun produit disponible pour le moment
+            </p>
+            <p className="text-sm text-muted-foreground font-roboto">
+              Veuillez consulter à nouveau plus tard ou contacter l'administrateur
             </p>
           </div>
         )}

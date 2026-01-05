@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut } from "lucide-react";
+import { Plus, LogOut, LayoutDashboard, Package, FolderOpen, ShoppingCart, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
 import OrdersManager from "../components/admin/OrdersManager";
+import AdminDashboard from "../components/admin/AdminDashboard";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

@@ -29,9 +29,13 @@ export function AdminSidebar() {
 
   return (
     <aside className="w-64 bg-primary text-primary-foreground min-h-screen p-6 flex flex-col">
-      <div className="mb-12">
-        <h1 className="text-3xl font-futura font-bold">Luxence</h1>
-        <p className="text-sm opacity-90 font-roboto">Admin Panel</p>
+      <div className="mb-12 flex flex-col items-center">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F8809a042284e4ef7a6e668ae9ec8758f?format=webp&width=800"
+          alt="Luxence Logo"
+          className="h-12 object-contain mb-3"
+        />
+        <p className="text-xs opacity-80 font-roboto text-center">Admin Panel</p>
       </div>
 
       <nav className="flex-1 space-y-2">

@@ -12,26 +12,29 @@ export default function AdminSearch() {
   const [hasSearched, setHasSearched] = useState(false);
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
       setHasSearched(true);
       return;
     }
 
-    const storedOrders = localStorage.getItem("admin-orders");
-    const allOrders: Order[] = storedOrders ? JSON.parse(storedOrders) : [];
+    try {
+      const response = await fetch(
+        `/api/admin/orders/search?query=${encodeURIComponent(searchQuery)}`
+      );
+      const data = await response.json();
 
-    const query = searchQuery.toLowerCase();
-    const results = allOrders.filter(
-      (order) =>
-        order.panierCode.toLowerCase().includes(query) ||
-        order.customerName.toLowerCase().includes(query) ||
-        order.email.toLowerCase().includes(query) ||
-        order.phone.includes(searchQuery)
-    );
+      if (data.success && data.orders) {
+        setSearchResults(data.orders);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      console.error("Error searching orders:", error);
+      setSearchResults([]);
+    }
 
-    setSearchResults(results);
     setHasSearched(true);
   };
 

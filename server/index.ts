@@ -78,5 +78,14 @@ export function createServer() {
   app.get("/api/contact/messages", getContactMessages);
   app.put("/api/contact/messages/:id/read", markMessageAsRead);
 
+  // Orders routes
+  app.post("/api/orders", createOrder);
+  app.get("/api/orders", getOrders);
+  app.get("/api/orders/panier/:panierCode", getOrderByPanierCode);
+  app.get("/api/orders/:id", getOrderById);
+  app.get("/api/orders/search", searchOrders);
+  app.put("/api/orders/:id/status", updateOrderStatus);
+  app.get("/api/orders/status/:status", getOrdersByStatus);
+
   return app;
 }

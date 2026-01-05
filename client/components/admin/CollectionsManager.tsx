@@ -140,42 +140,99 @@ export default function CollectionsManager() {
       {isAddingNew || editingId ? (
         <Card>
           <CardContent className="pt-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Collection Name *
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  required
-                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="e.g., Panels"
-                />
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Left Column - Form Fields */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-foreground">
+                      Collection Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                      required
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      placeholder="e.g., Panels"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
-                  rows={3}
-                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Collection description"
-                />
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-foreground">
+                      Description
+                    </label>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
+                      rows={4}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      placeholder="Collection description"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-foreground">
+                      Image URL
+                    </label>
+                    <input
+                      type="url"
+                      value={formData.image}
+                      onChange={(e) => handleImageUrlChange(e.target.value)}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Enter the URL of the collection image
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Column - Image Preview */}
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-foreground">
+                    Image Preview
+                  </label>
+                  <div className="w-full h-64 border-2 border-dashed border-border rounded-lg overflow-hidden bg-secondary/30 flex items-center justify-center">
+                    {imagePreview ? (
+                      <div className="relative w-full h-full">
+                        <img
+                          src={imagePreview}
+                          alt="Collection preview"
+                          className="w-full h-full object-cover"
+                          onError={() => {
+                            console.error("Failed to load image");
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleImageUrlChange("")}
+                          className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-colors"
+                          title="Remove image"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-2 opacity-50" />
+                        <p className="text-sm text-muted-foreground">
+                          No image yet
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="flex gap-3 pt-4 border-t border-border">
@@ -185,11 +242,7 @@ export default function CollectionsManager() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => {
-                    setIsAddingNew(false);
-                    setEditingId(null);
-                    setFormData({ name: "", description: "" });
-                  }}
+                  onClick={handleCancel}
                   className="flex-1"
                 >
                   Cancel

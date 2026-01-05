@@ -36,6 +36,12 @@ import {
   updateOrder,
   deleteOrder,
 } from "./routes/orders";
+import {
+  getHeroSlides,
+  createHeroSlide,
+  updateHeroSlide,
+  deleteHeroSlide,
+} from "./routes/slides";
 
 export function createServer() {
   const app = express();
@@ -87,6 +93,12 @@ export function createServer() {
   app.put("/api/orders/:id", updateOrder);
   app.delete("/api/orders/:id", deleteOrder);
   app.get("/api/orders/status/:status", getOrdersByStatus);
+
+  // Hero slides routes
+  app.get("/api/slides", getHeroSlides);
+  app.post("/api/slides", createHeroSlide);
+  app.put("/api/slides/:id", updateHeroSlide);
+  app.delete("/api/slides/:id", deleteHeroSlide);
 
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));

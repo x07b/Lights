@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { supabase } from "../lib/supabase";
 
 export interface HeroSlide {
@@ -27,7 +26,7 @@ function apiSlideToDb(apiSlide: Partial<HeroSlide>): any {
   return dbSlide;
 }
 
-export const getHeroSlides: RequestHandler = async (_req, res) => {
+export async function getHeroSlides(_req: any, res: any) {
   try {
     const { data: slides, error } = await supabase
       .from("hero_slides")
@@ -42,9 +41,9 @@ export const getHeroSlides: RequestHandler = async (_req, res) => {
     console.error("Error fetching hero slides:", error);
     res.status(500).json({ error: "Failed to fetch hero slides" });
   }
-};
+}
 
-export const createHeroSlide: RequestHandler = async (req, res) => {
+export async function createHeroSlide(req: any, res: any) {
   try {
     const { image, alt, order } = req.body;
 
@@ -89,9 +88,9 @@ export const createHeroSlide: RequestHandler = async (req, res) => {
     console.error("Error creating hero slide:", error);
     res.status(500).json({ error: "Failed to create hero slide" });
   }
-};
+}
 
-export const updateHeroSlide: RequestHandler = async (req, res) => {
+export async function updateHeroSlide(req: any, res: any) {
   try {
     const { id } = req.params;
     const { image, alt, order } = req.body;
@@ -128,9 +127,9 @@ export const updateHeroSlide: RequestHandler = async (req, res) => {
     console.error("Error updating hero slide:", error);
     res.status(500).json({ error: "Failed to update hero slide" });
   }
-};
+}
 
-export const deleteHeroSlide: RequestHandler = async (req, res) => {
+export async function deleteHeroSlide(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -160,4 +159,4 @@ export const deleteHeroSlide: RequestHandler = async (req, res) => {
     console.error("Error deleting hero slide:", error);
     res.status(500).json({ error: "Failed to delete hero slide" });
   }
-};
+}

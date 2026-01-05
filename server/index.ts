@@ -58,6 +58,42 @@ export function createServer() {
     res.json({ message: ping });
   });
 
+  // Debug endpoint to test Supabase connection
+  app.get("/api/debug", async (_req, res) => {
+    try {
+      const hasSupabaseUrl = !!process.env.SUPABASE_URL;
+      const hasSupabaseKey = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+      if (!hasSupabaseUrl || !hasSupabaseKey) {
+        return res.status(500).json({
+          error: "Missing Supabase environment variables",
+          hasUrl: hasSupabaseUrl,
+          hasKey: hasSupabaseKey,
+        });
+      }
+
+      // Try to fetch from products table
+      const { data, error, status } = await supabase
+        .from("products")
+        .select("count", { count: "exact" });
+
+      res.json({
+        status: "ok",
+        supabaseUrl: process.env.SUPABASE_URL,
+        hasKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+        dbStatus: status,
+        dbError: error ? error.message : null,
+        dbErrorCode: error?.code || null,
+        productCount: data,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        error: error.message,
+        stack: error.stack,
+      });
+    }
+  });
+
   app.get("/api/demo", handleDemo);
 
   // File upload route

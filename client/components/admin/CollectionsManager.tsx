@@ -16,7 +16,11 @@ export default function CollectionsManager() {
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({ name: "", description: "", image: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    image: "",
+  });
   const [imagePreview, setImagePreview] = useState<string>("");
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function CollectionsManager() {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       if (response.ok) {
@@ -62,7 +66,11 @@ export default function CollectionsManager() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this collection? Products in this collection will not be deleted.")) {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this collection? Products in this collection will not be deleted.",
+      )
+    ) {
       return;
     }
 
@@ -128,10 +136,7 @@ export default function CollectionsManager() {
             Total collections: {collections.length}
           </p>
         </div>
-        <Button
-          onClick={handleAddNew}
-          className="flex items-center gap-2"
-        >
+        <Button onClick={handleAddNew} className="flex items-center gap-2">
           <Plus className="w-4 h-4" />
           Add Collection
         </Button>
@@ -255,7 +260,10 @@ export default function CollectionsManager() {
 
       <div className="grid gap-4">
         {collections.map((collection) => (
-          <Card key={collection.id} className="hover:shadow-lg transition-all overflow-hidden">
+          <Card
+            key={collection.id}
+            className="hover:shadow-lg transition-all overflow-hidden"
+          >
             <CardContent className="p-0">
               <div className="flex flex-col md:flex-row items-stretch">
                 {/* Image Section */}

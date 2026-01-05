@@ -141,15 +141,17 @@ export default function AdminDashboard() {
 
   // Prepare data for charts
   const statusData = [
-    { name: "En attente", value: stats.ordersbyStatus.enAttente, color: "#eab308" },
+    {
+      name: "En attente",
+      value: stats.ordersbyStatus.enAttente,
+      color: "#eab308",
+    },
     { name: "En cours", value: stats.ordersbyStatus.enCours, color: "#3b82f6" },
     { name: "Livré", value: stats.ordersbyStatus.livre, color: "#22c55e" },
     { name: "Annulé", value: stats.ordersbyStatus.annule, color: "#ef4444" },
   ];
 
-  const revenueData = [
-    { name: "Revenu Total", value: stats.totalRevenue },
-  ];
+  const revenueData = [{ name: "Revenu Total", value: stats.totalRevenue }];
 
   return (
     <div className="space-y-8">
@@ -192,7 +194,9 @@ export default function AdminDashboard() {
         <Card className="border-0 bg-gradient-to-br from-green-50 to-green-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
           <div className="absolute -right-8 -top-8 w-24 h-24 bg-green-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">Revenu Total</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-700">
+              Revenu Total
+            </CardTitle>
             <div className="p-2 bg-green-400/20 rounded-lg">
               <TrendingUp className="h-5 w-5 text-green-600" />
             </div>
@@ -234,7 +238,9 @@ export default function AdminDashboard() {
         <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
           <div className="absolute -right-8 -top-8 w-24 h-24 bg-purple-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">Produits</CardTitle>
+            <CardTitle className="text-sm font-medium text-slate-700">
+              Produits
+            </CardTitle>
             <div className="p-2 bg-purple-400/20 rounded-lg">
               <Package className="h-5 w-5 text-purple-600" />
             </div>
@@ -255,8 +261,12 @@ export default function AdminDashboard() {
         {/* Order Status Distribution */}
         <Card className="border-0 hover:shadow-xl transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">Répartition des Commandes</CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">Vue d'ensemble des statuts</p>
+            <CardTitle className="text-lg font-futura">
+              Répartition des Commandes
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-1">
+              Vue d'ensemble des statuts
+            </p>
           </CardHeader>
           <CardContent>
             <div className="w-full h-80">
@@ -286,8 +296,12 @@ export default function AdminDashboard() {
         {/* Order Status List */}
         <Card className="border-0 hover:shadow-xl transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">Statut des Commandes</CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">Détail par statut</p>
+            <CardTitle className="text-lg font-futura">
+              Statut des Commandes
+            </CardTitle>
+            <p className="text-xs text-muted-foreground mt-1">
+              Détail par statut
+            </p>
           </CardHeader>
           <CardContent>
             <div className="space-y-5">
@@ -326,8 +340,12 @@ export default function AdminDashboard() {
       {/* Recent Orders */}
       <Card className="border-0 hover:shadow-xl transition-all duration-300">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-futura">Commandes Récentes</CardTitle>
-          <p className="text-xs text-muted-foreground mt-1">Derniers paiements reçus</p>
+          <CardTitle className="text-lg font-futura">
+            Commandes Récentes
+          </CardTitle>
+          <p className="text-xs text-muted-foreground mt-1">
+            Derniers paiements reçus
+          </p>
         </CardHeader>
         <CardContent>
           {stats.recentOrders.length === 0 ? (

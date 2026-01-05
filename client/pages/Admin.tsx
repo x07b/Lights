@@ -44,7 +44,10 @@ export default function Admin() {
     // Listen for hash changes to update active tab
     const handleHashChange = () => {
       const hash = window.location.hash.substring(1);
-      if (hash && ["dashboard", "orders", "products", "collections"].includes(hash)) {
+      if (
+        hash &&
+        ["dashboard", "orders", "products", "collections"].includes(hash)
+      ) {
         setActiveTab(hash);
       }
     };
@@ -200,7 +203,11 @@ export default function Admin() {
         {/* Content Area */}
         <div className="flex-1 overflow-auto bg-secondary/30">
           <div className="p-6 md:p-8">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
               {/* Removed TabsList - Navigation handled by sidebar */}
 
               <TabsContent value="dashboard" className="space-y-4">

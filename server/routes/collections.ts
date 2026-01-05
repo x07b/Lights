@@ -47,7 +47,7 @@ export const getCollectionById: RequestHandler = (req, res) => {
 
   // Get products in this collection
   const products = data.products.filter(
-    (p) => p.collectionId === collection.id
+    (p) => p.collectionId === collection.id,
   );
 
   res.json({ ...collection, products });
@@ -105,8 +105,12 @@ export const updateCollection: RequestHandler = (req, res) => {
   const updatedCollection: Collection = {
     ...data.collections[collectionIndex],
     name: name || data.collections[collectionIndex].name,
-    description: description !== undefined ? description : data.collections[collectionIndex].description,
-    image: image !== undefined ? image : data.collections[collectionIndex].image,
+    description:
+      description !== undefined
+        ? description
+        : data.collections[collectionIndex].description,
+    image:
+      image !== undefined ? image : data.collections[collectionIndex].image,
   };
 
   data.collections[collectionIndex] = updatedCollection;
@@ -129,12 +133,10 @@ export const deleteCollection: RequestHandler = (req, res) => {
   // Check if collection has products
   const hasProducts = data.products.some((p) => p.collectionId === id);
   if (hasProducts) {
-    res
-      .status(400)
-      .json({
-        error:
-          "Cannot delete collection with products. Delete all products first.",
-      });
+    res.status(400).json({
+      error:
+        "Cannot delete collection with products. Delete all products first.",
+    });
     return;
   }
 

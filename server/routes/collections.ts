@@ -54,7 +54,7 @@ export const getCollectionById: RequestHandler = (req, res) => {
 };
 
 export const createCollection: RequestHandler = (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
   if (!name) {
     res.status(400).json({ error: "Collection name is required" });
@@ -81,6 +81,7 @@ export const createCollection: RequestHandler = (req, res) => {
     name,
     slug,
     description: description || "",
+    image: image || undefined,
   };
 
   data.collections.push(newCollection);

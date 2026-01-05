@@ -57,6 +57,14 @@ const App = () => (
           }
         />
         <Route
+          path="/collections/:slug"
+          element={
+            <Layout>
+              <Collections />
+            </Layout>
+          }
+        />
+        <Route
           path="/about"
           element={
             <Layout>

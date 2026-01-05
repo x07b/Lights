@@ -45,9 +45,6 @@ export function createServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-  // Serve static files from public directory
-  app.use(express.static(path.join(process.cwd(), "public")));
-
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
@@ -90,6 +87,9 @@ export function createServer() {
   app.put("/api/orders/:id", updateOrder);
   app.delete("/api/orders/:id", deleteOrder);
   app.get("/api/orders/status/:status", getOrdersByStatus);
+
+  // Serve static files from public directory (after API routes)
+  app.use(express.static(path.join(process.cwd(), "public")));
 
   return app;
 }

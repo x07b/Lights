@@ -389,7 +389,7 @@ export async function getOrdersByStatus(req: any, res: any) {
 };
 
 // Update order (full update)
-export const updateOrder: RequestHandler = async (req, res) => {
+export async function updateOrder(req: any, res: any) {
   try {
     const { id } = req.params;
     const { customer, items, total, status } = req.body;

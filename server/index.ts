@@ -46,5 +46,12 @@ export function createServer() {
   app.get("/api/admin/orders/:code", handleGetOrderByCode);
   app.patch("/api/admin/orders/:code/status", handleUpdateOrderStatus);
 
+  // Collections endpoints
+  app.get("/api/collections", handleGetCollections);
+  app.post("/api/collections", handleCreateCollection);
+  app.get("/api/collections/:id", handleGetCollection);
+  app.patch("/api/collections/:id", handleUpdateCollection);
+  app.delete("/api/collections/:id", handleDeleteCollection);
+
   return app;
 }

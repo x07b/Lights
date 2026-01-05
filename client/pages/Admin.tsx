@@ -6,6 +6,7 @@ import { Plus, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
+import OrdersManager from "../components/admin/OrdersManager";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

@@ -12,6 +12,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
 import ProductDetail from "./pages/ProductDetail";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminSearch from "./pages/AdminSearch";
+import AdminAddProduct from "./pages/AdminAddProduct";
 import NotFound from "./pages/NotFound";
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
@@ -82,6 +85,12 @@ const App = () => (
             </Layout>
           }
         />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/search" element={<AdminSearch />} />
+        <Route path="/admin/add-product" element={<AdminAddProduct />} />
+
         <Route
           path="*"
           element={

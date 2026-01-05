@@ -10,6 +10,7 @@ import Collections from "./pages/Collections";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ProductDetail from "./pages/ProductDetail";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
@@ -70,6 +71,10 @@ const App = () => (
             <ProductDetail />
           </Layout>
         }
+      />
+      <Route
+        path="/admin"
+        element={<Admin />}
       />
       <Route
         path="*"

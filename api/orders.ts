@@ -32,6 +32,25 @@ function parseBody(req: IncomingMessage): Promise<any> {
   });
 }
 
+// Helper function to add Express-style methods to ServerResponse
+function wrapResponse(res: ServerResponse): any {
+  let statusCode = 200;
+
+  res.json = function (data: any) {
+    this.setHeader("Content-Type", "application/json");
+    this.statusCode = statusCode;
+    this.end(JSON.stringify(data));
+    return this;
+  };
+
+  res.status = function (code: number) {
+    statusCode = code;
+    return this;
+  };
+
+  return res;
+}
+
 export default async (
   req: IncomingMessage & { query?: Record<string, any>; body?: any },
   res: ServerResponse

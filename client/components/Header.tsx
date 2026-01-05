@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../hooks/useCart";
+import { CollectionsDropdown } from "./CollectionsDropdown";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

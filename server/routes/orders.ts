@@ -80,7 +80,7 @@ function generatePanierCode(): string {
 }
 
 // Create order
-export const createOrder: RequestHandler = async (req, res) => {
+export async function createOrder(req: any, res: any) {
   try {
     // Validate request body
     const validatedData = createOrderSchema.parse(req.body);

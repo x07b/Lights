@@ -18,6 +18,8 @@ interface Product {
   images: string[];
   category: string;
   slug: string;
+  pdfFile?: string | null;
+  pdfFilename?: string | null;
   specifications: Specification[];
 }
 
@@ -65,6 +67,8 @@ export const createProduct: RequestHandler = (req, res) => {
     images,
     category,
     collectionId,
+    pdfFile,
+    pdfFilename,
     specifications,
   } = req.body;
 
@@ -91,6 +95,8 @@ export const createProduct: RequestHandler = (req, res) => {
     images: images || [],
     category: category || "Uncategorized",
     slug,
+    pdfFile: pdfFile || null,
+    pdfFilename: pdfFilename || null,
     specifications: specifications || [],
   };
 
@@ -116,6 +122,8 @@ export const updateProduct: RequestHandler = (req, res) => {
     ...data.products[productIndex],
     ...updates,
     id: data.products[productIndex].id,
+    pdfFile: updates.pdfFile !== undefined ? updates.pdfFile : data.products[productIndex].pdfFile,
+    pdfFilename: updates.pdfFilename !== undefined ? updates.pdfFilename : data.products[productIndex].pdfFilename,
   };
 
   writeData(data);

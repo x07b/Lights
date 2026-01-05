@@ -2,6 +2,7 @@ import "./global.css";
 
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { CartProvider } from "./contexts/CartContext";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import Index from "./pages/Index";
@@ -9,6 +10,8 @@ import Products from "./pages/Products";
 import Collections from "./pages/Collections";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import ProductDetail from "./pages/ProductDetail";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";

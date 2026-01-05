@@ -1,12 +1,36 @@
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "../hooks/useCart";
 import { CollectionsDropdown } from "./CollectionsDropdown";
+import { ProductSearchOverlay } from "./ProductSearchOverlay";
+
+interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  category?: string;
+  price: number;
+  image: string;
+}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
   const { totalItems } = useCart();
+
+  useEffect(() => {
+    // Fetch products from localStorage (from admin added products)
+    const storedProducts = localStorage.getItem("admin-products");
+    if (storedProducts) {
+      try {
+        setProducts(JSON.parse(storedProducts));
+      } catch (error) {
+        console.error("Error loading products:", error);
+      }
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-md transition-shadow duration-300 hover:shadow-lg">

@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { z } from "zod";
 import { supabase } from "../lib/supabase";
 

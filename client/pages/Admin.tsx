@@ -187,26 +187,21 @@ export default function Admin() {
         <div className="flex-1 overflow-auto bg-secondary/30">
           <div className="p-6 md:p-8">
             <Tabs defaultValue="dashboard" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-white border border-border rounded-lg p-1 mb-6">
-                <TabsTrigger value="dashboard">Tableau de bord</TabsTrigger>
-                <TabsTrigger value="orders">Commandes</TabsTrigger>
-                <TabsTrigger value="products">Produits</TabsTrigger>
-                <TabsTrigger value="collections">Collections</TabsTrigger>
-              </TabsList>
+              {/* Removed TabsList - Navigation handled by sidebar */}
 
-              <TabsContent value="dashboard" className="space-y-4 mt-6">
+              <TabsContent value="dashboard" className="space-y-4">
                 <AdminDashboard />
               </TabsContent>
 
-              <TabsContent value="orders" className="space-y-4 mt-6">
+              <TabsContent value="orders" className="space-y-4">
                 <OrdersManager />
               </TabsContent>
 
-              <TabsContent value="products" className="space-y-4 mt-6">
+              <TabsContent value="products" className="space-y-4">
                 <ProductsManager />
               </TabsContent>
 
-              <TabsContent value="collections" className="space-y-4 mt-6">
+              <TabsContent value="collections" className="space-y-4">
                 <CollectionsManager />
               </TabsContent>
             </Tabs>

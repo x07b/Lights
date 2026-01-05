@@ -19,6 +19,8 @@
       ],
       "category": "Panneaux LED",
       "slug": "led-frameless-panel",
+      "pdfFile": null,
+      "pdfFilename": null,
       "specifications": [
         { "label": "Puissance", "value": "10W" },
         { "label": "Forme", "value": "Ronde" },
@@ -43,6 +45,8 @@
       ],
       "category": "Panneaux LED",
       "slug": "led-panel-light-round",
+      "pdfFile": null,
+      "pdfFilename": null,
       "specifications": [
         { "label": "Puissance", "value": "18W" },
         { "label": "Forme", "value": "Ronde" },

@@ -1,17 +1,35 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut } from "lucide-react";
+import {
+  Plus,
+  LogOut,
+  LayoutDashboard,
+  Package,
+  FolderOpen,
+  ShoppingCart,
+  Menu,
+  X,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
+import OrdersManager from "../components/admin/OrdersManager";
+import AdminDashboard from "../components/admin/AdminDashboard";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Check if already authenticated
@@ -45,7 +63,9 @@ export default function Admin() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>Admin Login</CardTitle>
-            <CardDescription>Enter the admin password to continue</CardDescription>
+            <CardDescription>
+              Enter the admin password to continue
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <input
@@ -63,7 +83,10 @@ export default function Admin() {
             <Button onClick={handleLogin} className="w-full">
               Login
             </Button>
-            <Link to="/" className="block text-center text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              to="/"
+              className="block text-center text-sm text-muted-foreground hover:text-foreground"
+            >
               Back to home
             </Link>
           </CardContent>
@@ -73,39 +96,153 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-border sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-futura font-bold text-foreground">Admin Dashboard</h1>
-            <p className="text-sm text-muted-foreground mt-1">Manage your products and collections</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar */}
+      <aside
+        className={`bg-slate-900 text-white transition-all duration-300 ${
+          isSidebarOpen ? "w-64" : "w-20"
+        } flex flex-col`}
+      >
+        {/* Logo Section */}
+        <div className="p-4 border-b border-slate-700">
+          <Link
+            to="/"
+            className="flex items-center justify-center h-12 hover:opacity-80 transition-opacity"
           >
-            <LogOut className="w-5 h-5" />
-            Logout
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F8809a042284e4ef7a6e668ae9ec8758f?format=webp&width=800"
+              alt="Luxence Logo"
+              className="h-full object-contain"
+            />
+          </Link>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-2">
+          <NavItem
+            icon={<LayoutDashboard className="w-5 h-5" />}
+            label="Tableau de bord"
+            href="#dashboard"
+            isOpen={isSidebarOpen}
+          />
+          <NavItem
+            icon={<ShoppingCart className="w-5 h-5" />}
+            label="Commandes"
+            href="#orders"
+            isOpen={isSidebarOpen}
+          />
+          <NavItem
+            icon={<Package className="w-5 h-5" />}
+            label="Produits"
+            href="#products"
+            isOpen={isSidebarOpen}
+          />
+          <NavItem
+            icon={<FolderOpen className="w-5 h-5" />}
+            label="Collections"
+            href="#collections"
+            isOpen={isSidebarOpen}
+          />
+        </nav>
+
+        {/* Toggle Button */}
+        <div className="p-4 border-t border-slate-700">
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="w-full flex items-center justify-center p-2 hover:bg-slate-800 rounded-lg transition-colors"
+          >
+            {isSidebarOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
           </button>
         </div>
-      </div>
+      </aside>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <Tabs defaultValue="products" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="collections">Collections</TabsTrigger>
-          </TabsList>
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Bar */}
+        <div className="bg-white border-b border-border sticky top-0 z-40">
+          <div className="px-6 py-4 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-futura font-bold text-foreground">
+                Admin Panel
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Gérez vos produits, commandes et collections
+              </p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <LogOut className="w-5 h-5" />
+              Déconnexion
+            </button>
+          </div>
+        </div>
 
-          <TabsContent value="products" className="space-y-4">
-            <ProductsManager />
-          </TabsContent>
+        {/* Content Area */}
+        <div className="flex-1 overflow-auto">
+          <div className="p-6">
+            <Tabs defaultValue="dashboard" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="dashboard">Tableau de bord</TabsTrigger>
+                <TabsTrigger value="orders">Commandes</TabsTrigger>
+                <TabsTrigger value="products">Produits</TabsTrigger>
+                <TabsTrigger value="collections">Collections</TabsTrigger>
+              </TabsList>
 
-          <TabsContent value="collections" className="space-y-4">
-            <CollectionsManager />
-          </TabsContent>
-        </Tabs>
+              <TabsContent value="dashboard" className="space-y-4 mt-6">
+                <AdminDashboard />
+              </TabsContent>
+
+              <TabsContent value="orders" className="space-y-4 mt-6">
+                <OrdersManager />
+              </TabsContent>
+
+              <TabsContent value="products" className="space-y-4 mt-6">
+                <ProductsManager />
+              </TabsContent>
+
+              <TabsContent value="collections" className="space-y-4 mt-6">
+                <CollectionsManager />
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+// Navigation Item Component
+function NavItem({
+  icon,
+  label,
+  href,
+  isOpen,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  href: string;
+  isOpen: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-colors group"
+    >
+      {icon}
+      {isOpen && (
+        <span className="text-sm font-roboto font-medium">{label}</span>
+      )}
+      {isOpen && (
+        <span className="ml-auto text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+          →
+        </span>
+      )}
+    </a>
   );
 }

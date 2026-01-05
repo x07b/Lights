@@ -1,6 +1,8 @@
-import { ShoppingCart, Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
@@ -26,6 +28,7 @@ export function ProductCard({
   const [isAdded, setIsAdded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop
   const productImages = images.length > 0 ? images : image ? [image] : [];
@@ -33,12 +36,23 @@ export function ProductCard({
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
+    try {
+      addItem({
+        id,
+        name,
+        price,
+        quantity: 1,
+        slug: slug || id,
+      });
+      setIsAdded(true);
+      toast.success(`${name} ajouté au panier`);
+      setTimeout(() => setIsAdded(false), 2000);
+    } catch (error) {
+      toast.error("Erreur lors de l'ajout au panier");
+    }
   };
 
-  const handleViewProduct = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCardClick = () => {
     if (slug) {
       navigate(`/product/${slug}`);
     }
@@ -47,19 +61,22 @@ export function ProductCard({
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === 0 ? productImages.length - 1 : prev - 1
+      prev === 0 ? productImages.length - 1 : prev - 1,
     );
   };
 
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === productImages.length - 1 ? 0 : prev + 1
+      prev === productImages.length - 1 ? 0 : prev + 1,
     );
   };
 
   return (
-    <div className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+    <div
+      onClick={handleCardClick}
+      className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 cursor-pointer"
+    >
       {/* Image Container */}
       <div className="product-image-container relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 p-8 flex items-center justify-center h-72">
         <img
@@ -130,30 +147,19 @@ export function ProductCard({
           </span>
         </div>
 
-        {/* Action Icons */}
-        <div className="flex gap-3 pt-4 space-y-0">
-          {/* Add to Cart Icon Button */}
-          <button
-            onClick={handleAddToCart}
-            title={isAdded ? "Ajouté !" : "Ajouter au panier"}
-            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center font-futura font-semibold ${
-              isAdded
-                ? "bg-accent/90 scale-95 text-white"
-                : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
-            }`}
-          >
-            <ShoppingCart className="w-5 h-5" />
-          </button>
-
-          {/* View Product Icon Button */}
-          <button
-            onClick={handleViewProduct}
-            title="Voir le produit"
-            className="flex-1 py-3 px-4 rounded-lg border-2 border-foreground text-foreground hover:bg-foreground hover:text-white transition-all duration-300 flex items-center justify-center font-futura font-semibold shadow-sm hover:shadow-md active:scale-95"
-          >
-            <Eye className="w-5 h-5" />
-          </button>
-        </div>
+        {/* Add to Cart Button */}
+        <button
+          onClick={handleAddToCart}
+          title={isAdded ? "Ajouté !" : "Ajouter au panier"}
+          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold ${
+            isAdded
+              ? "bg-accent/90 scale-95 text-white"
+              : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
+          }`}
+        >
+          <ShoppingCart className="w-5 h-5" />
+          {isAdded ? "Ajouté !" : "Ajouter au panier"}
+        </button>
       </div>
     </div>
   );

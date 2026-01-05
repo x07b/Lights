@@ -20,6 +20,20 @@ import {
   updateCollection,
   deleteCollection,
 } from "./routes/collections";
+import {
+  handleContact,
+  getContactMessages,
+  markMessageAsRead,
+} from "./routes/contact";
+import {
+  createOrder,
+  getOrders,
+  getOrderByPanierCode,
+  getOrderById,
+  searchOrders,
+  updateOrderStatus,
+  getOrdersByStatus,
+} from "./routes/orders";
 
 export function createServer() {
   const app = express();
@@ -58,6 +72,20 @@ export function createServer() {
   app.post("/api/collections", createCollection);
   app.put("/api/collections/:id", updateCollection);
   app.delete("/api/collections/:id", deleteCollection);
+
+  // Contact routes
+  app.post("/api/contact", handleContact);
+  app.get("/api/contact/messages", getContactMessages);
+  app.put("/api/contact/messages/:id/read", markMessageAsRead);
+
+  // Orders routes
+  app.post("/api/orders", createOrder);
+  app.get("/api/orders", getOrders);
+  app.get("/api/orders/panier/:panierCode", getOrderByPanierCode);
+  app.get("/api/orders/:id", getOrderById);
+  app.get("/api/orders/search", searchOrders);
+  app.put("/api/orders/:id/status", updateOrderStatus);
+  app.get("/api/orders/status/:status", getOrdersByStatus);
 
   return app;
 }

@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useCart } from "@/contexts/CartContext";
+import { SearchOverlay } from "./SearchOverlay";
 
 interface Collection {
   id: string;
@@ -10,9 +12,31 @@ interface Collection {
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] = useState(false);
+  const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] =
+    useState(false);
   const [isMobileCollectionsOpen, setIsMobileCollectionsOpen] = useState(false);
+  const { itemCount } = useCart();
+  const navigate = useNavigate();
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd+K or Ctrl+K to open search
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+      // Esc to close search
+      if (e.key === "Escape" && isSearchOpen) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isSearchOpen]);
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -65,7 +89,9 @@ export function Header() {
             <div className="relative group">
               <button
                 className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 flex items-center gap-1"
-                onClick={() => setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)}
+                onClick={() =>
+                  setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)
+                }
               >
                 Collections
                 <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
@@ -106,12 +132,24 @@ export function Header() {
 
           {/* Icons */}
           <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md"
+              title="Rechercher (Ctrl+K)"
+            >
               <Search className="w-5 h-5 text-foreground hover:text-accent transition-colors duration-300" />
             </button>
-            <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group">
+            <button
+              onClick={() => navigate("/cart")}
+              className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md relative group"
+              title="Voir le panier"
+            >
               <ShoppingCart className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+              {itemCount > 0 && (
+                <span className="absolute top-1 right-1 w-5 h-5 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold animate-pulse">
+                  {itemCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Button */}
@@ -148,7 +186,9 @@ export function Header() {
 
             {/* Mobile Collections Dropdown */}
             <button
-              onClick={() => setIsMobileCollectionsOpen(!isMobileCollectionsOpen)}
+              onClick={() =>
+                setIsMobileCollectionsOpen(!isMobileCollectionsOpen)
+              }
               className="w-full text-left py-3 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm font-medium flex items-center justify-between"
             >
               Collections
@@ -194,6 +234,12 @@ export function Header() {
           </nav>
         )}
       </div>
+
+      {/* Search Overlay */}
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </header>
   );
 }

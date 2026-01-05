@@ -26,21 +26,32 @@ export default function AdminDashboard() {
   });
 
   useEffect(() => {
-    // Fetch orders and calculate statistics
-    const storedOrders = localStorage.getItem("admin-orders");
-    const orders: Order[] = storedOrders ? JSON.parse(storedOrders) : [];
+    // Fetch orders from API
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch("/api/admin/orders");
+        const data = await response.json();
 
-    const uniqueEmails = new Set(orders.map((o) => o.email));
-    const totalRevenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
-    const avgOrder = orders.length > 0 ? totalRevenue / orders.length : 0;
+        if (data.success && data.orders) {
+          const orders = data.orders as Order[];
+          const uniqueEmails = new Set(orders.map((o) => o.email));
+          const totalRevenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
+          const avgOrder = orders.length > 0 ? totalRevenue / orders.length : 0;
 
-    setStats({
-      totalOrders: orders.length,
-      totalRevenue,
-      totalCustomers: uniqueEmails.size,
-      averageOrderValue: avgOrder,
-      orders,
-    });
+          setStats({
+            totalOrders: orders.length,
+            totalRevenue,
+            totalCustomers: uniqueEmails.size,
+            averageOrderValue: avgOrder,
+            orders,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
   // Mock data for charts

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Download,
   Zap,
@@ -13,62 +14,61 @@ import { Button } from "@/components/ui/button";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-const productsDatabase = [
-  {
-    id: "led-panel-light",
-    slug: "led-frameless-panel",
-    name: "LED Frameless Panel Light",
-    category: "Panneaux LED",
-    description:
-      "Panneau LED encastrable, design discret et performance lumineuse optimale.",
-    image:
-      "https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2Fff2a6753fb754ad38342a3f05b4cd636?format=webp&width=800",
-    price: 49.0,
-    specifications: [
-      { label: "Puissance", value: "10W" },
-      { label: "Forme", value: "Ronde" },
-      { label: "Type", value: "Encastré" },
-      { label: "Couleur", value: "Blanc" },
-      { label: "Température de couleur", value: "6500K" },
-      { label: "Flux lumineux", value: "1200 lm" },
-      { label: "Durée de vie", value: "3000 heures" },
-      { label: "Certification", value: "CE" },
-      { label: "Indice de protection", value: "IP20" },
-      { label: "Pays d'origine", value: "Fabriqué en Chine" },
-    ],
-    pdfFile: "/Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
-    pdfFilename: "Luxence_Fiche_Technique_LED_Frameless_Panel.pdf",
-  },
-  {
-    id: "led-panel-light-round",
-    slug: "led-panel-light-round",
-    name: "LED Panel Light Round",
-    category: "Panneaux LED",
-    description:
-      "Panneau LED encastrable rond haute performance, longue durée de vie et économie d'énergie.",
-    image:
-      "https://cdn.builder.io/api/v1/image/assets%2Fcbe2eec5db404214a3a4db1cb75a5758%2Fb16ebe3730ac4e5f9a4fb71cf3ee89d5?format=webp&width=800",
-    price: 49.0,
-    specifications: [
-      { label: "Puissance", value: "18W" },
-      { label: "Forme", value: "Ronde" },
-      { label: "Type", value: "Encastré" },
-      { label: "Couleur", value: "Blanc" },
-      { label: "Température de couleur", value: "3000K" },
-      { label: "Flux lumineux", value: "1800 lm" },
-      { label: "Durée de vie", value: "30000 heures" },
-      { label: "Certification", value: "CE" },
-      { label: "Indice de protection", value: "IP20" },
-      { label: "Pays d'origine", value: "Fabriqué en Chine" },
-    ],
-    pdfFile: "/Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
-    pdfFilename: "Luxence_Fiche_Technique_LED_Panel_Light_Round.pdf",
-  },
-];
+interface Specification {
+  label: string;
+  value: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: string[];
+  category: string;
+  slug: string;
+  specifications: Specification[];
+}
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const product = productsDatabase.find((p) => p.slug === slug);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`/api/products/${slug}`);
+        if (response.ok) {
+          const data = await response.json();
+          setProduct(data);
+          setMainImageIndex(0);
+        } else {
+          setProduct(null);
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="bg-gradient-to-br from-white to-gray-50 min-h-screen flex items-center justify-center px-4">
+        <div className="text-center space-y-8 animate-fade-in">
+          <p className="font-roboto text-lg text-muted-foreground">
+            Loading product...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -93,10 +93,8 @@ export default function ProductDetail() {
   }
 
   const handleDownloadPDF = () => {
-    const link = document.createElement("a");
-    link.href = product.pdfFile;
-    link.download = product.pdfFilename;
-    link.click();
+    // For now, products fetched from API don't have PDF files
+    alert("PDF download not available for this product");
   };
 
   const specifications = product.specifications;
@@ -144,17 +142,42 @@ export default function ProductDetail() {
       {/* Hero Section */}
       <section className="py-16 px-4 sm:py-20 md:py-28">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-            {/* Product Image */}
-            <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg hover:shadow-2xl transition-all duration-500 border border-border animate-fade-in">
-              <div className="relative w-full">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-auto max-w-md object-cover rounded-lg hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+            {/* Product Images Gallery */}
+            <div className="product-gallery space-y-4">
+              <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg hover:shadow-2xl transition-all duration-500 border border-border animate-fade-in">
+                <div className="relative w-full">
+                  <img
+                    src={product.images[mainImageIndex]}
+                    alt={product.name}
+                    className="w-full h-auto max-w-md object-cover rounded-lg hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />
+                </div>
               </div>
+
+              {/* Thumbnail Images */}
+              {product.images.length > 1 && (
+                <div className="thumbnail-container flex gap-3 overflow-x-auto pb-2">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setMainImageIndex(index)}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg border-2 transition-all duration-300 overflow-hidden ${
+                        mainImageIndex === index
+                          ? "border-accent shadow-lg"
+                          : "border-border hover:border-accent/50"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} ${index + 1}`}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info */}

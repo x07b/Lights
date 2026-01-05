@@ -86,7 +86,7 @@ async function sendEmail(data: {
   email: string;
   subject: string;
   message: string;
-}): Promise<void> {
+}): Promise<boolean> {
   // Check if email service is configured
   if (
     !process.env.SMTP_HOST ||
@@ -94,7 +94,7 @@ async function sendEmail(data: {
     !process.env.SMTP_PASS
   ) {
     console.log("Email service not configured, message stored in system");
-    return;
+    return false;
   }
 
   try {
@@ -128,9 +128,11 @@ async function sendEmail(data: {
     });
 
     console.log("Email sent successfully to admin");
+    return true;
   } catch (error) {
     console.error("Failed to send email:", error);
     // Don't throw error, just log it - message is already stored
+    return false;
   }
 }
 

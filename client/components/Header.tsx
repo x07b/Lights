@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "../hooks/useCart";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-md transition-shadow duration-300 hover:shadow-lg">

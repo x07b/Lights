@@ -185,4 +185,62 @@
   .premium-container {
     @apply max-w-7xl mx-auto;
   }
+
+  /* Navigation Icon Hover Effect */
+  .nav-icon-item {
+    @apply flex flex-col items-center justify-center p-3 rounded-lg transition-all duration-300 group hover:bg-secondary;
+  }
+
+  .nav-icon-label {
+    @apply text-xs text-muted-foreground group-hover:text-accent font-roboto mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap;
+  }
+
+  /* Enhanced Shadow Effects */
+  .shadow-premium {
+    @apply shadow-lg;
+  }
+
+  /* Smooth Animations */
+  @keyframes slideInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-in-down {
+    @apply animate-[slideInDown_0.3s_ease-out];
+  }
+
+  .animate-slide-in-up {
+    @apply animate-[slideInUp_0.3s_ease-out];
+  }
+
+  .animate-fade-in {
+    @apply animate-[fadeIn_0.2s_ease-out];
+  }
 }

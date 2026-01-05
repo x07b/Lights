@@ -1,5 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import {
+  Search,
+  ShoppingCart,
+  Menu,
+  X,
+  ChevronDown,
+  Home,
+  Package,
+  Folder,
+  Info,
+  Mail,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { SearchOverlay } from "./SearchOverlay";
@@ -68,44 +79,52 @@ export function Header() {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation - Icon Based */}
+          <nav className="hidden md:flex items-center gap-1">
+            {/* Home */}
             <Link
               to="/"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
+              title="Accueil"
             >
-              Accueil
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <Home className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
+                Accueil
+              </span>
             </Link>
+
+            {/* Products */}
             <Link
               to="/products"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
+              title="Produits"
             >
-              Produits
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <Package className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
+                Produits
+              </span>
             </Link>
 
             {/* Collections Dropdown */}
             <div className="relative group">
               <button
-                className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 flex items-center gap-1"
-                onClick={() =>
-                  setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)
-                }
+                className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
+                title="Collections"
               >
-                Collections
-                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+                <Folder className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
+                <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
+                  Collections
+                </span>
               </button>
 
               {/* Dropdown Menu */}
               {collections.length > 0 && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 bg-white border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 pt-2">
                   {collections.map((collection) => (
                     <Link
                       key={collection.id}
                       to={`/collections/${collection.slug}`}
-                      className="block px-4 py-2 text-sm font-roboto text-foreground hover:bg-secondary hover:text-accent transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
+                      className="block px-4 py-3 text-sm font-roboto text-foreground hover:bg-secondary hover:text-accent transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
                     >
                       {collection.name}
                     </Link>
@@ -114,19 +133,28 @@ export function Header() {
               )}
             </div>
 
+            {/* About */}
             <Link
               to="/about"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
+              title="À propos"
             >
-              À propos
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <Info className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
+                À propos
+              </span>
             </Link>
+
+            {/* Contact */}
             <Link
               to="/contact"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
+              className="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-300 group hover:bg-secondary/50"
+              title="Contact"
             >
-              Contact
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
+              <Mail className="w-5 h-5 text-foreground group-hover:text-accent transition-colors duration-300" />
+              <span className="text-xs text-foreground font-roboto mt-1 whitespace-nowrap font-medium">
+                Contact
+              </span>
             </Link>
           </nav>
 

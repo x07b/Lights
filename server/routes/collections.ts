@@ -9,6 +9,7 @@ interface Collection {
   name: string;
   slug: string;
   description: string;
+  image?: string;
 }
 
 interface DataFile {
@@ -46,14 +47,14 @@ export const getCollectionById: RequestHandler = (req, res) => {
 
   // Get products in this collection
   const products = data.products.filter(
-    (p) => p.collectionId === collection.id
+    (p) => p.collectionId === collection.id,
   );
 
   res.json({ ...collection, products });
 };
 
 export const createCollection: RequestHandler = (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
   if (!name) {
     res.status(400).json({ error: "Collection name is required" });
@@ -80,6 +81,7 @@ export const createCollection: RequestHandler = (req, res) => {
     name,
     slug,
     description: description || "",
+    image: image || undefined,
   };
 
   data.collections.push(newCollection);
@@ -90,7 +92,7 @@ export const createCollection: RequestHandler = (req, res) => {
 
 export const updateCollection: RequestHandler = (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
   const data = readData();
   const collectionIndex = data.collections.findIndex((c) => c.id === id);
@@ -103,7 +105,12 @@ export const updateCollection: RequestHandler = (req, res) => {
   const updatedCollection: Collection = {
     ...data.collections[collectionIndex],
     name: name || data.collections[collectionIndex].name,
-    description: description !== undefined ? description : data.collections[collectionIndex].description,
+    description:
+      description !== undefined
+        ? description
+        : data.collections[collectionIndex].description,
+    image:
+      image !== undefined ? image : data.collections[collectionIndex].image,
   };
 
   data.collections[collectionIndex] = updatedCollection;
@@ -126,12 +133,10 @@ export const deleteCollection: RequestHandler = (req, res) => {
   // Check if collection has products
   const hasProducts = data.products.some((p) => p.collectionId === id);
   if (hasProducts) {
-    res
-      .status(400)
-      .json({
-        error:
-          "Cannot delete collection with products. Delete all products first.",
-      });
+    res.status(400).json({
+      error:
+        "Cannot delete collection with products. Delete all products first.",
+    });
     return;
   }
 

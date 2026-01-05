@@ -49,13 +49,16 @@ export const handleContact: RequestHandler = async (req, res) => {
     contactMessages.push(message);
 
     // Try to send email if SMTP is configured
-    await sendEmail(validatedData);
+    const emailSent = await sendEmail(validatedData);
 
-    // Return success response
+    // Return success response with email delivery status
     res.status(200).json({
       success: true,
-      message: "Message envoyé avec succès",
+      message: emailSent
+        ? "Message envoyé avec succès et email notification reçue"
+        : "Message reçu avec succès (email de notification en attente de configuration)",
       messageId: message.id,
+      emailSent: emailSent,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -83,7 +86,7 @@ async function sendEmail(data: {
   email: string;
   subject: string;
   message: string;
-}): Promise<void> {
+}): Promise<boolean> {
   // Check if email service is configured
   if (
     !process.env.SMTP_HOST ||
@@ -91,7 +94,7 @@ async function sendEmail(data: {
     !process.env.SMTP_PASS
   ) {
     console.log("Email service not configured, message stored in system");
-    return;
+    return false;
   }
 
   try {
@@ -125,9 +128,11 @@ async function sendEmail(data: {
     });
 
     console.log("Email sent successfully to admin");
+    return true;
   } catch (error) {
     console.error("Failed to send email:", error);
     // Don't throw error, just log it - message is already stored
+    return false;
   }
 }
 

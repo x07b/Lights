@@ -30,6 +30,7 @@ export default function Admin() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   useEffect(() => {
     // Check if already authenticated
@@ -37,6 +38,22 @@ export default function Admin() {
     if (auth) {
       setIsAuthenticated(true);
     }
+  }, []);
+
+  useEffect(() => {
+    // Listen for hash changes to update active tab
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (
+        hash &&
+        ["dashboard", "orders", "products", "collections"].includes(hash)
+      ) {
+        setActiveTab(hash);
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const handleLogin = () => {
@@ -96,12 +113,12 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
       <aside
         className={`bg-slate-900 text-white transition-all duration-300 ${
           isSidebarOpen ? "w-64" : "w-20"
-        } flex flex-col`}
+        } flex flex-col shadow-lg`}
       >
         {/* Logo Section */}
         <div className="p-4 border-b border-slate-700">
@@ -163,19 +180,19 @@ export default function Admin() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
-        <div className="bg-white border-b border-border sticky top-0 z-40">
+        <div className="bg-white border-b border-border sticky top-0 z-40 shadow-sm">
           <div className="px-6 py-4 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-futura font-bold text-foreground">
                 Admin Panel
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mt-1">
                 Gérez vos produits, commandes et collections
               </p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50/50 rounded-lg transition-colors duration-300"
             >
               <LogOut className="w-5 h-5" />
               Déconnexion
@@ -184,29 +201,28 @@ export default function Admin() {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-auto">
-          <div className="p-6">
-            <Tabs defaultValue="dashboard" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="dashboard">Tableau de bord</TabsTrigger>
-                <TabsTrigger value="orders">Commandes</TabsTrigger>
-                <TabsTrigger value="products">Produits</TabsTrigger>
-                <TabsTrigger value="collections">Collections</TabsTrigger>
-              </TabsList>
+        <div className="flex-1 overflow-auto bg-secondary/30">
+          <div className="p-6 md:p-8">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
+              {/* Removed TabsList - Navigation handled by sidebar */}
 
-              <TabsContent value="dashboard" className="space-y-4 mt-6">
+              <TabsContent value="dashboard" className="space-y-4">
                 <AdminDashboard />
               </TabsContent>
 
-              <TabsContent value="orders" className="space-y-4 mt-6">
+              <TabsContent value="orders" className="space-y-4">
                 <OrdersManager />
               </TabsContent>
 
-              <TabsContent value="products" className="space-y-4 mt-6">
+              <TabsContent value="products" className="space-y-4">
                 <ProductsManager />
               </TabsContent>
 
-              <TabsContent value="collections" className="space-y-4 mt-6">
+              <TabsContent value="collections" className="space-y-4">
                 <CollectionsManager />
               </TabsContent>
             </Tabs>

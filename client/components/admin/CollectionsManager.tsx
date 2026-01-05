@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Trash2, Edit2 } from "lucide-react";
+import { Plus, Trash2, Edit2, ImageIcon, X } from "lucide-react";
 
 interface Collection {
   id: string;
   name: string;
   description: string;
   slug: string;
+  image?: string;
 }
 
 export default function CollectionsManager() {
@@ -15,7 +16,8 @@ export default function CollectionsManager() {
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [formData, setFormData] = useState({ name: "", description: "", image: "" });
+  const [imagePreview, setImagePreview] = useState<string>("");
 
   useEffect(() => {
     fetchCollections();

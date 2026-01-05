@@ -26,7 +26,8 @@ export default function Collections() {
   const navigate = useNavigate();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
+  const [selectedCollection, setSelectedCollection] =
+    useState<Collection | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,12 +46,12 @@ export default function Collections() {
         // If slug is provided, select that collection
         if (slug) {
           const collection = collectionsData.find(
-            (c: Collection) => c.slug === slug
+            (c: Collection) => c.slug === slug,
           );
           setSelectedCollection(collection);
           // Filter products for this collection
           const collectionProducts = productsData.filter(
-            (p: Product) => p.collectionId === collection?.id
+            (p: Product) => p.collectionId === collection?.id,
           );
           setProducts(collectionProducts);
         } else {
@@ -126,12 +127,13 @@ export default function Collections() {
                       <p className="text-muted-foreground font-roboto text-sm">
                         {
                           products.filter(
-                            (p) => p.collectionId === collection.id
+                            (p) => p.collectionId === collection.id,
                           ).length
                         }{" "}
                         produit
-                        {products.filter((p) => p.collectionId === collection.id)
-                          .length !== 1
+                        {products.filter(
+                          (p) => p.collectionId === collection.id,
+                        ).length !== 1
                           ? "s"
                           : ""}
                       </p>
@@ -237,12 +239,13 @@ export default function Collections() {
                       <p className="text-sm text-muted-foreground font-roboto mt-2">
                         {
                           products.filter(
-                            (p) => p.collectionId === collection.id
+                            (p) => p.collectionId === collection.id,
                           ).length
                         }{" "}
                         produit
-                        {products.filter((p) => p.collectionId === collection.id)
-                          .length !== 1
+                        {products.filter(
+                          (p) => p.collectionId === collection.id,
+                        ).length !== 1
                           ? "s"
                           : ""}
                       </p>

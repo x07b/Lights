@@ -96,10 +96,7 @@ const App = () => (
             </Layout>
           }
         />
-        <Route
-          path="/product"
-          element={<RedirectProduct />}
-        />
+        <Route path="/product" element={<RedirectProduct />} />
         <Route
           path="/product/:slug"
           element={
@@ -108,10 +105,7 @@ const App = () => (
             </Layout>
           }
         />
-        <Route
-          path="/admin"
-          element={<Admin />}
-        />
+        <Route path="/admin" element={<Admin />} />
         <Route
           path="*"
           element={

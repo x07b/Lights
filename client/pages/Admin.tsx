@@ -1,8 +1,23 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, LayoutDashboard, Package, FolderOpen, ShoppingCart, Menu, X } from "lucide-react";
+import {
+  Plus,
+  LogOut,
+  LayoutDashboard,
+  Package,
+  FolderOpen,
+  ShoppingCart,
+  Menu,
+  X,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
@@ -48,7 +63,9 @@ export default function Admin() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>Admin Login</CardTitle>
-            <CardDescription>Enter the admin password to continue</CardDescription>
+            <CardDescription>
+              Enter the admin password to continue
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <input
@@ -66,7 +83,10 @@ export default function Admin() {
             <Button onClick={handleLogin} className="w-full">
               Login
             </Button>
-            <Link to="/" className="block text-center text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              to="/"
+              className="block text-center text-sm text-muted-foreground hover:text-foreground"
+            >
               Back to home
             </Link>
           </CardContent>
@@ -215,7 +235,9 @@ function NavItem({
       className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-colors group"
     >
       {icon}
-      {isOpen && <span className="text-sm font-roboto font-medium">{label}</span>}
+      {isOpen && (
+        <span className="text-sm font-roboto font-medium">{label}</span>
+      )}
       {isOpen && (
         <span className="ml-auto text-xs opacity-0 group-hover:opacity-100 transition-opacity">
           →

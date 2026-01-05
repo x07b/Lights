@@ -86,7 +86,10 @@ export default function Cart() {
                     <div className="flex items-center border-2 border-border rounded-lg">
                       <button
                         onClick={() =>
-                          updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                          updateQuantity(
+                            item.id,
+                            Math.max(1, item.quantity - 1),
+                          )
                         }
                         className="p-2 hover:bg-secondary transition-colors"
                         title="Réduire la quantité"
@@ -141,7 +144,9 @@ export default function Cart() {
                 <div className="space-y-4 border-t border-b border-border py-4">
                   <div className="flex justify-between text-muted-foreground">
                     <span className="font-roboto">Sous-total:</span>
-                    <span className="font-semibold">{total.toFixed(2)} TND</span>
+                    <span className="font-semibold">
+                      {total.toFixed(2)} TND
+                    </span>
                   </div>
                   <div className="flex justify-between text-muted-foreground">
                     <span className="font-roboto">Frais de port:</span>
@@ -172,7 +177,7 @@ export default function Cart() {
                   onClick={() => {
                     if (
                       window.confirm(
-                        "Êtes-vous sûr de vouloir vider le panier ?"
+                        "Êtes-vous sûr de vouloir vider le panier ?",
                       )
                     ) {
                       clearCart();

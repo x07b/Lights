@@ -14,7 +14,8 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [collections, setCollections] = useState<Collection[]>([]);
-  const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] = useState(false);
+  const [isCollectionsDropdownOpen, setIsCollectionsDropdownOpen] =
+    useState(false);
   const [isMobileCollectionsOpen, setIsMobileCollectionsOpen] = useState(false);
   const { itemCount } = useCart();
   const navigate = useNavigate();
@@ -88,7 +89,9 @@ export function Header() {
             <div className="relative group">
               <button
                 className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 flex items-center gap-1"
-                onClick={() => setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)}
+                onClick={() =>
+                  setIsCollectionsDropdownOpen(!isCollectionsDropdownOpen)
+                }
               >
                 Collections
                 <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
@@ -183,7 +186,9 @@ export function Header() {
 
             {/* Mobile Collections Dropdown */}
             <button
-              onClick={() => setIsMobileCollectionsOpen(!isMobileCollectionsOpen)}
+              onClick={() =>
+                setIsMobileCollectionsOpen(!isMobileCollectionsOpen)
+              }
               className="w-full text-left py-3 px-2 text-foreground hover:text-accent hover:bg-secondary/50 rounded-lg transition-all duration-300 font-roboto text-sm font-medium flex items-center justify-between"
             >
               Collections
@@ -231,7 +236,10 @@ export function Header() {
       </div>
 
       {/* Search Overlay */}
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
     </header>
   );
 }

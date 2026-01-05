@@ -40,7 +40,7 @@ export default function Contact() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -81,7 +81,9 @@ export default function Contact() {
 
       const data = await response.json();
 
-      toast.success("Message envoyé avec succès ! Nous vous répondrons bientôt.");
+      toast.success(
+        "Message envoyé avec succès ! Nous vous répondrons bientôt.",
+      );
       setFormData({
         name: "",
         email: "",
@@ -117,9 +119,7 @@ export default function Contact() {
               <div className="flex justify-center mb-4">
                 <Mail className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="font-futura font-bold text-primary mb-2">
-                Email
-              </h3>
+              <h3 className="font-futura font-bold text-primary mb-2">Email</h3>
               <p className="text-muted-foreground font-roboto text-sm">
                 contact@luxence.fr
               </p>

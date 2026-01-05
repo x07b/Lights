@@ -109,7 +109,7 @@ export const getOrderByPanierCode: RequestHandler = (req, res) => {
   const { panierCode } = req.params;
 
   const order = orders.find(
-    (o) => o.panierCode.toUpperCase() === panierCode.toUpperCase()
+    (o) => o.panierCode.toUpperCase() === panierCode.toUpperCase(),
   );
 
   if (!order) {
@@ -161,7 +161,7 @@ export const searchOrders: RequestHandler = (req, res) => {
       order.panierCode.toLowerCase().includes(searchTerm) ||
       order.customer.name.toLowerCase().includes(searchTerm) ||
       order.customer.email.toLowerCase().includes(searchTerm) ||
-      order.customer.phone.includes(searchTerm)
+      order.customer.phone.includes(searchTerm),
   );
 
   res.status(200).json({

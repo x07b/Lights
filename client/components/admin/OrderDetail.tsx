@@ -44,7 +44,7 @@ export default function OrderDetail({
   };
 
   const getStatusColor = (
-    status: "en attente" | "en cours" | "livré" | "annulé"
+    status: "en attente" | "en cours" | "livré" | "annulé",
   ) => {
     switch (status) {
       case "en attente":
@@ -109,7 +109,7 @@ export default function OrderDetail({
               </p>
               <div
                 className={`px-6 py-2 rounded-lg font-semibold text-white text-sm ${getStatusColor(
-                  order.status
+                  order.status,
                 )}`}
               >
                 {order.status}
@@ -204,7 +204,10 @@ export default function OrderDetail({
 
           <div className="space-y-3 border border-border rounded-lg p-6 bg-secondary/50">
             {order.items.map((item, index) => (
-              <div key={item.id} className="pb-3 border-b border-border last:border-0 last:pb-0">
+              <div
+                key={item.id}
+                className="pb-3 border-b border-border last:border-0 last:pb-0"
+              >
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <div>
                     <p className="font-semibold text-foreground">{item.name}</p>
@@ -234,7 +237,9 @@ export default function OrderDetail({
 
           <div className="space-y-4 mb-6 text-right">
             <div className="flex justify-end gap-6">
-              <span className="text-muted-foreground font-roboto">Sous-total:</span>
+              <span className="text-muted-foreground font-roboto">
+                Sous-total:
+              </span>
               <span className="font-semibold text-foreground min-w-32">
                 {order.total.toFixed(2)} TND
               </span>
@@ -243,7 +248,9 @@ export default function OrderDetail({
               <span className="text-muted-foreground font-roboto">
                 Frais de port:
               </span>
-              <span className="font-semibold text-accent min-w-32">Gratuit</span>
+              <span className="font-semibold text-accent min-w-32">
+                Gratuit
+              </span>
             </div>
             <div className="flex justify-end gap-6 pt-4 border-t border-border">
               <span className="text-lg font-futura font-bold text-primary">

@@ -8,10 +8,7 @@ const contactFormSchema = z.object({
     .trim()
     .min(2, "Le nom doit contenir au moins 2 caractères")
     .max(100, "Le nom ne doit pas dépasser 100 caractères"),
-  email: z
-    .string()
-    .trim()
-    .email("L'adresse email n'est pas valide"),
+  email: z.string().trim().email("L'adresse email n'est pas valide"),
   subject: z
     .string()
     .trim()
@@ -88,7 +85,11 @@ async function sendEmail(data: {
   message: string;
 }): Promise<void> {
   // Check if email service is configured
-  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+  if (
+    !process.env.SMTP_HOST ||
+    !process.env.SMTP_USER ||
+    !process.env.SMTP_PASS
+  ) {
     console.log("Email service not configured, message stored in system");
     return;
   }

@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, Eye, Filter } from "lucide-react";
 import OrderDetail from "./OrderDetail";
@@ -59,7 +65,9 @@ export default function OrdersManager() {
     }
 
     try {
-      const response = await fetch(`/api/orders/search?query=${encodeURIComponent(searchQuery)}`);
+      const response = await fetch(
+        `/api/orders/search?query=${encodeURIComponent(searchQuery)}`,
+      );
       const data = await response.json();
       setOrders(data.results || []);
     } catch (error) {
@@ -84,7 +92,7 @@ export default function OrdersManager() {
   };
 
   const filteredOrders = orders.filter(
-    (order) => statusFilter === "all" || order.status === statusFilter
+    (order) => statusFilter === "all" || order.status === statusFilter,
   );
 
   if (loading) {
@@ -209,7 +217,9 @@ export default function OrdersManager() {
         {filteredOrders.length === 0 ? (
           <Card>
             <CardContent className="pt-6 text-center">
-              <p className="text-muted-foreground mb-4">Aucune commande trouvée</p>
+              <p className="text-muted-foreground mb-4">
+                Aucune commande trouvée
+              </p>
             </CardContent>
           </Card>
         ) : (
@@ -266,7 +276,10 @@ export default function OrdersManager() {
                       </p>
                       <ul className="space-y-1">
                         {order.items.map((item) => (
-                          <li key={item.id} className="flex justify-between text-sm">
+                          <li
+                            key={item.id}
+                            className="flex justify-between text-sm"
+                          >
                             <span className="text-foreground">
                               {item.name} x {item.quantity}
                             </span>
@@ -280,8 +293,13 @@ export default function OrdersManager() {
 
                     {/* Timestamps */}
                     <div className="flex gap-6 text-xs text-muted-foreground">
-                      <span>Créée: {new Date(order.createdAt).toLocaleDateString()}</span>
-                      <span>Mise à jour: {new Date(order.updatedAt).toLocaleDateString()}</span>
+                      <span>
+                        Créée: {new Date(order.createdAt).toLocaleDateString()}
+                      </span>
+                      <span>
+                        Mise à jour:{" "}
+                        {new Date(order.updatedAt).toLocaleDateString()}
+                      </span>
                     </div>
                   </div>
 
@@ -320,7 +338,9 @@ export default function OrdersManager() {
                     {order.status !== "livré" && order.status !== "annulé" && (
                       <select
                         value={order.status}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                        onChange={(e) =>
+                          handleStatusChange(order.id, e.target.value)
+                        }
                         className="px-3 py-2 border border-border rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent"
                       >
                         <option value="en attente">En attente</option>

@@ -116,7 +116,7 @@ export default function Checkout() {
     } catch (error) {
       console.error("Error creating order:", error);
       toast.error(
-        "Une erreur est survenue lors de la création de la commande."
+        "Une erreur est survenue lors de la création de la commande.",
       );
     } finally {
       setIsLoading(false);

@@ -61,14 +61,14 @@ export function ProductCard({
   const handlePrevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === 0 ? productImages.length - 1 : prev - 1
+      prev === 0 ? productImages.length - 1 : prev - 1,
     );
   };
 
   const handleNextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentImageIndex((prev) =>
-      prev === productImages.length - 1 ? 0 : prev + 1
+      prev === productImages.length - 1 ? 0 : prev + 1,
     );
   };
 

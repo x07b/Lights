@@ -54,7 +54,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
       (product) =>
         product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
+        product.category.toLowerCase().includes(query),
     );
 
     // Simulate network delay for better UX
@@ -177,7 +177,11 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
         {/* Footer Hint */}
         <div className="border-t border-border bg-secondary/50 px-4 md:px-6 py-3 text-xs text-muted-foreground text-center">
-          Appuyez sur <kbd className="px-2 py-1 bg-white border border-border rounded">Esc</kbd> pour fermer
+          Appuyez sur{" "}
+          <kbd className="px-2 py-1 bg-white border border-border rounded">
+            Esc
+          </kbd>{" "}
+          pour fermer
         </div>
       </div>
     </div>

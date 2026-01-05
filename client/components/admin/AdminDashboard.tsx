@@ -60,10 +60,10 @@ export default function AdminDashboard() {
       const totalOrders = orders.length;
       const totalRevenue = orders.reduce(
         (sum: number, order: any) => sum + order.total,
-        0
+        0,
       );
       const uniqueCustomers = new Set(
-        orders.map((order: any) => order.customer.email)
+        orders.map((order: any) => order.customer.email),
       ).size;
       const totalProducts = products.length;
 
@@ -104,7 +104,9 @@ export default function AdminDashboard() {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Chargement du tableau de bord...</div>;
+    return (
+      <div className="text-center py-8">Chargement du tableau de bord...</div>
+    );
   }
 
   const getStatusColor = (status: string) => {
@@ -137,7 +139,9 @@ export default function AdminDashboard() {
         {/* Total Orders */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Commandes Totales</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Commandes Totales
+            </CardTitle>
             <ShoppingCart className="h-4 w-4 text-accent" />
           </CardHeader>
           <CardContent>
@@ -162,14 +166,18 @@ export default function AdminDashboard() {
             <div className="text-2xl font-bold text-foreground">
               {stats.totalRevenue.toFixed(2)}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">Tunisian Dinars</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Tunisian Dinars
+            </p>
           </CardContent>
         </Card>
 
         {/* Unique Customers */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Clients Uniques</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Clients Uniques
+            </CardTitle>
             <Users className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
@@ -270,7 +278,10 @@ export default function AdminDashboard() {
             ) : (
               <div className="space-y-3">
                 {stats.recentOrders.map((order, index) => (
-                  <div key={index} className="flex items-start justify-between gap-3 pb-3 border-b border-border last:border-0 last:pb-0">
+                  <div
+                    key={index}
+                    className="flex items-start justify-between gap-3 pb-3 border-b border-border last:border-0 last:pb-0"
+                  >
                     <div>
                       <p className="text-sm font-semibold text-foreground">
                         {order.customerName}
@@ -288,7 +299,7 @@ export default function AdminDashboard() {
                       </p>
                       <span
                         className={`text-xs px-2 py-1 rounded font-semibold mt-1 inline-block ${getStatusColor(
-                          order.status
+                          order.status,
                         )}`}
                       >
                         {order.status}

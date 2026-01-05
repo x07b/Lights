@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Trash2, Edit2 } from "lucide-react";
+import { Plus, Trash2, Edit2, FileText } from "lucide-react";
 import ProductForm from "./ProductForm";
 
 interface Product {
@@ -13,6 +13,8 @@ interface Product {
   category: string;
   collectionId: string;
   slug: string;
+  pdfFile?: string | null;
+  pdfFilename?: string | null;
   specifications: Array<{ label: string; value: string }>;
 }
 
@@ -152,6 +154,12 @@ export default function ProductsManager() {
                         <span className="text-xs bg-secondary px-2 py-1 rounded">
                           {product.images.length} image(s)
                         </span>
+                        {product.pdfFile && (
+                          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded flex items-center gap-1">
+                            <FileText className="w-3 h-3" />
+                            PDF
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

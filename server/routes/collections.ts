@@ -19,7 +19,7 @@ function dbCollectionToApi(dbCollection: any): Collection {
   };
 }
 
-export const getCollections: RequestHandler = async (_req, res) => {
+export async function getCollections(_req: any, res: any) {
   try {
     const { data: collections, error } = await supabase
       .from("collections")
@@ -34,9 +34,9 @@ export const getCollections: RequestHandler = async (_req, res) => {
     console.error("Error fetching collections:", error);
     res.status(500).json({ error: "Failed to fetch collections" });
   }
-};
+}
 
-export const getCollectionById: RequestHandler = async (req, res) => {
+export async function getCollectionById(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -65,9 +65,9 @@ export const getCollectionById: RequestHandler = async (req, res) => {
     console.error("Error fetching collection:", error);
     res.status(500).json({ error: "Failed to fetch collection" });
   }
-};
+}
 
-export const createCollection: RequestHandler = async (req, res) => {
+export async function createCollection(req: any, res: any) {
   try {
     const { name, description, image } = req.body;
 
@@ -119,9 +119,9 @@ export const createCollection: RequestHandler = async (req, res) => {
     }
     res.status(500).json({ error: "Failed to create collection" });
   }
-};
+}
 
-export const updateCollection: RequestHandler = async (req, res) => {
+export async function updateCollection(req: any, res: any) {
   try {
     const { id } = req.params;
     const { name, description, image } = req.body;
@@ -159,9 +159,9 @@ export const updateCollection: RequestHandler = async (req, res) => {
     console.error("Error updating collection:", error);
     res.status(500).json({ error: "Failed to update collection" });
   }
-};
+}
 
-export const deleteCollection: RequestHandler = async (req, res) => {
+export async function deleteCollection(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -205,4 +205,4 @@ export const deleteCollection: RequestHandler = async (req, res) => {
     console.error("Error deleting collection:", error);
     res.status(500).json({ error: "Failed to delete collection" });
   }
-};
+}

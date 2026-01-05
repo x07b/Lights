@@ -49,13 +49,16 @@ export const handleContact: RequestHandler = async (req, res) => {
     contactMessages.push(message);
 
     // Try to send email if SMTP is configured
-    await sendEmail(validatedData);
+    const emailSent = await sendEmail(validatedData);
 
-    // Return success response
+    // Return success response with email delivery status
     res.status(200).json({
       success: true,
-      message: "Message envoyé avec succès",
+      message: emailSent
+        ? "Message envoyé avec succès et email notification reçue"
+        : "Message reçu avec succès (email de notification en attente de configuration)",
       messageId: message.id,
+      emailSent: emailSent,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {

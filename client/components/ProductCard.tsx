@@ -1,6 +1,6 @@
-import { ShoppingCart, Eye } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useCart } from "../hooks/useCart";
 
@@ -40,8 +40,7 @@ export function ProductCard({
     setTimeout(() => setIsAdded(false), 2000);
   };
 
-  const handleViewProduct = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCardClick = () => {
     if (slug) {
       navigate(`/product/${slug}`);
     }

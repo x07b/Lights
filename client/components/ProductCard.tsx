@@ -28,6 +28,7 @@ export function ProductCard({
   const [isAdded, setIsAdded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop
   const productImages = images.length > 0 ? images : image ? [image] : [];
@@ -35,8 +36,20 @@ export function ProductCard({
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
+    try {
+      addItem({
+        id,
+        name,
+        price,
+        quantity: 1,
+        slug: slug || id,
+      });
+      setIsAdded(true);
+      toast.success(`${name} ajouté au panier`);
+      setTimeout(() => setIsAdded(false), 2000);
+    } catch (error) {
+      toast.error("Erreur lors de l'ajout au panier");
+    }
   };
 
   const handleViewProduct = (e: React.MouseEvent) => {

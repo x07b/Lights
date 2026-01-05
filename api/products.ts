@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
+import { parseBody, wrapResponse, setupCORS, parseQueryString } from "./helpers";
 import {
   getProducts,
   getProductById,
@@ -14,28 +15,29 @@ export const config = {
 };
 
 export default async (
-  req: IncomingMessage & { query?: Record<string, any>; body?: any },
+  req: IncomingMessage & { query?: Record<string, any>; body?: any; params?: Record<string, any> },
   res: ServerResponse
 ) => {
+  // Wrap response with Express-style methods
+  const wrappedRes = wrapResponse(res);
+
   // Enable CORS
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-CSRF-Token,X-Forwarded-Host,X-URL-Scheme,x-middleware-preflight,Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,X-Api-Version"
-  );
+  setupCORS(res);
 
   if (req.method === "OPTIONS") {
-    res.status(200).end();
+    res.statusCode = 200;
+    res.end();
     return;
   }
 
   try {
+    // Parse request body
+    req.body = await parseBody(req);
+
+    // Parse query string
+    req.query = parseQueryString(req);
     const { id, action } = req.query;
+    req.params = {};
 
     // Route based on method and path
     if (req.method === "GET") {

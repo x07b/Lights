@@ -81,9 +81,12 @@ export default function Contact() {
 
       const data = await response.json();
 
-      toast.success(
-        "Message envoyé avec succès ! Nous vous répondrons bientôt.",
-      );
+      // Show appropriate success message based on email delivery status
+      const successMessage = data.emailSent
+        ? "Message envoyé avec succès ! Nous vous répondrons bientôt."
+        : "Message reçu ! Nous le traiterons dès que possible.";
+
+      toast.success(successMessage);
       setFormData({
         name: "",
         email: "",

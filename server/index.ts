@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import path from "path";
+import { supabase } from "./lib/supabase";
 import { handleDemo } from "./routes/demo";
 import { uploadFile } from "./routes/upload";
 import {

@@ -10,7 +10,7 @@ export function createCollection(
   name: string,
   description: string,
   image: string,
-  slug: string
+  slug: string,
 ): Collection {
   const collection: Collection = {
     id: `collection-${Date.now()}`,
@@ -51,7 +51,7 @@ export function getCollectionBySlug(slug: string): Collection | undefined {
  */
 export function updateCollection(
   id: string,
-  data: Partial<Omit<Collection, "id" | "createdAt">>
+  data: Partial<Omit<Collection, "id" | "createdAt">>,
 ): Collection | undefined {
   const collection = collections.find((c) => c.id === id);
   if (collection) {

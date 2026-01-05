@@ -21,7 +21,7 @@ export default function AdminSearch() {
 
     try {
       const response = await fetch(
-        `/api/admin/orders/search?query=${encodeURIComponent(searchQuery)}`
+        `/api/admin/orders/search?query=${encodeURIComponent(searchQuery)}`,
       );
       const data = await response.json();
 
@@ -96,7 +96,7 @@ export default function AdminSearch() {
                           setExpandedOrder(
                             expandedOrder === order.panierCode
                               ? null
-                              : order.panierCode
+                              : order.panierCode,
                           )
                         }
                         className="w-full p-6 hover:bg-secondary transition text-left"
@@ -171,7 +171,9 @@ export default function AdminSearch() {
                                   </p>
                                 </div>
                                 <p className="font-futura font-bold text-accent">
-                                  {(product.price * product.quantity).toFixed(2)}{" "}
+                                  {(product.price * product.quantity).toFixed(
+                                    2,
+                                  )}{" "}
                                   TND
                                 </p>
                               </div>
@@ -217,7 +219,7 @@ export default function AdminSearch() {
                                     day: "numeric",
                                     hour: "2-digit",
                                     minute: "2-digit",
-                                  }
+                                  },
                                 )}
                               </p>
                             </div>

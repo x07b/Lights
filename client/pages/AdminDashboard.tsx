@@ -65,10 +65,26 @@ export default function AdminDashboard() {
   ];
 
   const statusData = [
-    { name: "En attente", value: stats.orders.filter((o) => o.status === "pending").length, fill: "#FF9500" },
-    { name: "Confirmée", value: stats.orders.filter((o) => o.status === "confirmed").length, fill: "#00B060" },
-    { name: "Expédiée", value: stats.orders.filter((o) => o.status === "shipped").length, fill: "#0066FF" },
-    { name: "Livrée", value: stats.orders.filter((o) => o.status === "delivered").length, fill: "#9933FF" },
+    {
+      name: "En attente",
+      value: stats.orders.filter((o) => o.status === "pending").length,
+      fill: "#FF9500",
+    },
+    {
+      name: "Confirmée",
+      value: stats.orders.filter((o) => o.status === "confirmed").length,
+      fill: "#00B060",
+    },
+    {
+      name: "Expédiée",
+      value: stats.orders.filter((o) => o.status === "shipped").length,
+      fill: "#0066FF",
+    },
+    {
+      name: "Livrée",
+      value: stats.orders.filter((o) => o.status === "delivered").length,
+      fill: "#9933FF",
+    },
   ].filter((item) => item.value > 0);
 
   return (
@@ -260,7 +276,9 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td className="py-3 px-4 font-roboto text-sm text-muted-foreground">
-                          {new Date(order.createdAt).toLocaleDateString("fr-FR")}
+                          {new Date(order.createdAt).toLocaleDateString(
+                            "fr-FR",
+                          )}
                         </td>
                       </tr>
                     ))}

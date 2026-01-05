@@ -38,7 +38,7 @@ const collectionSchema = z.object({
     .max(100, "Le slug ne peut pas dépasser 100 caractères")
     .regex(
       /^[a-z0-9-]+$/,
-      "Le slug ne peut contenir que des lettres minuscules, des chiffres et des tirets"
+      "Le slug ne peut contenir que des lettres minuscules, des chiffres et des tirets",
     ),
 });
 
@@ -104,7 +104,7 @@ export default function AdminCollections() {
         toast.success(
           editingId
             ? "Collection modifiée avec succès!"
-            : "Collection créée avec succès!"
+            : "Collection créée avec succès!",
         );
         form.reset();
         setEditingId(null);

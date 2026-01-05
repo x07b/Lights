@@ -45,7 +45,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
         return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i,
         );
       }
       return [...prevItems, { ...item, quantity: 1 }];
@@ -62,9 +62,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      prevItems.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
   };
 
@@ -74,7 +72,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalPrice = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);

@@ -15,10 +15,7 @@ const contactFormSchema = z.object({
     .string()
     .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number")
     .min(10, "Phone number too short"),
-  subject: z
-    .string()
-    .min(3, "Subject too short")
-    .max(200, "Subject too long"),
+  subject: z.string().min(3, "Subject too short").max(200, "Subject too long"),
   message: z
     .string()
     .min(10, "Message too short")
@@ -37,7 +34,7 @@ function createTransporter() {
 
   if (!emailUser || !emailPassword) {
     console.warn(
-      "Email credentials not configured. Set EMAIL_USER and EMAIL_APP_PASSWORD environment variables."
+      "Email credentials not configured. Set EMAIL_USER and EMAIL_APP_PASSWORD environment variables.",
     );
     return null;
   }
@@ -69,7 +66,8 @@ export const handleSendEmail: RequestHandler = async (req, res) => {
     if (!validationResult.success) {
       return res.status(400).json({
         success: false,
-        message: "Validation failed: " + validationResult.error.errors[0].message,
+        message:
+          "Validation failed: " + validationResult.error.errors[0].message,
       } as ContactFormResponse);
     }
 
@@ -122,7 +120,8 @@ export const handleSendEmail: RequestHandler = async (req, res) => {
     console.error("Error sending email:", error);
     return res.status(500).json({
       success: false,
-      message: "An error occurred while sending the email. Please try again later.",
+      message:
+        "An error occurred while sending the email. Please try again later.",
     } as ContactFormResponse);
   }
 };

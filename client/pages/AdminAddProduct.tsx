@@ -42,7 +42,7 @@ const productSchema = z.object({
     .max(100, "Le slug ne peut pas dépasser 100 caractères")
     .regex(
       /^[a-z0-9-]+$/,
-      "Le slug ne peut contenir que des lettres minuscules, des chiffres et des tirets"
+      "Le slug ne peut contenir que des lettres minuscules, des chiffres et des tirets",
     ),
 });
 
@@ -261,7 +261,9 @@ export default function AdminAddProduct() {
                       {isSubmitting && (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       )}
-                      {isSubmitting ? "Ajout en cours..." : "Ajouter le produit"}
+                      {isSubmitting
+                        ? "Ajout en cours..."
+                        : "Ajouter le produit"}
                     </Button>
                   </form>
                 </Form>

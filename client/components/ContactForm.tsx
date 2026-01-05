@@ -30,10 +30,7 @@ const contactFormSchema = z.object({
     .max(255, "L'email ne peut pas dépasser 255 caractères"),
   phone: z
     .string()
-    .regex(
-      /^[\d\s\-\+\(\)]+$/,
-      "Veuillez entrer un numéro de téléphone valide"
-    )
+    .regex(/^[\d\s\-\+\(\)]+$/, "Veuillez entrer un numéro de téléphone valide")
     .min(10, "Le numéro de téléphone doit contenir au moins 10 caractères"),
   subject: z
     .string()

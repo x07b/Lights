@@ -37,7 +37,7 @@ export function ProductSearchOverlay({
     const filtered = products.filter(
       (product) =>
         product.name.toLowerCase().includes(query) ||
-        product.category?.toLowerCase().includes(query)
+        product.category?.toLowerCase().includes(query),
     );
 
     setResults(filtered);

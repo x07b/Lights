@@ -10,10 +10,7 @@ import {
 import { Collection } from "@shared/api";
 
 const collectionSchema = z.object({
-  name: z
-    .string()
-    .min(2, "Invalid name")
-    .max(100, "Name too long"),
+  name: z.string().min(2, "Invalid name").max(100, "Name too long"),
   description: z
     .string()
     .min(10, "Invalid description")
@@ -55,7 +52,8 @@ export const handleCreateCollection: RequestHandler = (req, res) => {
     if (!validationResult.success) {
       return res.status(400).json({
         success: false,
-        message: "Validation failed: " + validationResult.error.errors[0].message,
+        message:
+          "Validation failed: " + validationResult.error.errors[0].message,
       });
     }
 
@@ -72,7 +70,7 @@ export const handleCreateCollection: RequestHandler = (req, res) => {
       sanitizedData.name,
       sanitizedData.description,
       sanitizedData.image,
-      sanitizedData.slug
+      sanitizedData.slug,
     );
 
     res.status(201).json({
@@ -138,7 +136,8 @@ export const handleUpdateCollection: RequestHandler = (req, res) => {
     if (!validationResult.success) {
       return res.status(400).json({
         success: false,
-        message: "Validation failed: " + validationResult.error.errors[0].message,
+        message:
+          "Validation failed: " + validationResult.error.errors[0].message,
       });
     }
 
@@ -146,7 +145,8 @@ export const handleUpdateCollection: RequestHandler = (req, res) => {
 
     const sanitizedData: Partial<Omit<Collection, "id" | "createdAt">> = {};
     if (data.name) sanitizedData.name = sanitizeInput(data.name);
-    if (data.description) sanitizedData.description = sanitizeInput(data.description);
+    if (data.description)
+      sanitizedData.description = sanitizeInput(data.description);
     if (data.image) sanitizedData.image = sanitizeInput(data.image);
     if (data.slug) sanitizedData.slug = sanitizeInput(data.slug);
 

@@ -35,7 +35,9 @@ export function AdminSidebar() {
           alt="Luxence Logo"
           className="h-12 object-contain mb-3"
         />
-        <p className="text-xs opacity-80 font-roboto text-center">Admin Panel</p>
+        <p className="text-xs opacity-80 font-roboto text-center">
+          Admin Panel
+        </p>
       </div>
 
       <nav className="flex-1 space-y-2">

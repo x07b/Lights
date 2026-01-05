@@ -83,7 +83,8 @@ export default function Checkout() {
                 Commande confirmée !
               </h1>
               <p className="text-lg text-muted-foreground mb-8 font-roboto">
-                Merci pour votre achat. Votre commande a été reçue et nous allons vous appeler pour la vérification.
+                Merci pour votre achat. Votre commande a été reçue et nous
+                allons vous appeler pour la vérification.
               </p>
 
               <div className="bg-secondary rounded-lg p-8 mb-8">
@@ -106,7 +107,8 @@ export default function Checkout() {
                       Support client
                     </h3>
                     <p className="text-blue-800 font-roboto">
-                      Appelez-nous pour confirmer votre commande et les détails de livraison :
+                      Appelez-nous pour confirmer votre commande et les détails
+                      de livraison :
                     </p>
                     <p className="text-2xl font-futura font-bold text-blue-600 mt-2">
                       +33 (0) 1 23 45 67 89
@@ -156,7 +158,9 @@ export default function Checkout() {
         clearCart();
         toast.success("Commande créée avec succès!");
       } else {
-        toast.error(data.message || "Erreur lors de la création de la commande");
+        toast.error(
+          data.message || "Erreur lors de la création de la commande",
+        );
       }
     } catch (error) {
       console.error("Error creating order:", error);

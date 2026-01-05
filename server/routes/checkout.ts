@@ -22,7 +22,7 @@ const checkoutSchema = z.object({
         name: z.string().min(1, "Invalid product name"),
         price: z.number().positive("Invalid price"),
         quantity: z.number().int().positive("Invalid quantity"),
-      })
+      }),
     )
     .min(1, "Cart cannot be empty"),
 });
@@ -31,10 +31,7 @@ const checkoutSchema = z.object({
  * Sanitizes user input to prevent injection attacks
  */
 function sanitizeInput(input: string): string {
-  return input
-    .trim()
-    .replace(/[<>]/g, "")
-    .substring(0, 500);
+  return input.trim().replace(/[<>]/g, "").substring(0, 500);
 }
 
 export const handleCheckout: RequestHandler = async (req, res) => {
@@ -47,8 +44,7 @@ export const handleCheckout: RequestHandler = async (req, res) => {
         success: false,
         panierCode: "",
         message:
-          "Validation failed: " +
-          validationResult.error.errors[0].message,
+          "Validation failed: " + validationResult.error.errors[0].message,
       } as CheckoutResponse);
     }
 
@@ -70,7 +66,7 @@ export const handleCheckout: RequestHandler = async (req, res) => {
       sanitizedData.customerName,
       sanitizedData.email,
       sanitizedData.phone,
-      data.cartItems
+      data.cartItems,
     );
 
     // Log order for debugging (in production, would send to email/database)

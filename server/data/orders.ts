@@ -28,11 +28,11 @@ export function createOrder(
     name: string;
     price: number;
     quantity: number;
-  }[]
+  }[],
 ): Order {
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const order: Order = {
@@ -67,7 +67,7 @@ export function searchOrders(query: string): Order[] {
       order.panierCode.toLowerCase().includes(lowerQuery) ||
       order.customerName.toLowerCase().includes(lowerQuery) ||
       order.email.toLowerCase().includes(lowerQuery) ||
-      order.phone.includes(query)
+      order.phone.includes(query),
   );
 }
 
@@ -83,7 +83,7 @@ export function getAllOrders(): Order[] {
  */
 export function updateOrderStatus(
   panierCode: string,
-  status: Order["status"]
+  status: Order["status"],
 ): Order | undefined {
   const order = orders.find((o) => o.panierCode === panierCode);
   if (order) {

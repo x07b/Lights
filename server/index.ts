@@ -25,6 +25,15 @@ import {
   getContactMessages,
   markMessageAsRead,
 } from "./routes/contact";
+import {
+  createOrder,
+  getOrders,
+  getOrderByPanierCode,
+  getOrderById,
+  searchOrders,
+  updateOrderStatus,
+  getOrdersByStatus,
+} from "./routes/orders";
 
 export function createServer() {
   const app = express();

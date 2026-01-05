@@ -82,7 +82,7 @@ export async function handleContact(req: any, res: any) {
       message: "Une erreur est survenue lors de l'envoi du message",
     });
   }
-};
+}
 
 // Email sending function
 async function sendEmail(data: {
@@ -217,4 +217,4 @@ export async function markMessageAsRead(req: any, res: any) {
       message: "Failed to mark message as read",
     });
   }
-};
+}

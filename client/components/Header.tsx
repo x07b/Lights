@@ -40,13 +40,7 @@ export function Header() {
               Produits
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link
-              to="/collections"
-              className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"
-            >
-              Collections
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
-            </Link>
+            <CollectionsDropdown />
             <Link
               to="/about"
               className="text-foreground hover:text-accent relative font-roboto text-sm font-medium transition-colors duration-300 group"

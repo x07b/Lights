@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { supabase } from "../lib/supabase";
 
 interface Specification {
@@ -28,11 +27,15 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     name: dbProduct.name,
     description: dbProduct.description,
     price: parseFloat(dbProduct.price),
-    images: images.map((img) => img.image_url).sort((a, b) => {
-      const aIndex = images.find((img) => img.image_url === a)?.order_index || 0;
-      const bIndex = images.find((img) => img.image_url === b)?.order_index || 0;
-      return aIndex - bIndex;
-    }),
+    images: images
+      .map((img) => img.image_url)
+      .sort((a, b) => {
+        const aIndex =
+          images.find((img) => img.image_url === a)?.order_index || 0;
+        const bIndex =
+          images.find((img) => img.image_url === b)?.order_index || 0;
+        return aIndex - bIndex;
+      }),
     category: dbProduct.category,
     slug: dbProduct.slug,
     pdfFile: dbProduct.pdf_file || null,
@@ -43,7 +46,7 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
   };
 }
 
-export const getProducts: RequestHandler = async (_req, res) => {
+export async function getProducts(_req: any, res: any) {
   try {
     // Fetch all products
     const { data: products, error: productsError } = await supabase
@@ -95,8 +98,8 @@ export const getProducts: RequestHandler = async (_req, res) => {
       dbProductToApi(
         product,
         imagesByProduct.get(product.id) || [],
-        specsByProduct.get(product.id) || []
-      )
+        specsByProduct.get(product.id) || [],
+      ),
     );
 
     res.json(productsWithRelations);
@@ -104,9 +107,9 @@ export const getProducts: RequestHandler = async (_req, res) => {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Failed to fetch products" });
   }
-};
+}
 
-export const getProductById: RequestHandler = async (req, res) => {
+export async function getProductById(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -141,7 +144,7 @@ export const getProductById: RequestHandler = async (req, res) => {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -149,9 +152,9 @@ export const getProductById: RequestHandler = async (req, res) => {
     console.error("Error fetching product:", error);
     res.status(500).json({ error: "Failed to fetch product" });
   }
-};
+}
 
-export const createProduct: RequestHandler = async (req, res) => {
+export async function createProduct(req: any, res: any) {
   try {
     const {
       name,
@@ -166,7 +169,12 @@ export const createProduct: RequestHandler = async (req, res) => {
     } = req.body;
 
     if (!name || !description || price === undefined) {
-      res.status(400).json({ error: "Missing required fields: name, description, and price are required" });
+      res
+        .status(400)
+        .json({
+          error:
+            "Missing required fields: name, description, and price are required",
+        });
       return;
     }
 
@@ -223,7 +231,12 @@ export const createProduct: RequestHandler = async (req, res) => {
     ) {
       const specRecords = specifications
         .filter(
-          (spec: any) => spec && spec.label && spec.value && spec.label.trim() && spec.value.trim()
+          (spec: any) =>
+            spec &&
+            spec.label &&
+            spec.value &&
+            spec.label.trim() &&
+            spec.value.trim(),
         )
         .map((spec: any, index: number) => ({
           product_id: id,
@@ -258,7 +271,7 @@ export const createProduct: RequestHandler = async (req, res) => {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.status(201).json(productWithRelations);
@@ -266,9 +279,9 @@ export const createProduct: RequestHandler = async (req, res) => {
     console.error("Error creating product:", error);
     res.status(500).json({ error: "Failed to create product" });
   }
-};
+}
 
-export const updateProduct: RequestHandler = async (req, res) => {
+export async function updateProduct(req: any, res: any) {
   try {
     const { id } = req.params;
     const {
@@ -353,7 +366,11 @@ export const updateProduct: RequestHandler = async (req, res) => {
         const specRecords = specifications
           .filter(
             (spec: any) =>
-              spec && spec.label && spec.value && spec.label.trim() && spec.value.trim()
+              spec &&
+              spec.label &&
+              spec.value &&
+              spec.label.trim() &&
+              spec.value.trim(),
           )
           .map((spec: any, index: number) => ({
             product_id: id,
@@ -389,7 +406,7 @@ export const updateProduct: RequestHandler = async (req, res) => {
     const productWithRelations = dbProductToApi(
       product,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -397,9 +414,9 @@ export const updateProduct: RequestHandler = async (req, res) => {
     console.error("Error updating product:", error);
     res.status(500).json({ error: "Failed to update product" });
   }
-};
+}
 
-export const deleteProduct: RequestHandler = async (req, res) => {
+export async function deleteProduct(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -427,9 +444,9 @@ export const deleteProduct: RequestHandler = async (req, res) => {
     console.error("Error deleting product:", error);
     res.status(500).json({ error: "Failed to delete product" });
   }
-};
+}
 
-export const addProductImage: RequestHandler = async (req, res) => {
+export async function addProductImage(req: any, res: any) {
   try {
     const { id } = req.params;
     const { imageUrl } = req.body;
@@ -497,7 +514,7 @@ export const addProductImage: RequestHandler = async (req, res) => {
     const productWithRelations = dbProductToApi(
       productData,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -505,9 +522,9 @@ export const addProductImage: RequestHandler = async (req, res) => {
     console.error("Error adding product image:", error);
     res.status(500).json({ error: "Failed to add product image" });
   }
-};
+}
 
-export const removeProductImage: RequestHandler = async (req, res) => {
+export async function removeProductImage(req: any, res: any) {
   try {
     const { id } = req.params;
     const { imageUrl } = req.body;
@@ -549,7 +566,7 @@ export const removeProductImage: RequestHandler = async (req, res) => {
     const productWithRelations = dbProductToApi(
       productData,
       imagesResult.data || [],
-      specsResult.data || []
+      specsResult.data || [],
     );
 
     res.json(productWithRelations);
@@ -557,4 +574,4 @@ export const removeProductImage: RequestHandler = async (req, res) => {
     console.error("Error removing product image:", error);
     res.status(500).json({ error: "Failed to remove product image" });
   }
-};
+}

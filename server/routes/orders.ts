@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { z } from "zod";
 import { supabase } from "../lib/supabase";
 
@@ -81,7 +80,7 @@ function generatePanierCode(): string {
 }
 
 // Create order
-export const createOrder: RequestHandler = async (req, res) => {
+export async function createOrder(req: any, res: any) {
   try {
     // Validate request body
     const validatedData = createOrderSchema.parse(req.body);
@@ -152,10 +151,10 @@ export const createOrder: RequestHandler = async (req, res) => {
       message: "Une erreur est survenue lors de la création de la commande",
     });
   }
-};
+}
 
 // Get all orders (admin only)
-export const getOrders: RequestHandler = async (req, res) => {
+export async function getOrders(req: any, res: any) {
   try {
     const { data: orders, error } = await supabase
       .from("orders")
@@ -165,7 +164,7 @@ export const getOrders: RequestHandler = async (req, res) => {
     if (error) throw error;
 
     const apiOrders = await Promise.all(
-      (orders || []).map((order) => dbOrderToApi(order))
+      (orders || []).map((order) => dbOrderToApi(order)),
     );
 
     res.status(200).json({
@@ -180,10 +179,10 @@ export const getOrders: RequestHandler = async (req, res) => {
       message: "Failed to fetch orders",
     });
   }
-};
+}
 
 // Get order by panier code
-export const getOrderByPanierCode: RequestHandler = async (req, res) => {
+export async function getOrderByPanierCode(req: any, res: any) {
   try {
     const { panierCode } = req.params;
 
@@ -213,10 +212,10 @@ export const getOrderByPanierCode: RequestHandler = async (req, res) => {
       message: "Failed to fetch order",
     });
   }
-};
+}
 
 // Get order by ID
-export const getOrderById: RequestHandler = async (req, res) => {
+export async function getOrderById(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -246,10 +245,10 @@ export const getOrderById: RequestHandler = async (req, res) => {
       message: "Failed to fetch order",
     });
   }
-};
+}
 
 // Search orders by customer
-export const searchOrders: RequestHandler = async (req, res) => {
+export async function searchOrders(req: any, res: any) {
   try {
     const { query } = req.query;
 
@@ -264,32 +263,47 @@ export const searchOrders: RequestHandler = async (req, res) => {
 
     // Use multiple queries and combine results (Supabase doesn't support complex OR with ilike easily)
     const [panierRes, nameRes, emailRes, phoneRes] = await Promise.all([
-      supabase.from("orders").select("*").ilike("panier_code", `%${searchTerm}%`),
-      supabase.from("orders").select("*").ilike("customer_name", `%${searchTerm}%`),
-      supabase.from("orders").select("*").ilike("customer_email", `%${searchTerm}%`),
-      supabase.from("orders").select("*").ilike("customer_phone", `%${searchTerm}%`),
+      supabase
+        .from("orders")
+        .select("*")
+        .ilike("panier_code", `%${searchTerm}%`),
+      supabase
+        .from("orders")
+        .select("*")
+        .ilike("customer_name", `%${searchTerm}%`),
+      supabase
+        .from("orders")
+        .select("*")
+        .ilike("customer_email", `%${searchTerm}%`),
+      supabase
+        .from("orders")
+        .select("*")
+        .ilike("customer_phone", `%${searchTerm}%`),
     ]);
 
     // Check for errors
-    const error = panierRes.error || nameRes.error || emailRes.error || phoneRes.error;
+    const error =
+      panierRes.error || nameRes.error || emailRes.error || phoneRes.error;
     if (error) throw error;
 
     // Combine unique orders
     const orderMap = new Map();
-    [panierRes.data, nameRes.data, emailRes.data, phoneRes.data].forEach((ordersList) => {
-      ordersList?.forEach((order) => {
-        if (!orderMap.has(order.id)) {
-          orderMap.set(order.id, order);
-        }
-      });
-    });
+    [panierRes.data, nameRes.data, emailRes.data, phoneRes.data].forEach(
+      (ordersList) => {
+        ordersList?.forEach((order) => {
+          if (!orderMap.has(order.id)) {
+            orderMap.set(order.id, order);
+          }
+        });
+      },
+    );
 
     const orders = Array.from(orderMap.values());
 
     if (error) throw error;
 
     const apiOrders = await Promise.all(
-      (orders || []).map((order) => dbOrderToApi(order))
+      (orders || []).map((order) => dbOrderToApi(order)),
     );
 
     res.status(200).json({
@@ -304,10 +318,10 @@ export const searchOrders: RequestHandler = async (req, res) => {
       message: "Failed to search orders",
     });
   }
-};
+}
 
 // Update order status
-export const updateOrderStatus: RequestHandler = async (req, res) => {
+export async function updateOrderStatus(req: any, res: any) {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -348,10 +362,10 @@ export const updateOrderStatus: RequestHandler = async (req, res) => {
       message: "Failed to update order status",
     });
   }
-};
+}
 
 // Get orders by status
-export const getOrdersByStatus: RequestHandler = async (req, res) => {
+export async function getOrdersByStatus(req: any, res: any) {
   try {
     const { status } = req.params;
 
@@ -372,7 +386,7 @@ export const getOrdersByStatus: RequestHandler = async (req, res) => {
     if (error) throw error;
 
     const apiOrders = await Promise.all(
-      (orders || []).map((order) => dbOrderToApi(order))
+      (orders || []).map((order) => dbOrderToApi(order)),
     );
 
     res.status(200).json({
@@ -387,10 +401,10 @@ export const getOrdersByStatus: RequestHandler = async (req, res) => {
       message: "Failed to fetch orders",
     });
   }
-};
+}
 
 // Update order (full update)
-export const updateOrder: RequestHandler = async (req, res) => {
+export async function updateOrder(req: any, res: any) {
   try {
     const { id } = req.params;
     const { customer, items, total, status } = req.body;
@@ -479,10 +493,10 @@ export const updateOrder: RequestHandler = async (req, res) => {
       message: "Failed to update order",
     });
   }
-};
+}
 
 // Delete order
-export const deleteOrder: RequestHandler = async (req, res) => {
+export async function deleteOrder(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -520,4 +534,4 @@ export const deleteOrder: RequestHandler = async (req, res) => {
       message: "Failed to delete order",
     });
   }
-};
+}

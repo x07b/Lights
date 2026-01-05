@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import { z } from "zod";
 import { supabase } from "../lib/supabase";
 
@@ -22,7 +21,7 @@ const contactFormSchema = z.object({
     .max(5000, "Le message ne doit pas dépasser 5000 caractères"),
 });
 
-export const handleContact: RequestHandler = async (req, res) => {
+export async function handleContact(req: any, res: any) {
   try {
     // Validate request body
     const validatedData = contactFormSchema.parse(req.body) as {
@@ -83,7 +82,7 @@ export const handleContact: RequestHandler = async (req, res) => {
       message: "Une erreur est survenue lors de l'envoi du message",
     });
   }
-};
+}
 
 // Email sending function
 async function sendEmail(data: {
@@ -106,7 +105,7 @@ async function sendEmail(data: {
     // Dynamically import nodemailer only when needed (optional dependency)
     // @ts-ignore - nodemailer is optional, type check disabled
     const nodemailer = await import("nodemailer").catch(() => null);
-    
+
     if (!nodemailer) {
       console.log("nodemailer not available, skipping email send");
       return false;
@@ -161,7 +160,7 @@ function escapeHtml(text: string): string {
 }
 
 // Get all contact messages (admin only)
-export const getContactMessages: RequestHandler = async (req, res) => {
+export async function getContactMessages(req: any, res: any) {
   try {
     const { data: messages, error } = await supabase
       .from("contact_messages")
@@ -186,10 +185,10 @@ export const getContactMessages: RequestHandler = async (req, res) => {
     console.error("Error fetching contact messages:", error);
     res.status(500).json({ error: "Failed to fetch contact messages" });
   }
-};
+}
 
 // Mark message as read
-export const markMessageAsRead: RequestHandler = async (req, res) => {
+export async function markMessageAsRead(req: any, res: any) {
   try {
     const { id } = req.params;
 
@@ -218,4 +217,4 @@ export const markMessageAsRead: RequestHandler = async (req, res) => {
       message: "Failed to mark message as read",
     });
   }
-};
+}

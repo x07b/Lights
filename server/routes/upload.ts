@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import fs from "fs";
 import path from "path";
 
@@ -10,7 +9,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
-export const uploadFile: RequestHandler = (req, res) => {
+export async function uploadFile(req: any, res: any) {
   // Handle file from fetch with FormData
   const contentType = req.get("content-type") || "";
 
@@ -72,4 +71,4 @@ export const uploadFile: RequestHandler = (req, res) => {
     console.error("Upload stream error:", error);
     res.status(500).json({ error: "Upload failed" });
   });
-};
+}

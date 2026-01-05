@@ -47,7 +47,10 @@ export function ProductCard({
   };
 
   return (
-    <div className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
+    <div
+      onClick={handleCardClick}
+      className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 cursor-pointer"
+    >
       {/* Image Container */}
       <div className="relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 p-8 flex items-center justify-center h-72">
         <img
@@ -69,17 +72,9 @@ export function ProductCard({
         )}
 
         {/* Title */}
-        {slug ? (
-          <Link to={`/product/${slug}`} className="group/title">
-            <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover/title:text-accent transition-colors duration-300 cursor-pointer">
-              {name}
-            </h3>
-          </Link>
-        ) : (
-          <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover:text-accent transition-colors duration-300">
-            {name}
-          </h3>
-        )}
+        <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover:text-accent transition-colors duration-300">
+          {name}
+        </h3>
 
         {/* Description */}
         <p className="text-sm text-muted-foreground font-roboto line-clamp-2 flex-grow leading-relaxed">
@@ -93,30 +88,19 @@ export function ProductCard({
           </span>
         </div>
 
-        {/* Action Icons */}
-        <div className="flex gap-3 pt-4 space-y-0">
-          {/* Add to Cart Icon Button */}
-          <button
-            onClick={handleAddToCart}
-            title={isAdded ? "Ajouté !" : "Ajouter au panier"}
-            className={`flex-1 py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center font-futura font-semibold ${
-              isAdded
-                ? "bg-accent/90 scale-95 text-white"
-                : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
-            }`}
-          >
-            <ShoppingCart className="w-5 h-5" />
-          </button>
-
-          {/* View Product Icon Button */}
-          <button
-            onClick={handleViewProduct}
-            title="Voir le produit"
-            className="flex-1 py-3 px-4 rounded-lg border-2 border-foreground text-foreground hover:bg-foreground hover:text-white transition-all duration-300 flex items-center justify-center font-futura font-semibold shadow-sm hover:shadow-md active:scale-95"
-          >
-            <Eye className="w-5 h-5" />
-          </button>
-        </div>
+        {/* Add to Cart Button */}
+        <button
+          onClick={handleAddToCart}
+          title={isAdded ? "Ajouté !" : "Ajouter au panier"}
+          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold ${
+            isAdded
+              ? "bg-accent/90 scale-95 text-white"
+              : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
+          }`}
+        >
+          <ShoppingCart className="w-5 h-5" />
+          {isAdded ? "Ajouté !" : "Ajouter au panier"}
+        </button>
       </div>
     </div>
   );

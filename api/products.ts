@@ -1,5 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { parseBody, wrapResponse, setupCORS, parseQueryString } from "./helpers";
+import {
+  parseBody,
+  wrapResponse,
+  setupCORS,
+  parseQueryString,
+} from "./helpers";
 import {
   getProducts,
   getProductById,
@@ -15,8 +20,12 @@ export const config = {
 };
 
 export default async (
-  req: IncomingMessage & { query?: Record<string, any>; body?: any; params?: Record<string, any> },
-  res: ServerResponse
+  req: IncomingMessage & {
+    query?: Record<string, any>;
+    body?: any;
+    params?: Record<string, any>;
+  },
+  res: ServerResponse,
 ) => {
   // Wrap response with Express-style methods
   const wrappedRes = wrapResponse(res);

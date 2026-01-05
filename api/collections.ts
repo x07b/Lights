@@ -1,5 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { parseBody, wrapResponse, setupCORS, parseQueryString } from "./helpers";
+import {
+  parseBody,
+  wrapResponse,
+  setupCORS,
+  parseQueryString,
+} from "./helpers";
 import {
   getCollections,
   getCollectionById,
@@ -13,8 +18,12 @@ export const config = {
 };
 
 export default async (
-  req: IncomingMessage & { query?: Record<string, any>; body?: any; params?: Record<string, any> },
-  res: ServerResponse
+  req: IncomingMessage & {
+    query?: Record<string, any>;
+    body?: any;
+    params?: Record<string, any>;
+  },
+  res: ServerResponse,
 ) => {
   // Wrap response with Express-style methods
   const wrappedRes = wrapResponse(res);
@@ -65,7 +74,9 @@ export default async (
         return updateCollection(req as any, wrappedRes as any);
       }
 
-      return wrappedRes.status(400).json({ error: "Collection ID is required" });
+      return wrappedRes
+        .status(400)
+        .json({ error: "Collection ID is required" });
     }
 
     if (req.method === "DELETE") {
@@ -75,7 +86,9 @@ export default async (
         return deleteCollection(req as any, wrappedRes as any);
       }
 
-      return wrappedRes.status(400).json({ error: "Collection ID is required" });
+      return wrappedRes
+        .status(400)
+        .json({ error: "Collection ID is required" });
     }
 
     return wrappedRes.status(405).json({ error: "Method not allowed" });

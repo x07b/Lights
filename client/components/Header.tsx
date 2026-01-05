@@ -129,7 +129,11 @@ export function Header() {
 
           {/* Icons */}
           <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 hover:bg-secondary rounded-lg transition-all duration-300 hover:shadow-md"
+              title="Rechercher (Ctrl+K)"
+            >
               <Search className="w-5 h-5 text-foreground hover:text-accent transition-colors duration-300" />
             </button>
             <button

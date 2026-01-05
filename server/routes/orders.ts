@@ -151,7 +151,7 @@ export async function createOrder(req: any, res: any) {
       message: "Une erreur est survenue lors de la création de la commande",
     });
   }
-};
+}
 
 // Get all orders (admin only)
 export async function getOrders(req: any, res: any) {
@@ -179,7 +179,7 @@ export async function getOrders(req: any, res: any) {
       message: "Failed to fetch orders",
     });
   }
-};
+}
 
 // Get order by panier code
 export async function getOrderByPanierCode(req: any, res: any) {
@@ -212,7 +212,7 @@ export async function getOrderByPanierCode(req: any, res: any) {
       message: "Failed to fetch order",
     });
   }
-};
+}
 
 // Get order by ID
 export async function getOrderById(req: any, res: any) {
@@ -245,7 +245,7 @@ export async function getOrderById(req: any, res: any) {
       message: "Failed to fetch order",
     });
   }
-};
+}
 
 // Search orders by customer
 export async function searchOrders(req: any, res: any) {
@@ -303,7 +303,7 @@ export async function searchOrders(req: any, res: any) {
       message: "Failed to search orders",
     });
   }
-};
+}
 
 // Update order status
 export async function updateOrderStatus(req: any, res: any) {
@@ -347,7 +347,7 @@ export async function updateOrderStatus(req: any, res: any) {
       message: "Failed to update order status",
     });
   }
-};
+}
 
 // Get orders by status
 export async function getOrdersByStatus(req: any, res: any) {
@@ -386,7 +386,7 @@ export async function getOrdersByStatus(req: any, res: any) {
       message: "Failed to fetch orders",
     });
   }
-};
+}
 
 // Update order (full update)
 export async function updateOrder(req: any, res: any) {
@@ -478,7 +478,7 @@ export async function updateOrder(req: any, res: any) {
       message: "Failed to update order",
     });
   }
-};
+}
 
 // Delete order
 export async function deleteOrder(req: any, res: any) {
@@ -519,4 +519,4 @@ export async function deleteOrder(req: any, res: any) {
       message: "Failed to delete order",
     });
   }
-};
+}

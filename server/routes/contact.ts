@@ -188,7 +188,7 @@ export async function getContactMessages(req: any, res: any) {
 };
 
 // Mark message as read
-export const markMessageAsRead: RequestHandler = async (req, res) => {
+export async function markMessageAsRead(req: any, res: any) {
   try {
     const { id } = req.params;
 

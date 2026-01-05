@@ -52,9 +52,12 @@ function wrapResponse(res: ServerResponse): any {
 }
 
 export default async (
-  req: IncomingMessage & { query?: Record<string, any>; body?: any },
+  req: IncomingMessage & { query?: Record<string, any>; body?: any; params?: Record<string, any> },
   res: ServerResponse
 ) => {
+  // Wrap response with Express-style methods
+  const wrappedRes = wrapResponse(res);
+
   // Enable CORS
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -85,6 +88,7 @@ export default async (
     const search = url.searchParams.get("search");
     const query = url.searchParams.get("query");
     req.query = { panierCode, id, status, search, query };
+    req.params = {};
 
     // Route based on method and query parameters
     if (req.method === "GET") {

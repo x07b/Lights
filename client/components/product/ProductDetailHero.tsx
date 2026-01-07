@@ -94,38 +94,24 @@ export function ProductDetailHero({
               </div>
             )}
 
-            {/* Price Section */}
-            <div className="border-t border-b border-border py-8 space-y-4">
-              <div className="flex justify-between items-center pt-4 border-t border-border">
-                <span className="font-roboto font-bold text-foreground">
-                  Prix
-                </span>
-                <span className="font-futura font-bold text-accent text-3xl">
-                  {price.toFixed(2)} TND
-                </span>
-              </div>
-            </div>
-
             {/* Action Buttons */}
-            <div className="flex items-center gap-3 pt-4">
+            <div className="flex flex-col gap-3 pt-8 border-t border-border">
+              <button
+                onClick={handleRequestQuote}
+                className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+              >
+                <Mail className="w-5 h-5" />
+                Demande de devis
+              </button>
               {pdfFile && (
                 <button
                   onClick={handleDownloadPDF}
-                  className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+                  className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
                 >
-                  <Download className="w-5 h-5" />
-                  Télécharger la fiche technique
+                  <FileText className="w-5 h-5" />
+                  Fiche technique PDF
                 </button>
               )}
-              <button
-                onClick={handleAddToCart}
-                title="Ajouter au panier"
-                className={`border-2 border-foreground text-foreground hover:bg-foreground hover:text-white p-3 rounded-lg flex items-center justify-center transition-all duration-300 hover:shadow-lg active:scale-95 ${
-                  pdfFile ? "" : "flex-1"
-                }`}
-              >
-                <ShoppingCart className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>

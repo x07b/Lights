@@ -499,33 +499,8 @@ export default function Checkout() {
                     <span className="text-muted-foreground font-roboto">
                       {item.name} x {item.quantity}
                     </span>
-                    <span className="font-semibold">
-                      {(item.price * item.quantity).toFixed(2)} TND
-                    </span>
                   </div>
                 ))}
-              </div>
-
-              {/* Summary */}
-              <div className="space-y-4">
-                <div className="flex justify-between text-muted-foreground">
-                  <span className="font-roboto">Sous-total:</span>
-                  <span className="font-semibold">{total.toFixed(2)} TND</span>
-                </div>
-                <div className="flex justify-between text-muted-foreground">
-                  <span className="font-roboto">Frais de port:</span>
-                  <span className="font-semibold text-accent">Gratuit</span>
-                </div>
-              </div>
-
-              {/* Total */}
-              <div className="border-t border-border pt-4 flex justify-between items-center">
-                <span className="text-lg font-futura font-bold text-primary">
-                  Total:
-                </span>
-                <span className="text-2xl font-futura font-bold text-accent">
-                  {total.toFixed(2)} TND
-                </span>
               </div>
             </div>
           </div>

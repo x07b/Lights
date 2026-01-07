@@ -79,8 +79,12 @@ export function QuoteRequestModal({
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Erreur lors de l'envoi de la demande de devis");
+        console.error("Quote request error response:", data);
+        const errorMessage = data.message || data.error || "Erreur lors de l'envoi de la demande de devis";
+        throw new Error(errorMessage);
       }
 
       toast.success(
@@ -96,7 +100,8 @@ export function QuoteRequestModal({
       onClose();
     } catch (error) {
       console.error("Error sending quote request:", error);
-      toast.error("Une erreur est survenue. Veuillez réessayer.");
+      const errorMessage = error instanceof Error ? error.message : "Une erreur est survenue. Veuillez réessayer.";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

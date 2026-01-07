@@ -158,8 +158,55 @@ export default function ProductDetail() {
     "Garantie de 5 ans et support technique dédié",
   ];
 
+  // Detail sections for the sticky panel
+  const detailSections: DetailSection[] = [
+    {
+      title: "Description du produit",
+      content: product.description || "Description disponible prochainement",
+    },
+    {
+      title: "Données techniques",
+      content: product.specifications.map(s => `${s.label}: ${s.value}`),
+    },
+    {
+      title: "Informations sur l'emballage",
+      content: [
+        "Dimensions du carton: Personnalisées",
+        "Poids net: Selon le modèle",
+        "Poids brut: Selon le modèle",
+        "Quantité par carton: À confirmer",
+      ],
+    },
+    {
+      title: "Documents et certificats",
+      content: product.pdfFile
+        ? "Fiche technique PDF disponible au téléchargement"
+        : "Documents disponibles sur demande",
+    },
+    {
+      title: "Images et graphiques du produit",
+      content: `${product.images.length} image(s) du produit disponible(s)`,
+    },
+    {
+      title: "Cas d'application",
+      content: [
+        "Bureaux et espaces de travail modernes",
+        "Résidences et espaces de vie",
+        "Environnement commercial et retail",
+        "Établissements publics et institutionnels",
+      ],
+    },
+  ];
+
   return (
     <div className="bg-gradient-to-b from-white via-white to-gray-50 min-h-screen">
+      {/* Sticky Product Details Panel */}
+      <ProductDetailsPanel
+        productName={product.name}
+        productCategory={product.category}
+        sections={detailSections}
+      />
+
       {/* Back Button */}
       <div className="bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -178,7 +225,6 @@ export default function ProductDetail() {
         name={product.name}
         category={product.category}
         description={product.description}
-        price={product.price}
         features={features}
         pdfFile={product.pdfFile}
         pdfFilename={product.pdfFilename}

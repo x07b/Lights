@@ -1,7 +1,3 @@
-import { FileText, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
-
 interface Feature {
   icon: React.ReactNode;
   label: string;

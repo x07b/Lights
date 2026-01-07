@@ -35,7 +35,7 @@ export function ProductGallery({
       <div className="product-gallery space-y-4">
         {/* Main Image Container */}
         <div className="flex items-center justify-center bg-white p-4 sm:p-6 animate-fade-in relative group">
-          <div className="relative w-full">
+          <div className="relative w-full flex justify-center">
             <img
               src={images[mainImageIndex]}
               alt={productName}

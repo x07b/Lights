@@ -243,4 +243,35 @@
   .animate-fade-in {
     @apply animate-[fadeIn_0.2s_ease-out];
   }
+
+  /* Product Details Panel Animations */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    @apply animate-[slideInRight_0.4s_ease-out];
+  }
+
+  /* Accordion Item Animations */
+  .product-details-panel [data-state="open"] {
+    @apply animate-[slideInDown_0.3s_ease-out];
+  }
+
+  /* Smooth scroll behavior for fixed sidebar */
+  .product-details-panel {
+    scroll-behavior: smooth;
+  }
+
+  /* Smooth transitions for accordion triggers */
+  [role="button"][data-state] {
+    @apply transition-all duration-300 ease-out;
+  }
 }

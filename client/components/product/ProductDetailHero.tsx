@@ -1,7 +1,3 @@
-import { FileText, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
-
 interface Feature {
   icon: React.ReactNode;
   label: string;
@@ -57,26 +53,6 @@ export function ProductDetailHero({
                 ))}
               </div>
             )}
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3 pt-8 border-t border-border">
-              <button
-                onClick={handleRequestQuote}
-                className="flex-1 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-              >
-                <Mail className="w-5 h-5" />
-                Demande de devis
-              </button>
-              {pdfFile && (
-                <button
-                  onClick={handleDownloadPDF}
-                  className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-semibold py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-                >
-                  <FileText className="w-5 h-5" />
-                  Fiche technique PDF
-                </button>
-              )}
-            </div>
           </div>
         </div>
       </div>

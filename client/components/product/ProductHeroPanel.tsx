@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { FileText, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import { QuoteRequestModal } from "../QuoteRequestModal";
 
 interface ProductHeroPanelProps {
   id: string;
@@ -24,8 +25,8 @@ export function ProductHeroPanel({
   pdfFilename,
   slug,
 }: ProductHeroPanelProps) {
-  const navigate = useNavigate();
   const { addItem } = useCart();
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   const handleAddToCart = () => {
     addItem({
@@ -39,15 +40,7 @@ export function ProductHeroPanel({
   };
 
   const handleRequestQuote = () => {
-    addItem({
-      id,
-      name,
-      price,
-      quantity: 1,
-      slug,
-    });
-    toast.success(`${name} ajouté à la demande de devis!`);
-    navigate("/checkout");
+    setIsQuoteModalOpen(true);
   };
 
   const handleDownloadPDF = () => {

@@ -2,6 +2,7 @@ import { Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductCardProps {
   id: string;
@@ -11,6 +12,7 @@ interface ProductCardProps {
   images?: string[];
   category?: string;
   slug?: string;
+  price?: number;
 }
 
 export function ProductCard({
@@ -21,9 +23,11 @@ export function ProductCard({
   images = [],
   category,
   slug,
+  price = 0,
 }: ProductCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop
   const productImages = images.length > 0 ? images : image ? [image] : [];
@@ -31,9 +35,18 @@ export function ProductCard({
 
   const handleRequestQuote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toast.success(`Demande de devis pour ${name} envoyée!`);
-    if (slug) {
-      navigate(`/product/${slug}`);
+    if (slug && price > 0) {
+      addItem({
+        id,
+        name,
+        price,
+        quantity: 1,
+        slug,
+      });
+      toast.success(`${name} ajouté à la demande de devis!`);
+      navigate("/checkout");
+    } else {
+      toast.error("Produit invalide");
     }
   };
 

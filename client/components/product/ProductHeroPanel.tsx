@@ -1,23 +1,42 @@
 import { FileText, Mail } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductHeroPanelProps {
+  id: string;
   category: string;
   name: string;
   description: string;
+  price: number;
   pdfFile?: string;
   pdfFilename?: string;
+  slug: string;
 }
 
 export function ProductHeroPanel({
+  id,
   category,
   name,
   description,
+  price,
   pdfFile,
   pdfFilename,
+  slug,
 }: ProductHeroPanelProps) {
+  const navigate = useNavigate();
+  const { addItem } = useCart();
+
   const handleRequestQuote = () => {
-    toast.success(`Demande de devis pour ${name} envoyée!`);
+    addItem({
+      id,
+      name,
+      price,
+      quantity: 1,
+      slug,
+    });
+    toast.success(`${name} ajouté à la demande de devis!`);
+    navigate("/checkout");
   };
 
   const handleDownloadPDF = () => {

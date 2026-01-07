@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailHero } from "@/components/product/ProductDetailHero";
+import { ProductTitleSticky } from "@/components/product/ProductTitleSticky";
 import {
   BenefitsSection,
   type Benefit,

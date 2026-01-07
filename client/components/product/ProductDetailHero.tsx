@@ -12,11 +12,10 @@ interface ProductDetailHeroProps {
   category: string;
   description: string;
   features?: Feature[];
-  price: number;
   pdfFile?: string;
   pdfFilename?: string;
   onDownloadPDF?: () => void;
-  onAddToCart?: () => void;
+  onRequestQuote?: () => void;
   children?: React.ReactNode; // For image gallery
 }
 

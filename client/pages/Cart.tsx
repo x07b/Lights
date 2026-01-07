@@ -107,7 +107,6 @@ export default function Cart() {
                       </button>
                     </div>
 
-
                     {/* Remove Button */}
                     <button
                       onClick={() => removeItem(item.id)}
@@ -127,7 +126,6 @@ export default function Cart() {
                 <h2 className="text-2xl font-futura font-bold text-primary">
                   Votre Panier
                 </h2>
-
 
                 {/* Checkout Button */}
                 <Link

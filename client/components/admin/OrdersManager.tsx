@@ -95,7 +95,9 @@ export default function OrdersManager() {
   };
 
   const handleDelete = async (orderId: string) => {
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cette commande ?")) {
+    if (
+      !window.confirm("Êtes-vous sûr de vouloir supprimer cette commande ?")
+    ) {
       return;
     }
 
@@ -321,10 +323,7 @@ export default function OrdersManager() {
                       </p>
                       <ul className="space-y-1">
                         {order.items.map((item) => (
-                          <li
-                            key={item.id}
-                            className="text-sm"
-                          >
+                          <li key={item.id} className="text-sm">
                             <span className="text-foreground">
                               {item.name} x {item.quantity}
                             </span>

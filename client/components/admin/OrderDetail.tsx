@@ -221,7 +221,6 @@ export default function OrderDetail({
           </div>
         </div>
 
-
         {/* Order Metadata */}
         <div className="bg-secondary/50 rounded-lg p-4 space-y-2 text-sm text-muted-foreground">
           <p>

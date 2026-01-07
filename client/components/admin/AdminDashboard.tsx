@@ -190,7 +190,6 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-
         {/* Unique Customers */}
         <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
           <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />

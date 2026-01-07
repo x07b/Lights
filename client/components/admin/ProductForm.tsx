@@ -24,7 +24,6 @@ export default function ProductForm({
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
-    price: product?.price || "",
     category: product?.category || "",
     collectionId: product?.collectionId || "",
     images: product?.images || [""],

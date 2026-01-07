@@ -86,61 +86,40 @@ export async function handleContact(req: any, res: any) {
 }
 
 // Email sending function
-async function sendEmail(data: {
+async function sendContactEmail(data: {
   name: string;
   email: string;
   subject: string;
   message: string;
 }): Promise<boolean> {
   // Check if email service is configured
-  if (
-    !process.env.SMTP_HOST ||
-    !process.env.SMTP_USER ||
-    !process.env.SMTP_PASS
-  ) {
+  if (!process.env.RESEND_API_KEY) {
     console.log("Email service not configured, message stored in system");
     return false;
   }
 
   try {
-    // Dynamically import nodemailer only when needed (optional dependency)
-    // @ts-ignore - nodemailer is optional, type check disabled
-    const nodemailer = await import("nodemailer").catch(() => null);
+    const adminEmail = process.env.ADMIN_EMAIL || "itsazizsaidi@gmail.com";
 
-    if (!nodemailer) {
-      console.log("nodemailer not available, skipping email send");
-      return false;
-    }
-
-    const transporter = nodemailer.default.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: process.env.SMTP_SECURE === "true", // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    // Send email to admin
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: "itsazizsaidi@gmail.com",
-      subject: `Nouveau message de contact: ${data.subject}`,
-      html: `
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
         <h2>Nouveau message de contact</h2>
         <p><strong>De:</strong> ${escapeHtml(data.name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+        <p><strong>Email:</strong> <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a></p>
         <p><strong>Sujet:</strong> ${escapeHtml(data.subject)}</p>
-        <hr />
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;" />
         <p><strong>Message:</strong></p>
-        <p>${escapeHtml(data.message).replace(/\n/g, "<br>")}</p>
-      `,
-      replyTo: data.email,
+        <p style="white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(data.message)}</p>
+      </div>
+    `;
+
+    const result = await sendEmail({
+      to: adminEmail,
+      subject: `Nouveau message de contact: ${data.subject}`,
+      html,
     });
 
-    console.log("Email sent successfully to admin");
-    return true;
+    return result.success;
   } catch (error) {
     console.error("Failed to send email:", error);
     // Don't throw error, just log it - message is already stored

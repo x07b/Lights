@@ -1,31 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  Zap,
-  Sun,
-  Leaf,
-  CheckCircle,
-  RotateCcw,
-  Lightbulb,
-  Trash2,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
-import { ProductDetailHero } from "@/components/product/ProductDetailHero";
-import { ProductTitleSticky } from "@/components/product/ProductTitleSticky";
-import {
-  BenefitsSection,
-  type Benefit,
-} from "@/components/product/BenefitsSection";
-import { ProductDescription } from "@/components/product/ProductDescription";
-import { TechnicalSpecifications } from "@/components/product/TechnicalSpecifications";
-import { UseCasesSection } from "@/components/product/UseCasesSection";
-import { CertificationsSection } from "@/components/product/CertificationsSection";
-import { CTASection } from "@/components/product/CTASection";
-import {
-  ProductDetailsPanel,
-  type DetailSection,
-} from "@/components/product/ProductDetailsPanel";
+import { ProductStickyHeader } from "@/components/product/ProductStickyHeader";
 
 interface Specification {
   label: string;
@@ -73,10 +50,10 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-white to-gray-50 min-h-screen flex items-center justify-center px-4">
-        <div className="text-center space-y-8 animate-fade-in">
-          <p className="font-roboto text-lg text-muted-foreground">
-            Loading product...
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-white to-gray-50">
+        <div className="text-center">
+          <p className="font-roboto text-lg text-muted-foreground animate-pulse">
+            Chargement du produit...
           </p>
         </div>
       </div>
@@ -85,19 +62,19 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-gradient-to-br from-white to-gray-50 min-h-screen flex items-center justify-center px-4">
-        <div className="text-center space-y-8 animate-fade-in">
-          <h1 className="font-futura text-5xl font-bold text-foreground">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-white to-gray-50">
+        <div className="text-center space-y-6 max-w-md">
+          <h1 className="font-futura text-4xl font-bold text-foreground">
             Produit non trouvé
           </h1>
-          <p className="font-roboto text-lg text-muted-foreground">
+          <p className="font-roboto text-muted-foreground">
             Le produit que vous recherchez n'existe pas.
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-4 px-8 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95 group"
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-roboto font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95"
           >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+            <ArrowLeft className="w-5 h-5" />
             Retour aux produits
           </Link>
         </div>
@@ -105,181 +82,266 @@ export default function ProductDetail() {
     );
   }
 
-  // Smart features for the hero section
-  const smartFeatures = [
-    { icon: Zap, label: "App Control" },
-    { icon: Sun, label: "Tunable White" },
-    { icon: Lightbulb, label: "Dimmable" },
-    { icon: Leaf, label: "Écologique" },
-  ];
-
-  const features = smartFeatures.map((f) => ({
-    icon: <f.icon className="w-5 h-5" />,
-    label: f.label,
-  }));
-
-  // Benefits with icons
-  const benefits: Benefit[] = [
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Longue durée de vie",
-      description: "3000 heures de fonctionnement optimal",
-    },
-    {
-      icon: <Leaf className="w-8 h-8" />,
-      title: "Économie d'énergie",
-      description: "Technologie LED performante et durable",
-    },
-    {
-      icon: <Sun className="w-8 h-8" />,
-      title: "Haute luminosité",
-      description: "1200 lm pour un éclairage puissant et uniforme",
-    },
-  ];
-
-  // Certifications
-  const certifications = [
-    { icon: <CheckCircle className="w-12 h-12" />, label: "RoHS" },
-    { icon: <RotateCcw className="w-12 h-12" />, label: "Recyclable" },
-    { icon: <Lightbulb className="w-12 h-12" />, label: "CE" },
-    { icon: <Trash2 className="w-12 h-12" />, label: "Ne pas jeter" },
-  ];
-
-  // Sample use cases (optional)
-  const useCases = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop",
-      title: "Bureaux modernes",
-      caption:
-        "Illumination professionnelle et durable pour espaces de travail",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-      title: "Espaces résidentiels",
-      caption: "Ambiance chaleureuse et flexible pour votre intérieur",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1571768910459-b1aaee40a736?w=400&h=300&fit=crop",
-      title: "Environnement commercial",
-      caption: "Solutions d'éclairage premium pour commerces et boutiques",
-    },
-  ];
-
-  const productDescription = `Découvrez notre solution d'éclairage premium ${product.name}. Conçu avec une attention particulière aux détails, ce luminaire combine la technologie LED la plus avancée avec un design épuré et minimaliste. Parfait pour les espaces modernes qui exigent à la fois performance énergétique et esthétique raffinée.`;
-
-  const bulletPoints = [
-    "Technologie LED haute performance avec efficacité énergétique optimale",
-    "Design architectural épuré et minimaliste",
-    "Compatible avec systèmes de contrôle intelligents",
-    "Installation facile et maintien simple",
-    "Garantie de 5 ans et support technique dédié",
-  ];
-
-  // Detail sections for the sticky panel
-  const detailSections: DetailSection[] = [
-    {
-      title: "Description du produit",
-      content: product.description || "Description disponible prochainement",
-    },
-    {
-      title: "Données techniques",
-      content: product.specifications.map((s) => `${s.label}: ${s.value}`),
-    },
-    {
-      title: "Informations sur l'emballage",
-      content: [
-        "Dimensions du carton: Personnalisées",
-        "Poids net: Selon le modèle",
-        "Poids brut: Selon le modèle",
-        "Quantité par carton: À confirmer",
-      ],
-    },
-    {
-      title: "Documents et certificats",
-      content: product.pdfFile
-        ? "Fiche technique PDF disponible au téléchargement"
-        : "Documents disponibles sur demande",
-    },
-    {
-      title: "Images et graphiques du produit",
-      content: `${product.images.length} image(s) du produit disponible(s)`,
-    },
-    {
-      title: "Cas d'application",
-      content: [
-        "Bureaux et espaces de travail modernes",
-        "Résidences et espaces de vie",
-        "Environnement commercial et retail",
-        "Établissements publics et institutionnels",
-      ],
-    },
-  ];
-
   return (
-    <div className="bg-gradient-to-b from-white via-white to-gray-50 min-h-screen">
-      {/* Sticky Right-Side Title + Buttons Component */}
-      <ProductTitleSticky
-        name={product.name}
+    <div className="min-h-screen bg-white">
+      {/* Sticky Header */}
+      <ProductStickyHeader
         category={product.category}
+        name={product.name}
+        description={product.description}
         pdfFile={product.pdfFile}
         pdfFilename={product.pdfFilename}
       />
 
-      {/* Main Content - With right padding to accommodate fixed sidebar on desktop */}
-      <div className="lg:pr-96">
-        {/* Back Button */}
-        <div className="bg-white border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 py-6">
-            <Link
-              to="/products"
-              className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-all duration-300 font-roboto font-semibold group"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-              Retour aux produits
-            </Link>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16">
+        {/* Product Gallery Section */}
+        <section className="mb-16 sm:mb-20">
+          <div className="bg-white rounded-lg overflow-hidden">
+            <ProductGallery images={product.images} productName={product.name} />
           </div>
-        </div>
+        </section>
 
-        {/* Hero Section with Gallery */}
-        <ProductDetailHero
-          name={product.name}
-          category={product.category}
-          description={product.description}
-          features={features}
-        >
-          <ProductGallery images={product.images} productName={product.name} />
-        </ProductDetailHero>
+        {/* Product Overview Section */}
+        <section className="mb-16 sm:mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Description */}
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-futura text-3xl sm:text-4xl font-bold text-foreground mb-4">
+                  Découvrez l'excellence en éclairage
+                </h2>
+                <p className="font-roboto text-lg text-muted-foreground leading-relaxed">
+                  Le {product.name} représente le summum de la technologie d'éclairage moderne. Combinant performance énergétique, durabilité exceptionnelle et design minimaliste, ce luminaire transforme vos espaces en environnements lumineux sophistiqués.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-border">
+                <p className="font-roboto text-muted-foreground leading-relaxed">
+                  Conçu pour les professionnels et les particuliers exigeants, ce produit offre une solution complète d'éclairage avec contrôle intelligent, adaptabilité et fiabilité inégalées. Chaque détail a été pensé pour assurer votre satisfaction et optimiser votre investissement.
+                </p>
+              </div>
+            </div>
+
+            {/* Key Features */}
+            <div className="space-y-4">
+              <h3 className="font-futura text-2xl font-bold text-foreground mb-6">
+                Caractéristiques principales
+              </h3>
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+                      <span className="text-accent font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-futura font-bold text-foreground mb-1">
+                      Longévité supérieure
+                    </h4>
+                    <p className="font-roboto text-sm text-muted-foreground">
+                      Durée de vie exceptionnelle de 3000+ heures avec performance constante
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+                      <span className="text-accent font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-futura font-bold text-foreground mb-1">
+                      Efficacité énergétique
+                    </h4>
+                    <p className="font-roboto text-sm text-muted-foreground">
+                      Technologie LED haute performance réduisant votre consommation énergétique
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+                      <span className="text-accent font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-futura font-bold text-foreground mb-1">
+                      Design épuré
+                    </h4>
+                    <p className="font-roboto text-sm text-muted-foreground">
+                      Esthétique minimaliste s'intégrant parfaitement à tout décor
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+                      <span className="text-accent font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-futura font-bold text-foreground mb-1">
+                      Contrôle intelligent
+                    </h4>
+                    <p className="font-roboto text-sm text-muted-foreground">
+                      Compatible avec systèmes domotiques pour contrôle personnalisé
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+                      <span className="text-accent font-bold">✓</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-futura font-bold text-foreground mb-1">
+                      Installation simple
+                    </h4>
+                    <p className="font-roboto text-sm text-muted-foreground">
+                      Setup rapide et facile, support technique disponible
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Specifications Section */}
+        {product.specifications && product.specifications.length > 0 && (
+          <section className="mb-16 sm:mb-20">
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  Spécifications techniques
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {product.specifications.map((spec, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-50 rounded-lg p-6 border border-border"
+                  >
+                    <p className="font-roboto text-sm uppercase tracking-widest text-accent font-bold mb-2">
+                      {spec.label}
+                    </p>
+                    <p className="font-futura text-2xl font-bold text-foreground">
+                      {spec.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Benefits Section */}
-        <BenefitsSection benefits={benefits} />
+        <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
+          <div className="space-y-8">
+            <div>
+              <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                Pourquoi choisir ce produit ?
+              </h2>
+              <div className="h-1 w-20 bg-accent rounded-full" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Performance garantie
+                </h3>
+                <p className="font-roboto text-muted-foreground leading-relaxed">
+                  Nous garantissons la performance constante de ce luminaire avec une couverture complète et un support technique réactif. Votre investissement est protégé.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Solution économique
+                </h3>
+                <p className="font-roboto text-muted-foreground leading-relaxed">
+                  Réduisez vos coûts énergétiques tout en profitant d'une qualité d'éclairage supérieure. Amortissement rapide et rentabilité garantie.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Respect de l'environnement
+                </h3>
+                <p className="font-roboto text-muted-foreground leading-relaxed">
+                  Solution écologique et durable, recyclable et certifiée. Contribuez à la préservation de l'environnement sans compromis.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Support expert
+                </h3>
+                <p className="font-roboto text-muted-foreground leading-relaxed">
+                  Équipe d'experts disponible pour assistance, conseil et maintenance. Satisfaction client garantie à 100%.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Product Description */}
-        <ProductDescription
-          content={productDescription}
-          bulletPoints={bulletPoints}
-        />
+        {/* Applications Section */}
+        <section className="mb-16 sm:mb-20">
+          <div className="space-y-6">
+            <div>
+              <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                Cas d'application
+              </h2>
+              <div className="h-1 w-20 bg-accent rounded-full" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Espaces professionnels
+                </h3>
+                <p className="font-roboto text-muted-foreground">
+                  Bureau, open space, salles de réunion. Créez un environnement productif et confortable pour vos équipes.
+                </p>
+              </div>
+              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Espaces résidentiels
+                </h3>
+                <p className="font-roboto text-muted-foreground">
+                  Salon, cuisine, chambre. Transformez votre habitat avec un éclairage adapté à votre style de vie.
+                </p>
+              </div>
+              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                  Environnements commerciaux
+                </h3>
+                <p className="font-roboto text-muted-foreground">
+                  Boutique, galerie, showroom. Mettez en valeur vos produits avec un éclairage professionnel et élégant.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Technical Specifications */}
-        <TechnicalSpecifications specifications={product.specifications} />
-
-        {/* Certifications */}
-        <CertificationsSection certifications={certifications} />
-
-        {/* Use Cases Section */}
-        <UseCasesSection useCases={useCases} />
-
-        {/* Final CTA */}
-        <CTASection productName={product.name} />
-
-        {/* Product Details Panel - Scrollable section below all main content */}
-        <ProductDetailsPanel
-          sections={detailSections}
-          sectionTitle="Détails du produit"
-          sectionSubtitle="Informations complètes et spécifications"
-        />
+        {/* CTA Section */}
+        <section className="bg-gradient-to-r from-accent to-accent/80 rounded-lg p-8 sm:p-12 text-center text-white space-y-6">
+          <h2 className="font-futura text-3xl sm:text-4xl font-bold">
+            Prêt à transformer votre éclairage ?
+          </h2>
+          <p className="font-roboto text-lg max-w-2xl mx-auto text-white/90">
+            Contactez-nous dès maintenant pour obtenir un devis personnalisé ou télécharger la fiche technique complète.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+            <button className="bg-white hover:bg-white/90 text-accent font-roboto font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95">
+              Demander un devis
+            </button>
+            <button className="border-2 border-white text-white hover:bg-white hover:text-accent font-roboto font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95">
+              Documentation
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   );

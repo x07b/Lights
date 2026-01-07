@@ -220,17 +220,16 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-gradient-to-b from-white via-white to-gray-50 min-h-screen">
-      {/* Sticky Product Details Panel - Hidden on mobile, visible on desktop */}
-      <div className="hidden lg:block">
-        <ProductDetailsPanel
-          productName={product.name}
-          productCategory={product.category}
-          sections={detailSections}
-        />
-      </div>
+      {/* Sticky Right-Side Title + Buttons Component */}
+      <ProductTitleSticky
+        name={product.name}
+        category={product.category}
+        pdfFile={product.pdfFile}
+        pdfFilename={product.pdfFilename}
+      />
 
-      {/* Main Content with right margin for sidebar */}
-      <div className="lg:mr-96">
+      {/* Main Content - Full width, no right margin needed due to sticky sidebar fixed positioning */}
+      <div>
         {/* Back Button */}
         <div className="bg-white border-b border-border">
           <div className="max-w-7xl mx-auto px-4 py-6">

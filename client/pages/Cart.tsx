@@ -125,7 +125,7 @@ export default function Cart() {
             <div className="lg:col-span-1 h-fit">
               <div className="bg-white rounded-lg border border-border p-8 sticky top-4 space-y-6">
                 <h2 className="text-2xl font-futura font-bold text-primary">
-                  Résumé
+                  Votre Panier
                 </h2>
 
 

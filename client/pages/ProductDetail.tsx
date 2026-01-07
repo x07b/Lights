@@ -117,13 +117,18 @@ export default function ProductDetail() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16">
-        {/* Two-Column Hero Section: Gallery Left, Sticky Panel Right */}
+        {/* Two-Column Section: Gallery + Details Left, Sticky Panel Right */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
-          {/* Left: Product Gallery (2 cols) */}
-          <div className="lg:col-span-2">
+          {/* Left: Product Gallery + Details Accordion (2 cols) */}
+          <div className="lg:col-span-2 space-y-8">
             <ProductGallery
               images={product.images}
               productName={product.name}
+            />
+            <ProductDetailsPanel
+              sections={detailSections}
+              sectionTitle="Détails du produit"
+              sectionSubtitle="Informations complètes"
             />
           </div>
 
@@ -137,15 +142,6 @@ export default function ProductDetail() {
               pdfFilename={product.pdfFilename}
             />
           </div>
-        </section>
-
-        {/* Product Details Accordion Section */}
-        <section className="mb-16 sm:mb-20">
-          <ProductDetailsPanel
-            sections={detailSections}
-            sectionTitle="Détails du produit"
-            sectionSubtitle="Informations complètes"
-          />
         </section>
 
         {/* Specifications Section */}

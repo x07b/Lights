@@ -33,7 +33,7 @@ export function ProductCard({
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleRequestQuote = (e: React.MouseEvent) => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (slug && price > 0) {
       addItem({
@@ -43,8 +43,7 @@ export function ProductCard({
         quantity: 1,
         slug,
       });
-      toast.success(`${name} ajouté à la demande de devis!`);
-      navigate("/checkout");
+      toast.success(`${name} ajouté au panier!`);
     } else {
       toast.error("Produit invalide");
     }
@@ -162,14 +161,13 @@ export function ProductCard({
           {description}
         </p>
 
-        {/* Request Quote Button */}
+        {/* Add to Cart Button */}
         <button
-          onClick={handleRequestQuote}
-          title="Demander un devis"
+          onClick={handleAddToCart}
+          title="Ajouter au panier"
           className="w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
         >
-          <Mail className="w-5 h-5" />
-          Demande de devis
+          Ajouter au panier
         </button>
       </div>
     </div>

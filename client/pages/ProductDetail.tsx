@@ -200,61 +200,103 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-gradient-to-b from-white via-white to-gray-50 min-h-screen">
-      {/* Sticky Product Details Panel */}
-      <ProductDetailsPanel
-        productName={product.name}
-        productCategory={product.category}
-        sections={detailSections}
-      />
-
-      {/* Back Button */}
-      <div className="bg-white border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <Link
-            to="/products"
-            className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-all duration-300 font-roboto font-semibold group"
-          >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-            Retour aux produits
-          </Link>
-        </div>
+      {/* Sticky Product Details Panel - Hidden on mobile, visible on desktop */}
+      <div className="hidden lg:block">
+        <ProductDetailsPanel
+          productName={product.name}
+          productCategory={product.category}
+          sections={detailSections}
+        />
       </div>
 
-      {/* Hero Section with Gallery */}
-      <ProductDetailHero
-        name={product.name}
-        category={product.category}
-        description={product.description}
-        features={features}
-        pdfFile={product.pdfFile}
-        pdfFilename={product.pdfFilename}
-      >
-        <ProductGallery
-          images={product.images}
-          productName={product.name}
+      {/* Main Content with right margin for sidebar */}
+      <div className="lg:mr-96">
+        {/* Back Button */}
+        <div className="bg-white border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <Link
+              to="/products"
+              className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-all duration-300 font-roboto font-semibold group"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+              Retour aux produits
+            </Link>
+          </div>
+        </div>
+
+        {/* Hero Section with Gallery */}
+        <ProductDetailHero
+          name={product.name}
+          category={product.category}
+          description={product.description}
+          features={features}
+          pdfFile={product.pdfFile}
+          pdfFilename={product.pdfFilename}
+        >
+          <ProductGallery
+            images={product.images}
+            productName={product.name}
+          />
+        </ProductDetailHero>
+
+        {/* Benefits Section */}
+        <BenefitsSection benefits={benefits} />
+
+        {/* Product Description */}
+        <ProductDescription
+          content={productDescription}
+          bulletPoints={bulletPoints}
         />
-      </ProductDetailHero>
 
-      {/* Benefits Section */}
-      <BenefitsSection benefits={benefits} />
+        {/* Technical Specifications */}
+        <TechnicalSpecifications specifications={product.specifications} />
 
-      {/* Product Description */}
-      <ProductDescription
-        content={productDescription}
-        bulletPoints={bulletPoints}
-      />
+        {/* Certifications */}
+        <CertificationsSection certifications={certifications} />
 
-      {/* Technical Specifications */}
-      <TechnicalSpecifications specifications={product.specifications} />
+        {/* Use Cases Section */}
+        <UseCasesSection useCases={useCases} />
 
-      {/* Certifications */}
-      <CertificationsSection certifications={certifications} />
+        {/* Final CTA */}
+        <CTASection productName={product.name} />
 
-      {/* Use Cases Section */}
-      <UseCasesSection useCases={useCases} />
-
-      {/* Final CTA */}
-      <CTASection productName={product.name} />
+        {/* Mobile: Product Details Panel at bottom */}
+        <div className="lg:hidden">
+          <div className="bg-white border-t border-border">
+            <div className="max-w-7xl mx-auto px-4 py-12">
+              <h2 className="font-futura text-3xl font-bold text-foreground mb-8">
+                Détails du produit
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {detailSections.map((section, index) => (
+                  <div key={index} className="space-y-3">
+                    <h3 className="font-futura font-bold text-foreground uppercase text-sm tracking-wide">
+                      {section.title}
+                    </h3>
+                    {Array.isArray(section.content) ? (
+                      <ul className="space-y-2">
+                        {section.content.map((item, itemIndex) => (
+                          <li
+                            key={itemIndex}
+                            className="font-roboto text-sm text-muted-foreground flex gap-2"
+                          >
+                            <span className="text-accent">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="font-roboto text-sm text-muted-foreground">
+                        {section.content}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

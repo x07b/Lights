@@ -267,7 +267,7 @@ CREATE POLICY "Hero slides are viewable by everyone"
 -- For now, the service_role key (used in the backend API) bypasses RLS, so all operations
 -- will work. In production, you should create proper admin policies based on your authentication.
 
--- Note: Orders and contact_messages are managed via your backend API using the service_role key,
+-- Note: Orders, contact_messages, and quote_requests are managed via your backend API using the service_role key,
 -- which bypasses RLS. If you want to allow client-side access later, you'll need to configure
 -- additional policies based on your authentication system.
 

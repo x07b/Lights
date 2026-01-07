@@ -10,7 +10,6 @@ interface Product {
   collectionId: string;
   name: string;
   description: string;
-  price: number;
   images: string[];
   category: string;
   slug: string;
@@ -26,7 +25,6 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     collectionId: dbProduct.collection_id,
     name: dbProduct.name,
     description: dbProduct.description,
-    price: parseFloat(dbProduct.price),
     images: images
       .map((img) => img.image_url)
       .sort((a, b) => {
@@ -159,7 +157,6 @@ export async function createProduct(req: any, res: any) {
     const {
       name,
       description,
-      price,
       images,
       category,
       collectionId,
@@ -168,12 +165,12 @@ export async function createProduct(req: any, res: any) {
       specifications,
     } = req.body;
 
-    if (!name || !description || price === undefined) {
+    if (!name || !description) {
       res
         .status(400)
         .json({
           error:
-            "Missing required fields: name, description, and price are required",
+            "Missing required fields: name and description are required",
         });
       return;
     }
@@ -193,7 +190,6 @@ export async function createProduct(req: any, res: any) {
         collection_id: collectionId || null,
         name,
         description,
-        price: parseFloat(price),
         category: category || "Uncategorized",
         slug,
         pdf_file: pdfFile || null,
@@ -287,7 +283,6 @@ export async function updateProduct(req: any, res: any) {
     const {
       name,
       description,
-      price,
       images,
       category,
       collectionId,
@@ -311,7 +306,6 @@ export async function updateProduct(req: any, res: any) {
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
-    if (price !== undefined) updateData.price = parseFloat(price);
     if (category !== undefined) updateData.category = category;
     if (collectionId !== undefined) updateData.collection_id = collectionId;
     if (pdfFile !== undefined) updateData.pdf_file = pdfFile || null;

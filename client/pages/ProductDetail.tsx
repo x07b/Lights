@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
-import { ProductStickyHeader } from "@/components/product/ProductStickyHeader";
+import { ProductHeroPanel } from "@/components/product/ProductHeroPanel";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 interface Specification {
   label: string;
@@ -84,21 +85,28 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Sticky Header */}
-      <ProductStickyHeader
-        category={product.category}
-        name={product.name}
-        description={product.description}
-        pdfFile={product.pdfFile}
-        pdfFilename={product.pdfFilename}
-      />
+      <ScrollToTop />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16">
-        {/* Product Gallery Section */}
-        <section className="mb-16 sm:mb-20">
-          <div className="bg-white rounded-lg overflow-hidden">
-            <ProductGallery images={product.images} productName={product.name} />
+        {/* Two-Column Hero Section: Gallery Left, Sticky Panel Right */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
+          {/* Left: Product Gallery (2 cols) */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg overflow-hidden border border-border">
+              <ProductGallery images={product.images} productName={product.name} />
+            </div>
+          </div>
+
+          {/* Right: Sticky Product Info Panel (1 col) */}
+          <div className="lg:col-span-1">
+            <ProductHeroPanel
+              category={product.category}
+              name={product.name}
+              description={product.description}
+              pdfFile={product.pdfFile}
+              pdfFilename={product.pdfFilename}
+            />
           </div>
         </section>
 

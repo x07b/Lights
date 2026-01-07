@@ -1,14 +1,12 @@
-import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
+import { Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
   name: string;
   description: string;
-  price: number;
   image?: string;
   images?: string[];
   category?: string;

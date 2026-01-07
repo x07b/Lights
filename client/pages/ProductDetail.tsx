@@ -157,13 +157,15 @@ export default function ProductDetail() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16">
         {/* Two-Column Section: Gallery + Details Left, Sticky Panel Right */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
-          {/* Left: Product Gallery + Details Accordion (2 cols) */}
-          <div className="lg:col-span-2 space-y-8">
-            <ProductGallery
-              images={product.images}
-              productName={product.name}
-            />
+        <section className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12 mb-16 sm:mb-20">
+          {/* Left: Product Gallery + Details Accordion (1 col) */}
+          <div className="lg:col-span-1 space-y-8">
+            <div className="max-w-xs mx-auto lg:mx-0">
+              <ProductGallery
+                images={product.images}
+                productName={product.name}
+              />
+            </div>
             <ProductDetailsPanel
               sections={detailSections}
               sectionTitle="Détails du produit"
@@ -171,8 +173,8 @@ export default function ProductDetail() {
             />
           </div>
 
-          {/* Right: Sticky Product Info Panel (1 col) */}
-          <div className="lg:col-span-1">
+          {/* Right: Sticky Product Info Panel (3 cols) */}
+          <div className="lg:col-span-3">
             <ProductHeroPanel
               category={product.category}
               name={product.name}

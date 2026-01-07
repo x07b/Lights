@@ -32,14 +32,14 @@ export function ProductGallery({
   return (
     <>
       {/* Main Gallery */}
-      <div className="product-gallery space-y-4">
+      <div className="product-gallery space-y-3">
         {/* Main Image Container */}
-        <div className="flex items-center justify-center bg-white p-4 sm:p-6 animate-fade-in relative group">
+        <div className="flex items-center justify-center bg-white p-2 animate-fade-in relative group">
           <div className="relative w-full flex justify-center">
             <img
               src={images[mainImageIndex]}
               alt={productName}
-              className="h-auto max-w-xs object-cover hover:scale-105 transition-transform duration-500 cursor-pointer"
+              className="h-auto max-h-56 w-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer"
               onClick={() => setIsFullscreen(true)}
             />
             <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />

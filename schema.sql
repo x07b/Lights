@@ -210,6 +210,12 @@ CREATE TRIGGER update_contact_messages_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_quote_requests_updated_at ON quote_requests;
+CREATE TRIGGER update_quote_requests_updated_at
+  BEFORE UPDATE ON quote_requests
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
 DROP TRIGGER IF EXISTS update_hero_slides_updated_at ON hero_slides;
 CREATE TRIGGER update_hero_slides_updated_at
   BEFORE UPDATE ON hero_slides
@@ -227,6 +233,7 @@ ALTER TABLE product_specifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quote_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE hero_slides ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for collections (products are public)

@@ -22,7 +22,6 @@ export function ProductDetailHero({
   features = [],
   children,
 }: ProductDetailHeroProps) {
-
   return (
     <section className="py-16 px-4 sm:py-20 md:py-28">
       <div className="max-w-7xl mx-auto">

@@ -67,7 +67,9 @@ export function ProductDetailsPanel({
                         key={itemIndex}
                         className="flex gap-4 items-start font-roboto text-sm text-muted-foreground leading-relaxed"
                       >
-                        <span className="text-accent font-bold mt-0.5 flex-shrink-0 text-lg">→</span>
+                        <span className="text-accent font-bold mt-0.5 flex-shrink-0 text-lg">
+                          →
+                        </span>
                         <span className="flex-grow">{item}</span>
                       </li>
                     ))}

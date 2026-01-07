@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Zap, Sun, Leaf, CheckCircle, RotateCcw, Lightbulb, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Zap,
+  Sun,
+  Leaf,
+  CheckCircle,
+  RotateCcw,
+  Lightbulb,
+  Trash2,
+} from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailHero } from "@/components/product/ProductDetailHero";
-import { BenefitsSection, type Benefit } from "@/components/product/BenefitsSection";
+import {
+  BenefitsSection,
+  type Benefit,
+} from "@/components/product/BenefitsSection";
 import { ProductDescription } from "@/components/product/ProductDescription";
 import { TechnicalSpecifications } from "@/components/product/TechnicalSpecifications";
 import { UseCasesSection } from "@/components/product/UseCasesSection";
 import { CertificationsSection } from "@/components/product/CertificationsSection";
 import { CTASection } from "@/components/product/CTASection";
-import { ProductDetailsPanel, type DetailSection } from "@/components/product/ProductDetailsPanel";
+import {
+  ProductDetailsPanel,
+  type DetailSection,
+} from "@/components/product/ProductDetailsPanel";
 
 interface Specification {
   label: string;
@@ -97,7 +112,7 @@ export default function ProductDetail() {
     { icon: Leaf, label: "Écologique" },
   ];
 
-  const features = smartFeatures.map(f => ({
+  const features = smartFeatures.map((f) => ({
     icon: <f.icon className="w-5 h-5" />,
     label: f.label,
   }));
@@ -132,17 +147,21 @@ export default function ProductDetail() {
   // Sample use cases (optional)
   const useCases = [
     {
-      image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop",
       title: "Bureaux modernes",
-      caption: "Illumination professionnelle et durable pour espaces de travail",
+      caption:
+        "Illumination professionnelle et durable pour espaces de travail",
     },
     {
-      image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
       title: "Espaces résidentiels",
       caption: "Ambiance chaleureuse et flexible pour votre intérieur",
     },
     {
-      image: "https://images.unsplash.com/photo-1571768910459-b1aaee40a736?w=400&h=300&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1571768910459-b1aaee40a736?w=400&h=300&fit=crop",
       title: "Environnement commercial",
       caption: "Solutions d'éclairage premium pour commerces et boutiques",
     },
@@ -166,7 +185,7 @@ export default function ProductDetail() {
     },
     {
       title: "Données techniques",
-      content: product.specifications.map(s => `${s.label}: ${s.value}`),
+      content: product.specifications.map((s) => `${s.label}: ${s.value}`),
     },
     {
       title: "Informations sur l'emballage",
@@ -233,10 +252,7 @@ export default function ProductDetail() {
           pdfFile={product.pdfFile}
           pdfFilename={product.pdfFilename}
         >
-          <ProductGallery
-            images={product.images}
-            productName={product.name}
-          />
+          <ProductGallery images={product.images} productName={product.name} />
         </ProductDetailHero>
 
         {/* Benefits Section */}

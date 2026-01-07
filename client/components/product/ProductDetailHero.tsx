@@ -1,6 +1,5 @@
-import { ShoppingCart, Download } from "lucide-react";
+import { FileText, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
 interface Feature {

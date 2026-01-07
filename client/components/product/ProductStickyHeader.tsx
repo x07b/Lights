@@ -1,13 +1,10 @@
-import { useState } from "react";
 import { FileText, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { QuoteRequestModal } from "../QuoteRequestModal";
 
 interface ProductStickyHeaderProps {
   category: string;
   name: string;
   description: string;
-  productId: string;
   pdfFile?: string;
   pdfFilename?: string;
 }
@@ -16,14 +13,11 @@ export function ProductStickyHeader({
   category,
   name,
   description,
-  productId,
   pdfFile,
   pdfFilename,
 }: ProductStickyHeaderProps) {
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-
   const handleRequestQuote = () => {
-    setIsQuoteModalOpen(true);
+    toast.success(`Demande de devis pour ${name} envoyée!`);
   };
 
   const handleDownloadPDF = () => {

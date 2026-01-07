@@ -93,7 +93,10 @@ export default function ProductDetail() {
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
           {/* Left: Product Gallery (2 cols) */}
           <div className="lg:col-span-2">
-            <ProductGallery images={product.images} productName={product.name} />
+            <ProductGallery
+              images={product.images}
+              productName={product.name}
+            />
           </div>
 
           {/* Right: Sticky Product Info Panel (1 col) */}
@@ -161,7 +164,9 @@ export default function ProductDetail() {
                   Performance garantie
                 </h3>
                 <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Nous garantissons la performance constante de ce luminaire avec une couverture complète et un support technique réactif. Votre investissement est protégé.
+                  Nous garantissons la performance constante de ce luminaire
+                  avec une couverture complète et un support technique réactif.
+                  Votre investissement est protégé.
                 </p>
               </div>
               <div>
@@ -169,7 +174,9 @@ export default function ProductDetail() {
                   Solution économique
                 </h3>
                 <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Réduisez vos coûts énergétiques tout en profitant d'une qualité d'éclairage supérieure. Amortissement rapide et rentabilité garantie.
+                  Réduisez vos coûts énergétiques tout en profitant d'une
+                  qualité d'éclairage supérieure. Amortissement rapide et
+                  rentabilité garantie.
                 </p>
               </div>
               <div>
@@ -177,7 +184,9 @@ export default function ProductDetail() {
                   Respect de l'environnement
                 </h3>
                 <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Solution écologique et durable, recyclable et certifiée. Contribuez à la préservation de l'environnement sans compromis.
+                  Solution écologique et durable, recyclable et certifiée.
+                  Contribuez à la préservation de l'environnement sans
+                  compromis.
                 </p>
               </div>
               <div>
@@ -185,7 +194,8 @@ export default function ProductDetail() {
                   Support expert
                 </h3>
                 <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Équipe d'experts disponible pour assistance, conseil et maintenance. Satisfaction client garantie à 100%.
+                  Équipe d'experts disponible pour assistance, conseil et
+                  maintenance. Satisfaction client garantie à 100%.
                 </p>
               </div>
             </div>
@@ -207,7 +217,8 @@ export default function ProductDetail() {
                   Espaces professionnels
                 </h3>
                 <p className="font-roboto text-muted-foreground">
-                  Bureau, open space, salles de réunion. Créez un environnement productif et confortable pour vos équipes.
+                  Bureau, open space, salles de réunion. Créez un environnement
+                  productif et confortable pour vos équipes.
                 </p>
               </div>
               <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
@@ -215,7 +226,8 @@ export default function ProductDetail() {
                   Espaces résidentiels
                 </h3>
                 <p className="font-roboto text-muted-foreground">
-                  Salon, cuisine, chambre. Transformez votre habitat avec un éclairage adapté à votre style de vie.
+                  Salon, cuisine, chambre. Transformez votre habitat avec un
+                  éclairage adapté à votre style de vie.
                 </p>
               </div>
               <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
@@ -223,7 +235,8 @@ export default function ProductDetail() {
                   Environnements commerciaux
                 </h3>
                 <p className="font-roboto text-muted-foreground">
-                  Boutique, galerie, showroom. Mettez en valeur vos produits avec un éclairage professionnel et élégant.
+                  Boutique, galerie, showroom. Mettez en valeur vos produits
+                  avec un éclairage professionnel et élégant.
                 </p>
               </div>
             </div>
@@ -236,7 +249,8 @@ export default function ProductDetail() {
             Prêt à transformer votre éclairage ?
           </h2>
           <p className="font-roboto text-lg max-w-2xl mx-auto text-white/90">
-            Contactez-nous dès maintenant pour obtenir un devis personnalisé ou télécharger la fiche technique complète.
+            Contactez-nous dès maintenant pour obtenir un devis personnalisé ou
+            télécharger la fiche technique complète.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
             <button className="bg-white hover:bg-white/90 text-accent font-roboto font-bold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg active:scale-95">

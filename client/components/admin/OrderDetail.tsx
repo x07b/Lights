@@ -208,20 +208,12 @@ export default function OrderDetail({
                 key={item.id}
                 className="pb-3 border-b border-border last:border-0 last:pb-0"
               >
-                <div className="flex items-start justify-between gap-4 mb-2">
+                <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-semibold text-foreground">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      Prix unitaire: {item.price.toFixed(2)} TND
-                    </p>
                   </div>
                   <p className="text-sm bg-accent/10 text-accent font-semibold px-3 py-1 rounded-lg">
                     Quantité: {item.quantity}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-futura font-bold text-accent">
-                    {(item.price * item.quantity).toFixed(2)} TND
                   </p>
                 </div>
               </div>
@@ -229,39 +221,6 @@ export default function OrderDetail({
           </div>
         </div>
 
-        {/* Order Summary */}
-        <div className="border-t border-border pt-6">
-          <h3 className="text-2xl font-futura font-bold text-primary mb-6">
-            Résumé
-          </h3>
-
-          <div className="space-y-4 mb-6 text-right">
-            <div className="flex justify-end gap-6">
-              <span className="text-muted-foreground font-roboto">
-                Sous-total:
-              </span>
-              <span className="font-semibold text-foreground min-w-32">
-                {order.total.toFixed(2)} TND
-              </span>
-            </div>
-            <div className="flex justify-end gap-6">
-              <span className="text-muted-foreground font-roboto">
-                Frais de port:
-              </span>
-              <span className="font-semibold text-accent min-w-32">
-                Gratuit
-              </span>
-            </div>
-            <div className="flex justify-end gap-6 pt-4 border-t border-border">
-              <span className="text-lg font-futura font-bold text-primary">
-                Total:
-              </span>
-              <span className="text-3xl font-futura font-bold text-accent min-w-32">
-                {order.total.toFixed(2)} TND
-              </span>
-            </div>
-          </div>
-        </div>
 
         {/* Order Metadata */}
         <div className="bg-secondary/50 rounded-lg p-4 space-y-2 text-sm text-muted-foreground">

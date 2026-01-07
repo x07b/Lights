@@ -311,9 +311,6 @@ export default function OrdersManager() {
                         <p className="font-semibold text-foreground">
                           {order.items.length} article(s)
                         </p>
-                        <p className="text-2xl font-futura font-bold text-accent mt-2">
-                          {order.total.toFixed(2)} TND
-                        </p>
                       </div>
                     </div>
 
@@ -326,13 +323,10 @@ export default function OrdersManager() {
                         {order.items.map((item) => (
                           <li
                             key={item.id}
-                            className="flex justify-between text-sm"
+                            className="text-sm"
                           >
                             <span className="text-foreground">
                               {item.name} x {item.quantity}
-                            </span>
-                            <span className="text-muted-foreground">
-                              {(item.price * item.quantity).toFixed(2)} TND
                             </span>
                           </li>
                         ))}

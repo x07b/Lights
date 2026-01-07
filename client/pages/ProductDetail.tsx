@@ -84,6 +84,33 @@ export default function ProductDetail() {
     );
   }
 
+  const detailSections = [
+    {
+      title: "Description générale",
+      content: product.description,
+    },
+    {
+      title: "Caractéristiques principales",
+      content: [
+        "Technologie LED dernière génération",
+        "Efficacité énergétique optimale",
+        "Design innovant et élégant",
+        "Installation facile et rapide",
+        "Durée de vie prolongée",
+      ],
+    },
+    {
+      title: "Garantie et support",
+      content: [
+        "Garantie fabricant 3 ans",
+        "Support technique gratuit",
+        "Service client réactif",
+        "Documentation complète incluse",
+        "Assistance installation disponible",
+      ],
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <ScrollToTop />

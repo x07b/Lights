@@ -43,6 +43,13 @@ import {
   updateHeroSlide,
   deleteHeroSlide,
 } from "./routes/slides";
+import {
+  createQuoteRequest,
+  getQuoteRequests,
+  getQuoteRequestById,
+  updateQuoteRequestStatus,
+  deleteQuoteRequest,
+} from "./routes/quotes";
 
 export function createServer() {
   const app = express();

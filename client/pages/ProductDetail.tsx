@@ -249,8 +249,6 @@ export default function ProductDetail() {
           category={product.category}
           description={product.description}
           features={features}
-          pdfFile={product.pdfFile}
-          pdfFilename={product.pdfFilename}
         >
           <ProductGallery images={product.images} productName={product.name} />
         </ProductDetailHero>

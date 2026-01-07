@@ -228,8 +228,8 @@ export default function ProductDetail() {
         pdfFilename={product.pdfFilename}
       />
 
-      {/* Main Content - Full width, no right margin needed due to sticky sidebar fixed positioning */}
-      <div>
+      {/* Main Content - With right padding to accommodate fixed sidebar on desktop */}
+      <div className="lg:pr-96">
         {/* Back Button */}
         <div className="bg-white border-b border-border">
           <div className="max-w-7xl mx-auto px-4 py-6">

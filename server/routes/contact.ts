@@ -53,8 +53,8 @@ export async function handleContact(req: any, res: any) {
 
     if (insertError) throw insertError;
 
-    // Try to send email if SMTP is configured
-    const emailSent = await sendEmail(validatedData);
+    // Try to send email if Resend is configured
+    const emailSent = await sendContactEmail(validatedData);
 
     // Return success response with email delivery status
     res.status(200).json({

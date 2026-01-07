@@ -149,25 +149,14 @@ export function ProductCard({
           {description}
         </p>
 
-        {/* Price */}
-        <div className="pt-2 border-t border-border">
-          <span className="text-2xl font-futura font-bold text-accent">
-            {price.toFixed(2)} TND
-          </span>
-        </div>
-
-        {/* Add to Cart Button */}
+        {/* Request Quote Button */}
         <button
-          onClick={handleAddToCart}
-          title={isAdded ? "Ajouté !" : "Ajouter au panier"}
-          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold ${
-            isAdded
-              ? "bg-accent/90 scale-95 text-white"
-              : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
-          }`}
+          onClick={handleRequestQuote}
+          title="Demander un devis"
+          className="w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
         >
-          <ShoppingCart className="w-5 h-5" />
-          {isAdded ? "Ajouté !" : "Ajouter au panier"}
+          <Mail className="w-5 h-5" />
+          Demande de devis
         </button>
       </div>
     </div>

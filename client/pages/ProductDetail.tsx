@@ -276,42 +276,12 @@ export default function ProductDetail() {
         {/* Final CTA */}
         <CTASection productName={product.name} />
 
-        {/* Mobile: Product Details Panel at bottom */}
-        <div className="lg:hidden">
-          <div className="bg-white border-t border-border">
-            <div className="max-w-7xl mx-auto px-4 py-12">
-              <h2 className="font-futura text-3xl font-bold text-foreground mb-8">
-                Détails du produit
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {detailSections.map((section, index) => (
-                  <div key={index} className="space-y-3">
-                    <h3 className="font-futura font-bold text-foreground uppercase text-sm tracking-wide">
-                      {section.title}
-                    </h3>
-                    {Array.isArray(section.content) ? (
-                      <ul className="space-y-2">
-                        {section.content.map((item, itemIndex) => (
-                          <li
-                            key={itemIndex}
-                            className="font-roboto text-sm text-muted-foreground flex gap-2"
-                          >
-                            <span className="text-accent">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="font-roboto text-sm text-muted-foreground">
-                        {section.content}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Product Details Panel - Scrollable section below all main content */}
+        <ProductDetailsPanel
+          sections={detailSections}
+          sectionTitle="Détails du produit"
+          sectionSubtitle="Informations complètes et spécifications"
+        />
       </div>
     </div>
   );

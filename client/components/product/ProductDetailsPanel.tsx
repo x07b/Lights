@@ -13,72 +13,67 @@ export interface DetailSection {
 }
 
 interface ProductDetailsPanelProps {
-  productName: string;
-  productCategory?: string;
   sections: DetailSection[];
+  sectionTitle?: string;
+  sectionSubtitle?: string;
 }
 
 export function ProductDetailsPanel({
-  productName,
-  productCategory,
   sections,
+  sectionTitle = "Détails du produit",
+  sectionSubtitle = "Informations complètes",
 }: ProductDetailsPanelProps) {
   const [openSections, setOpenSections] = useState<string[]>([]);
 
   return (
-    <aside className="product-details-panel fixed right-0 top-0 h-screen w-96 bg-white border-l border-border overflow-y-auto shadow-2xl z-40 animate-slide-in-right">
-      {/* Sticky Header */}
-      <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-border z-50 px-6 py-8 shadow-sm">
-        <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold mb-2">
-          {productCategory || "Produit"}
-        </p>
-        <h2 className="font-futura text-2xl font-bold text-foreground leading-tight line-clamp-3">
-          {productName}
-        </h2>
-      </div>
-
-      {/* Accordion Sections */}
-      <div className="px-4 py-6 space-y-1">
-        <div className="mb-6 pb-4 border-b-2 border-accent/20">
+    <section className="product-details-panel py-16 md:py-24 px-4 bg-white">
+      <div className="max-w-4xl mx-auto">
+        {/* Section Header */}
+        <div className="mb-12 space-y-3">
           <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">
-            ✓ Détails du produit
+            {sectionSubtitle}
           </p>
+          <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+            {sectionTitle}
+          </h2>
+          <div className="h-1 w-20 bg-accent rounded-full" />
         </div>
 
+        {/* Accordion Sections */}
         <Accordion
           type="multiple"
           value={openSections}
           onValueChange={setOpenSections}
-          className="w-full space-y-3"
+          className="w-full space-y-4"
         >
           {sections.map((section, index) => (
             <AccordionItem
               key={`section-${index}`}
               value={`section-${index}`}
-              className="border border-border/50 rounded-xl overflow-hidden hover:border-accent/30 transition-all duration-300 hover:shadow-md"
+              className="border border-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg"
             >
-              <AccordionTrigger className="text-base font-bold text-foreground py-4 px-4 hover:no-underline hover:text-accent hover:bg-accent/5 transition-all duration-300 group">
-                <span className="font-futura font-bold uppercase tracking-wider text-xs">
+              <AccordionTrigger className="text-lg font-bold text-foreground py-5 px-6 hover:no-underline hover:text-accent hover:bg-accent/5 transition-all duration-300 group">
+                <span className="font-futura font-bold uppercase tracking-wider text-sm">
                   {section.title}
                 </span>
-                <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 text-accent" />
+                <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 text-accent group-data-[state=open]:rotate-180" />
               </AccordionTrigger>
 
-              <AccordionContent className="pb-4 pt-2 px-4 bg-white border-t border-border/20">
+              <AccordionContent className="pb-6 pt-2 px-6 bg-gradient-to-b from-white/50 to-white border-t border-border/20">
                 {Array.isArray(section.content) ? (
                   <ul className="space-y-3">
                     {section.content.map((item, itemIndex) => (
                       <li
                         key={itemIndex}
-                        className="flex gap-3 items-start font-roboto text-xs text-muted-foreground leading-relaxed"
+                        className="flex gap-4 items-start font-roboto text-sm text-muted-foreground leading-relaxed"
                       >
-                        <span className="text-accent font-bold mt-1.5 flex-shrink-0">→</span>
+                        <span className="text-accent font-bold mt-0.5 flex-shrink-0 text-lg">→</span>
                         <span className="flex-grow">{item}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="font-roboto text-xs text-muted-foreground leading-relaxed">
+                  <p className="font-roboto text-sm text-muted-foreground leading-relaxed">
                     {section.content}
                   </p>
                 )}
@@ -87,22 +82,6 @@ export function ProductDetailsPanel({
           ))}
         </Accordion>
       </div>
-
-      {/* Bottom CTA Section */}
-      <div className="sticky bottom-0 bg-gradient-to-t from-white via-white to-transparent border-t border-border px-4 py-6 space-y-3">
-        <a
-          href="#cta-section"
-          className="block w-full bg-accent hover:bg-accent/90 text-white font-roboto font-bold py-3 px-4 rounded-lg text-center transition-all duration-300 hover:shadow-lg active:scale-95"
-        >
-          Demander un devis
-        </a>
-        <p className="font-roboto text-xs text-muted-foreground text-center">
-          Sélectionnez des produits et demandez un devis personnalisé
-        </p>
-      </div>
-
-      {/* Bottom Spacing */}
-      <div className="h-12" />
-    </aside>
+    </section>
   );
 }

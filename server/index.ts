@@ -144,6 +144,13 @@ export function createServer() {
   app.put("/api/slides/:id", updateHeroSlide);
   app.delete("/api/slides/:id", deleteHeroSlide);
 
+  // Quote requests routes
+  app.post("/api/quotes", createQuoteRequest);
+  app.get("/api/quotes", getQuoteRequests);
+  app.get("/api/quotes/:id", getQuoteRequestById);
+  app.put("/api/quotes/:id/status", updateQuoteRequestStatus);
+  app.delete("/api/quotes/:id", deleteQuoteRequest);
+
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));
 

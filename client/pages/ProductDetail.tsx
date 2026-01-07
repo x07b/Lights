@@ -9,6 +9,7 @@ import { TechnicalSpecifications } from "@/components/product/TechnicalSpecifica
 import { UseCasesSection } from "@/components/product/UseCasesSection";
 import { CertificationsSection } from "@/components/product/CertificationsSection";
 import { CTASection } from "@/components/product/CTASection";
+import { ProductDetailsPanel, type DetailSection } from "@/components/product/ProductDetailsPanel";
 
 interface Specification {
   label: string;

@@ -24,15 +24,12 @@ export function ProductDetailHero({
   category,
   description,
   features = [],
-  price,
   pdfFile,
   pdfFilename,
   onDownloadPDF,
-  onAddToCart,
+  onRequestQuote,
   children,
 }: ProductDetailHeroProps) {
-  const { addItem } = useCart();
-
   const handleDownloadPDF = () => {
     if (onDownloadPDF) {
       onDownloadPDF();
@@ -52,24 +49,13 @@ export function ProductDetailHero({
     document.body.removeChild(link);
   };
 
-  const handleAddToCart = () => {
-    if (onAddToCart) {
-      onAddToCart();
+  const handleRequestQuote = () => {
+    if (onRequestQuote) {
+      onRequestQuote();
       return;
     }
 
-    try {
-      addItem({
-        id: name,
-        name,
-        price,
-        quantity: 1,
-        slug: name.toLowerCase().replace(/\s+/g, "-"),
-      });
-      toast.success(`${name} ajouté au panier`);
-    } catch (error) {
-      toast.error("Erreur lors de l'ajout au panier");
-    }
+    toast.success(`Demande de devis pour ${name} envoyée!`);
   };
 
   return (

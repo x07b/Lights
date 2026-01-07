@@ -51,69 +51,52 @@ export function ProductHeroPanel({
   };
 
   return (
-    <>
-      <div className="sticky top-24 h-fit space-y-6">
-        {/* Category Tag */}
-        <p className="font-roboto text-sm uppercase tracking-widest text-accent font-bold">
-          {category}
-        </p>
+    <div className="sticky top-24 h-fit space-y-6">
+      {/* Category Tag */}
+      <p className="font-roboto text-sm uppercase tracking-widest text-accent font-bold">
+        {category}
+      </p>
 
-        {/* Title */}
-        <h1 className="font-futura text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-          {name}
-        </h1>
+      {/* Title */}
+      <h1 className="font-futura text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+        {name}
+      </h1>
 
-        {/* Description */}
-        <p className="font-roboto text-base text-muted-foreground leading-relaxed">
-          {description}
-        </p>
+      {/* Description */}
+      <p className="font-roboto text-base text-muted-foreground leading-relaxed">
+        {description}
+      </p>
 
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-accent to-transparent" />
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-accent to-transparent" />
 
-        {/* Action Buttons */}
-        <div className="space-y-3">
-          {/* Add to Cart Button - Primary */}
+      {/* Action Buttons */}
+      <div className="space-y-3">
+        {/* Request Quote Button - Primary */}
+        <button
+          onClick={handleRequestQuote}
+          className="w-full bg-accent hover:bg-accent/90 text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+        >
+          <Mail className="w-5 h-5" />
+          Demande de devis
+        </button>
+
+        {/* Download PDF - Secondary */}
+        {pdfFile && (
           <button
-            onClick={handleAddToCart}
-            className="w-full bg-accent hover:bg-accent/90 text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-          >
-            Ajouter au panier
-          </button>
-
-          {/* Request Quote Button - Secondary */}
-          <button
-            onClick={handleRequestQuote}
+            onClick={handleDownloadPDF}
             className="w-full border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
           >
-            <Mail className="w-5 h-5" />
-            Demande de devis
+            <FileText className="w-5 h-5" />
+            Fiche technique
           </button>
-
-          {/* Download PDF - Tertiary */}
-          {pdfFile && (
-            <button
-              onClick={handleDownloadPDF}
-              className="w-full border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-            >
-              <FileText className="w-5 h-5" />
-              Fiche technique
-            </button>
-          )}
-        </div>
-
-        {/* Info Text */}
-        <p className="text-xs text-muted-foreground text-center">
-          Demandez un devis gratuit et sans engagement
-        </p>
+        )}
       </div>
 
-      <QuoteRequestModal
-        isOpen={isQuoteModalOpen}
-        productId={id}
-        productName={name}
-        onClose={() => setIsQuoteModalOpen(false)}
-      />
-    </>
+      {/* Info Text */}
+      <p className="text-xs text-muted-foreground text-center">
+        Demandez un devis gratuit et sans engagement
+      </p>
+    </div>
   );
 }

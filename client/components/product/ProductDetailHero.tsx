@@ -12,10 +12,6 @@ interface ProductDetailHeroProps {
   category: string;
   description: string;
   features?: Feature[];
-  pdfFile?: string;
-  pdfFilename?: string;
-  onDownloadPDF?: () => void;
-  onRequestQuote?: () => void;
   children?: React.ReactNode; // For image gallery
 }
 

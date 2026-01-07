@@ -2,154 +2,246 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@example.com";
-const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@example.com";
+// Admin email address
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "itsazizsaidi@gmail.com";
 
+export interface SendEmailParams {
+  to: string;
+  subject: string;
+  html: string;
+}
+
+export async function sendEmail({
+  to,
+  subject,
+  html,
+}: SendEmailParams): Promise<{ success: boolean; error?: string }> {
+  try {
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("RESEND_API_KEY not configured");
+      return { success: false, error: "Email service not configured" };
+    }
+
+    const response = await resend.emails.send({
+      from: "notifications@luxence.fr",
+      to,
+      subject,
+      html,
+    });
+
+    if (response.error) {
+      console.error("Resend error:", response.error);
+      return { success: false, error: response.error.message };
+    }
+
+    console.log("Email sent successfully:", response.data?.id);
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to send email:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+// Send order confirmation email to client
 export async function sendOrderConfirmationEmail(
   customerEmail: string,
   customerName: string,
   panierCode: string,
-  items: Array<{ name: string; quantity: number }>,
-) {
-  try {
-    const itemsList = items
-      .map((item) => `<li>${item.name} (Quantité: ${item.quantity})</li>`)
-      .join("");
+  items: Array<{ name: string; quantity: number; price: number }>,
+  total: number,
+): Promise<{ success: boolean; error?: string }> {
+  const itemsHtml = items
+    .map(
+      (item) => `
+    <tr>
+      <td style="padding: 8px; border-bottom: 1px solid #eee;">${escapeHtml(item.name)}</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${item.price.toFixed(2)}€</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${(item.price * item.quantity).toFixed(2)}€</td>
+    </tr>
+  `,
+    )
+    .join("");
 
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
-            .code-box { background-color: #e8f0ff; padding: 15px; border-radius: 5px; margin: 20px 0; }
-            .code { font-size: 24px; font-weight: bold; color: #004aad; }
-            .items-list { padding: 10px 0; }
-            .footer { color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 15px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Merci pour votre demande de devis!</h1>
-              <p>Bonjour ${customerName},</p>
-            </div>
-            
-            <p>Votre demande de devis a été reçue avec succès. Nous vous remercions de votre intérêt.</p>
-            
-            <div class="code-box">
-              <p style="margin: 0 0 10px 0; color: #666;">Votre code de panier:</p>
-              <div class="code">${panierCode}</div>
-              <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">Conservez ce code pour suivre votre demande</p>
-            </div>
-            
-            <h3>Produits demandés:</h3>
-            <ul class="items-list">
-              ${itemsList}
-            </ul>
-            
-            <p>Notre équipe examinera votre demande et vous contactera dans les meilleurs délais pour discuter des détails et des options de personnalisation.</p>
-            
-            <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
-            
-            <div class="footer">
-              <p>© 2025 Luxence. Tous droits réservés.</p>
-              <p>Cet email a été envoyé automatiquement, merci de ne pas répondre directement.</p>
-            </div>
-          </div>
-        </body>
-      </html>
-    `;
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <h2 style="color: #2c3e50;">Confirmation de Commande</h2>
+      <p>Bonjour ${escapeHtml(customerName)},</p>
+      <p>Merci pour votre commande! Voici les détails de votre commande:</p>
+      
+      <div style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; margin: 20px 0;">
+        <p><strong>Code Panier:</strong> ${escapeHtml(panierCode)}</p>
+      </div>
+      
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+          <tr style="background-color: #f5f5f5;">
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Produit</th>
+            <th style="padding: 8px; text-align: center; border-bottom: 2px solid #ddd;">Quantité</th>
+            <th style="padding: 8px; text-align: right; border-bottom: 2px solid #ddd;">Prix</th>
+            <th style="padding: 8px; text-align: right; border-bottom: 2px solid #ddd;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+          <tr style="font-weight: bold; font-size: 16px;">
+            <td colspan="3" style="padding: 12px; text-align: right;">TOTAL:</td>
+            <td style="padding: 12px; text-align: right; border-top: 2px solid #ddd;">${total.toFixed(2)}€</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p style="margin-top: 20px; color: #666;">Nous vous contacterons bientôt pour confirmer les détails de votre commande.</p>
+      <p style="color: #999; font-size: 12px; margin-top: 20px;">Luxence</p>
+    </div>
+  `;
 
-    const response = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: customerEmail,
-      subject: `Votre demande de devis - Code: ${panierCode}`,
-      html: emailHtml,
-    });
-
-    console.log("Customer email sent successfully:", response);
-    return response;
-  } catch (error) {
-    console.error("Error sending customer email:", error);
-    throw error;
-  }
+  return sendEmail({
+    to: customerEmail,
+    subject: `Confirmation de Commande - ${panierCode}`,
+    html,
+  });
 }
 
-export async function sendAdminOrderNotificationEmail(
+// Send new order notification to admin
+export async function sendOrderAdminNotificationEmail(
   customerName: string,
   customerEmail: string,
   panierCode: string,
-  items: Array<{ name: string; quantity: number }>,
-) {
-  try {
-    const itemsList = items
-      .map((item) => `<li>${item.name} (Quantité: ${item.quantity})</li>`)
-      .join("");
+  items: Array<{ name: string; quantity: number; price: number }>,
+  total: number,
+): Promise<{ success: boolean; error?: string }> {
+  const itemsHtml = items
+    .map(
+      (item) => `
+    <tr>
+      <td style="padding: 8px; border-bottom: 1px solid #eee;">${escapeHtml(item.name)}</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${item.price.toFixed(2)}€</td>
+      <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${(item.price * item.quantity).toFixed(2)}€</td>
+    </tr>
+  `,
+    )
+    .join("");
 
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #fff3cd; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
-            .code-box { background-color: #e8f0ff; padding: 15px; border-radius: 5px; margin: 20px 0; }
-            .code { font-size: 20px; font-weight: bold; color: #004aad; }
-            .customer-info { background-color: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0; }
-            .action-button { background-color: #004aad; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin: 20px 0; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>🔔 Nouvelle demande de devis reçue</h1>
-            </div>
-            
-            <p>Une nouvelle demande de devis a été soumise sur votre plateforme.</p>
-            
-            <div class="customer-info">
-              <h3>Informations du client:</h3>
-              <p><strong>Nom:</strong> ${customerName}</p>
-              <p><strong>Email:</strong> ${customerEmail}</p>
-            </div>
-            
-            <div class="code-box">
-              <p style="margin: 0 0 10px 0; color: #666;">Code de panier:</p>
-              <div class="code">${panierCode}</div>
-            </div>
-            
-            <h3>Produits demandés:</h3>
-            <ul>
-              ${itemsList}
-            </ul>
-            
-            <a href="${process.env.ADMIN_DASHBOARD_URL || "https://your-domain.com/admin"}" class="action-button">
-              Consulter le dashboard
-            </a>
-            
-            <p style="margin-top: 30px; font-size: 12px; color: #666;">
-              Cet email a été généré automatiquement. Veuillez vous connecter au dashboard pour voir les détails complets et gérer cette commande.
-            </p>
-          </div>
-        </body>
-      </html>
-    `;
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <h2 style="color: #e74c3c;">🔔 Nouvelle Commande Reçue</h2>
+      
+      <div style="background-color: #fff3cd; padding: 12px; border-radius: 4px; margin: 20px 0; border-left: 4px solid #ffc107;">
+        <strong>Code Panier:</strong> ${escapeHtml(panierCode)}
+      </div>
+      
+      <h3>Client</h3>
+      <p>
+        <strong>Nom:</strong> ${escapeHtml(customerName)}<br/>
+        <strong>Email:</strong> ${escapeHtml(customerEmail)}
+      </p>
+      
+      <h3>Articles Commandés</h3>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <thead>
+          <tr style="background-color: #f5f5f5;">
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Produit</th>
+            <th style="padding: 8px; text-align: center; border-bottom: 2px solid #ddd;">Quantité</th>
+            <th style="padding: 8px; text-align: right; border-bottom: 2px solid #ddd;">Prix</th>
+            <th style="padding: 8px; text-align: right; border-bottom: 2px solid #ddd;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+          <tr style="font-weight: bold; font-size: 16px; background-color: #f5f5f5;">
+            <td colspan="3" style="padding: 12px; text-align: right;">TOTAL:</td>
+            <td style="padding: 12px; text-align: right; border-top: 2px solid #ddd;">${total.toFixed(2)}€</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p style="margin-top: 20px; padding: 12px; background-color: #d4edda; border-radius: 4px; border-left: 4px solid #28a745;">
+        ✅ Veuillez traiter cette commande dès que possible.
+      </p>
+    </div>
+  `;
 
-    const response = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `[NOUVELLE COMMANDE] ${panierCode} - ${customerName}`,
-      html: emailHtml,
-    });
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `[NOUVELLE COMMANDE] ${panierCode} - ${escapeHtml(customerName)}`,
+    html,
+  });
+}
 
-    console.log("Admin notification email sent successfully:", response);
-    return response;
-  } catch (error) {
-    console.error("Error sending admin notification email:", error);
-    throw error;
-  }
+// Send quote request confirmation to client
+export async function sendQuoteRequestConfirmationEmail(
+  clientEmail: string,
+  clientName: string,
+  productName: string,
+): Promise<{ success: boolean; error?: string }> {
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <h2 style="color: #2c3e50;">Demande de Devis Reçue</h2>
+      <p>Bonjour ${escapeHtml(clientName)},</p>
+      <p>Merci pour votre intérêt envers nos produits. Nous avons bien reçu votre demande de devis pour:</p>
+      
+      <div style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3498db;">
+        <strong style="font-size: 16px;">${escapeHtml(productName)}</strong>
+      </div>
+      
+      <p>Notre équipe d'experts examinera votre demande et vous contacterons dans les plus brefs délais pour vous fournir un devis personnalisé.</p>
+      <p style="margin-top: 20px; color: #666;">Cordialement,<br/>L'équipe Luxence</p>
+    </div>
+  `;
+
+  return sendEmail({
+    to: clientEmail,
+    subject: `Demande de Devis Reçue - ${productName}`,
+    html,
+  });
+}
+
+// Send quote request notification to admin
+export async function sendQuoteRequestAdminNotificationEmail(
+  clientName: string,
+  clientEmail: string,
+  productName: string,
+): Promise<{ success: boolean; error?: string }> {
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <h2 style="color: #e74c3c;">🔔 Nouvelle Demande de Devis</h2>
+      
+      <div style="background-color: #fff3cd; padding: 12px; border-radius: 4px; margin: 20px 0; border-left: 4px solid #ffc107;">
+        <strong>Produit:</strong> ${escapeHtml(productName)}
+      </div>
+      
+      <h3>Informations du Client</h3>
+      <p>
+        <strong>Nom:</strong> ${escapeHtml(clientName)}<br/>
+        <strong>Email:</strong> <a href="mailto:${escapeHtml(clientEmail)}">${escapeHtml(clientEmail)}</a>
+      </p>
+      
+      <p style="margin-top: 20px; padding: 12px; background-color: #d4edda; border-radius: 4px; border-left: 4px solid #28a745;">
+        ✅ Veuillez contacter le client pour fournir un devis détaillé.
+      </p>
+    </div>
+  `;
+
+  return sendEmail({
+    to: ADMIN_EMAIL,
+    subject: `[DEMANDE DE DEVIS] ${productName} - ${escapeHtml(clientName)}`,
+    html,
+  });
+}
+
+// Helper function to escape HTML special characters (XSS prevention)
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
 }

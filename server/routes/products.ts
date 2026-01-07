@@ -159,6 +159,7 @@ export async function createProduct(req: any, res: any) {
     const {
       name,
       description,
+      price,
       images,
       category,
       collectionId,
@@ -189,6 +190,7 @@ export async function createProduct(req: any, res: any) {
         collection_id: collectionId || null,
         name,
         description,
+        price: price || 0,
         category: category || "Uncategorized",
         slug,
         pdf_file: pdfFile || null,

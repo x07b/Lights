@@ -204,32 +204,17 @@ export default function ProductForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Basic Info */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-2">Product Name *</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-            className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-            placeholder="e.g., LED Panel Light"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2">Price (TND) *</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            required
-            step="0.01"
-            className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-            placeholder="49.00"
-          />
-        </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Product Name *</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+          placeholder="e.g., LED Panel Light"
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -94,7 +94,8 @@ export default function Products() {
               Aucun produit disponible pour le moment
             </p>
             <p className="text-sm text-muted-foreground font-roboto">
-              Veuillez consulter à nouveau plus tard ou contacter l'administrateur
+              Veuillez consulter à nouveau plus tard ou contacter
+              l'administrateur
             </p>
           </div>
         )}

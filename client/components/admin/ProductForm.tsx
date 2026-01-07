@@ -20,7 +20,9 @@ export default function ProductForm({
 }: ProductFormProps) {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+  const [uploadProgress, setUploadProgress] = useState<{
+    [key: string]: number;
+  }>({});
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
@@ -46,7 +48,11 @@ export default function ProductForm({
     fetchCollections();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -96,7 +102,10 @@ export default function ProductForm({
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -158,7 +167,7 @@ export default function ProductForm({
   const handleSpecChange = (
     index: number,
     field: "label" | "value",
-    value: string
+    value: string,
   ) => {
     const newSpecs = [...formData.specifications];
     newSpecs[index] = {
@@ -190,7 +199,7 @@ export default function ProductForm({
 
     const filteredImages = formData.images.filter((img) => img.trim());
     const filteredSpecs = formData.specifications.filter(
-      (spec) => spec.label && spec.value
+      (spec) => spec.label && spec.value,
     );
 
     onSave({
@@ -231,7 +240,9 @@ export default function ProductForm({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Collection (Optional)</label>
+          <label className="block text-sm font-medium mb-2">
+            Collection (Optional)
+          </label>
           <select
             name="collectionId"
             value={formData.collectionId}
@@ -270,12 +281,7 @@ export default function ProductForm({
               Upload images from your PC or paste image URLs
             </p>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={addImage}
-          >
+          <Button type="button" variant="outline" size="sm" onClick={addImage}>
             <Plus className="w-4 h-4 mr-1" />
             Add Image
           </Button>
@@ -373,7 +379,9 @@ export default function ProductForm({
               <FileText className="w-6 h-6 text-red-500" />
               <div>
                 <p className="text-sm font-medium">{formData.pdfFilename}</p>
-                <p className="text-xs text-muted-foreground">Ready to download</p>
+                <p className="text-xs text-muted-foreground">
+                  Ready to download
+                </p>
               </div>
             </div>
             <button
@@ -406,12 +414,7 @@ export default function ProductForm({
       <div>
         <div className="flex items-center justify-between mb-3">
           <label className="block text-sm font-medium">Specifications</label>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={addSpec}
-          >
+          <Button type="button" variant="outline" size="sm" onClick={addSpec}>
             <Plus className="w-4 h-4 mr-1" />
             Add Spec
           </Button>
@@ -453,12 +456,12 @@ export default function ProductForm({
 
       {/* Form Actions */}
       <div className="flex gap-3 pt-4 border-t border-border">
-        <Button
-          type="submit"
-          disabled={isUploading}
-          className="flex-1"
-        >
-          {isUploading ? "Uploading..." : product ? "Update Product" : "Create Product"}
+        <Button type="submit" disabled={isUploading} className="flex-1">
+          {isUploading
+            ? "Uploading..."
+            : product
+              ? "Update Product"
+              : "Create Product"}
         </Button>
         <Button
           type="button"

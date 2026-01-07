@@ -166,12 +166,9 @@ export async function createProduct(req: any, res: any) {
     } = req.body;
 
     if (!name || !description) {
-      res
-        .status(400)
-        .json({
-          error:
-            "Missing required fields: name and description are required",
-        });
+      res.status(400).json({
+        error: "Missing required fields: name and description are required",
+      });
       return;
     }
 

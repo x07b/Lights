@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Edit2, FileText } from "lucide-react";
 import ProductForm from "./ProductForm";
@@ -65,7 +71,7 @@ export default function ProductsManager() {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(productData),
-        }
+        },
       );
 
       if (response.ok) {
@@ -103,14 +109,14 @@ export default function ProductsManager() {
       {isAddingNew || editingId ? (
         <Card>
           <CardHeader>
-            <CardTitle>{editingId ? "Edit Product" : "Add New Product"}</CardTitle>
+            <CardTitle>
+              {editingId ? "Edit Product" : "Add New Product"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ProductForm
               product={
-                editingId
-                  ? products.find((p) => p.id === editingId)
-                  : undefined
+                editingId ? products.find((p) => p.id === editingId) : undefined
               }
               onSave={handleSave}
               onCancel={() => {

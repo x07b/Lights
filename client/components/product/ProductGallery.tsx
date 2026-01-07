@@ -20,9 +20,7 @@ export function ProductGallery({
   };
 
   const handleNextImage = () => {
-    setMainImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setMainImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const goToImage = (index: number) => {

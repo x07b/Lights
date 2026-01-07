@@ -2,7 +2,6 @@
 // A modular, CMS-ready component library for premium product pages
 
 export { ProductDetailHero } from "./ProductDetailHero";
-export type { default as ProductDetailHeroProps } from "./ProductDetailHero";
 
 export { ProductGallery } from "./ProductGallery";
 

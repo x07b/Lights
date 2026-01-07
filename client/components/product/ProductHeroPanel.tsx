@@ -27,6 +27,17 @@ export function ProductHeroPanel({
   const navigate = useNavigate();
   const { addItem } = useCart();
 
+  const handleAddToCart = () => {
+    addItem({
+      id,
+      name,
+      price,
+      quantity: 1,
+      slug,
+    });
+    toast.success(`${name} ajouté au panier!`);
+  };
+
   const handleRequestQuote = () => {
     addItem({
       id,
@@ -75,16 +86,24 @@ export function ProductHeroPanel({
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        {/* Request Quote Button - Primary */}
+        {/* Add to Cart Button - Primary */}
+        <button
+          onClick={handleAddToCart}
+          className="w-full bg-accent hover:bg-accent/90 text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+        >
+          Ajouter au panier
+        </button>
+
+        {/* Request Quote Button - Secondary */}
         <button
           onClick={handleRequestQuote}
-          className="w-full bg-accent hover:bg-accent/90 text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+          className="w-full border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
         >
           <Mail className="w-5 h-5" />
           Demande de devis
         </button>
 
-        {/* Download PDF - Secondary */}
+        {/* Download PDF - Tertiary */}
         {pdfFile && (
           <button
             onClick={handleDownloadPDF}

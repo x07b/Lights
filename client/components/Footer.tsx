@@ -26,17 +26,6 @@ export function Footer() {
               Luminaires d'art conçus pour sublimer vos intérieurs avec design
               et excellence.
             </p>
-            <div className="flex gap-3 pt-4">
-              <a
-                href="#"
-                className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center hover:bg-accent hover:scale-110 transition-all duration-300 group"
-                aria-label="Accueil"
-              >
-                <span className="text-accent group-hover:text-white transition-colors duration-300 text-lg">
-                  ✦
-                </span>
-              </a>
-            </div>
           </div>
 
           {/* À propos */}

@@ -76,9 +76,6 @@ export default function Cart() {
                     >
                       {item.name}
                     </Link>
-                    <p className="text-lg text-accent font-semibold">
-                      {item.price.toFixed(2)} TND
-                    </p>
                   </div>
 
                   <div className="flex items-center gap-4">
@@ -110,16 +107,6 @@ export default function Cart() {
                       </button>
                     </div>
 
-                    {/* Subtotal */}
-                    <div className="text-right min-w-32">
-                      <p className="text-sm text-muted-foreground mb-1">
-                        Sous-total
-                      </p>
-                      <p className="text-xl font-futura font-bold text-accent">
-                        {(item.price * item.quantity).toFixed(2)} TND
-                      </p>
-                    </div>
-
                     {/* Remove Button */}
                     <button
                       onClick={() => removeItem(item.id)}
@@ -137,32 +124,8 @@ export default function Cart() {
             <div className="lg:col-span-1 h-fit">
               <div className="bg-white rounded-lg border border-border p-8 sticky top-4 space-y-6">
                 <h2 className="text-2xl font-futura font-bold text-primary">
-                  Résumé
+                  Votre Panier
                 </h2>
-
-                {/* Summary Lines */}
-                <div className="space-y-4 border-t border-b border-border py-4">
-                  <div className="flex justify-between text-muted-foreground">
-                    <span className="font-roboto">Sous-total:</span>
-                    <span className="font-semibold">
-                      {total.toFixed(2)} TND
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-muted-foreground">
-                    <span className="font-roboto">Frais de port:</span>
-                    <span className="font-semibold text-accent">Gratuit</span>
-                  </div>
-                </div>
-
-                {/* Total */}
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-futura font-bold text-primary">
-                    Total:
-                  </span>
-                  <span className="text-3xl font-futura font-bold text-accent">
-                    {total.toFixed(2)} TND
-                  </span>
-                </div>
 
                 {/* Checkout Button */}
                 <Link

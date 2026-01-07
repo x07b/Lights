@@ -18,6 +18,7 @@ interface Product {
   images: string[];
   category: string;
   slug: string;
+  price: number;
   specifications: Specification[];
   pdfFile?: string;
   pdfFilename?: string;
@@ -173,11 +174,14 @@ export default function ProductDetail() {
           {/* Right: Sticky Product Info Panel */}
           <div>
             <ProductHeroPanel
+              id={product.id}
               category={product.category}
               name={product.name}
               description={product.description}
+              price={product.price}
               pdfFile={product.pdfFile}
               pdfFilename={product.pdfFilename}
+              slug={product.slug}
             />
           </div>
         </section>

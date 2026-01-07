@@ -5,6 +5,8 @@ export { ProductDetailHero } from "./ProductDetailHero";
 
 export { ProductGallery } from "./ProductGallery";
 
+export { ProductStickyHeader } from "./ProductStickyHeader";
+
 export { BenefitsSection } from "./BenefitsSection";
 export type { Benefit } from "./BenefitsSection";
 

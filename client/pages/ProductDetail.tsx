@@ -93,9 +93,7 @@ export default function ProductDetail() {
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
           {/* Left: Product Gallery (2 cols) */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg overflow-hidden border border-border">
-              <ProductGallery images={product.images} productName={product.name} />
-            </div>
+            <ProductGallery images={product.images} productName={product.name} />
           </div>
 
           {/* Right: Sticky Product Info Panel (1 col) */}
@@ -110,114 +108,13 @@ export default function ProductDetail() {
           </div>
         </section>
 
-        {/* Product Overview Section */}
+        {/* Product Details Accordion Section */}
         <section className="mb-16 sm:mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Description */}
-            <div className="space-y-6">
-              <div>
-                <h2 className="font-futura text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                  Découvrez l'excellence en éclairage
-                </h2>
-                <p className="font-roboto text-lg text-muted-foreground leading-relaxed">
-                  Le {product.name} représente le summum de la technologie d'éclairage moderne. Combinant performance énergétique, durabilité exceptionnelle et design minimaliste, ce luminaire transforme vos espaces en environnements lumineux sophistiqués.
-                </p>
-              </div>
-              <div className="pt-6 border-t border-border">
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Conçu pour les professionnels et les particuliers exigeants, ce produit offre une solution complète d'éclairage avec contrôle intelligent, adaptabilité et fiabilité inégalées. Chaque détail a été pensé pour assurer votre satisfaction et optimiser votre investissement.
-                </p>
-              </div>
-            </div>
-
-            {/* Key Features */}
-            <div className="space-y-4">
-              <h3 className="font-futura text-2xl font-bold text-foreground mb-6">
-                Caractéristiques principales
-              </h3>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
-                      <span className="text-accent font-bold">✓</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-futura font-bold text-foreground mb-1">
-                      Longévité supérieure
-                    </h4>
-                    <p className="font-roboto text-sm text-muted-foreground">
-                      Durée de vie exceptionnelle de 3000+ heures avec performance constante
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
-                      <span className="text-accent font-bold">✓</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-futura font-bold text-foreground mb-1">
-                      Efficacité énergétique
-                    </h4>
-                    <p className="font-roboto text-sm text-muted-foreground">
-                      Technologie LED haute performance réduisant votre consommation énergétique
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
-                      <span className="text-accent font-bold">✓</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-futura font-bold text-foreground mb-1">
-                      Design épuré
-                    </h4>
-                    <p className="font-roboto text-sm text-muted-foreground">
-                      Esthétique minimaliste s'intégrant parfaitement à tout décor
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
-                      <span className="text-accent font-bold">✓</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-futura font-bold text-foreground mb-1">
-                      Contrôle intelligent
-                    </h4>
-                    <p className="font-roboto text-sm text-muted-foreground">
-                      Compatible avec systèmes domotiques pour contrôle personnalisé
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
-                      <span className="text-accent font-bold">✓</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-futura font-bold text-foreground mb-1">
-                      Installation simple
-                    </h4>
-                    <p className="font-roboto text-sm text-muted-foreground">
-                      Setup rapide et facile, support technique disponible
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductDetailsPanel
+            sections={detailSections}
+            sectionTitle="Détails du produit"
+            sectionSubtitle="Informations complètes"
+          />
         </section>
 
         {/* Specifications Section */}

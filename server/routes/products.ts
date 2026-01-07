@@ -10,6 +10,7 @@ interface Product {
   collectionId: string;
   name: string;
   description: string;
+  price: number;
   images: string[];
   category: string;
   slug: string;
@@ -25,6 +26,7 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     collectionId: dbProduct.collection_id,
     name: dbProduct.name,
     description: dbProduct.description,
+    price: dbProduct.price || 0,
     images: images
       .map((img) => img.image_url)
       .sort((a, b) => {

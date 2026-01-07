@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
 
 export interface DetailSection {
   title: string;
@@ -52,11 +51,10 @@ export function ProductDetailsPanel({
               value={`section-${index}`}
               className="border border-border rounded-xl overflow-hidden hover:border-accent/40 transition-all duration-300 hover:shadow-lg"
             >
-              <AccordionTrigger className="text-lg font-bold text-foreground py-5 px-6 hover:no-underline hover:text-accent hover:bg-accent/5 transition-all duration-300 group">
+              <AccordionTrigger className="text-lg font-bold text-foreground py-5 px-6 hover:no-underline hover:text-accent hover:bg-accent/5 transition-all duration-300">
                 <span className="font-futura font-bold uppercase tracking-wider text-sm">
                   {section.title}
                 </span>
-                <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-300 text-accent group-data-[state=open]:rotate-180" />
               </AccordionTrigger>
 
               <AccordionContent className="pb-6 pt-2 px-6 bg-gradient-to-b from-white/50 to-white border-t border-border/20">

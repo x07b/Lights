@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Edit2, FileText } from "lucide-react";
 import ProductForm from "./ProductForm";
@@ -8,7 +14,6 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
   images: string[];
   category: string;
   collectionId: string;
@@ -66,7 +71,7 @@ export default function ProductsManager() {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(productData),
-        }
+        },
       );
 
       if (response.ok) {
@@ -104,14 +109,14 @@ export default function ProductsManager() {
       {isAddingNew || editingId ? (
         <Card>
           <CardHeader>
-            <CardTitle>{editingId ? "Edit Product" : "Add New Product"}</CardTitle>
+            <CardTitle>
+              {editingId ? "Edit Product" : "Add New Product"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <ProductForm
               product={
-                editingId
-                  ? products.find((p) => p.id === editingId)
-                  : undefined
+                editingId ? products.find((p) => p.id === editingId) : undefined
               }
               onSave={handleSave}
               onCancel={() => {
@@ -143,9 +148,6 @@ export default function ProductsManager() {
                       </h3>
                       <p className="text-sm text-muted-foreground">
                         {product.description}
-                      </p>
-                      <p className="text-sm text-accent font-semibold mt-2">
-                        {product.price.toFixed(2)} TND
                       </p>
                       <div className="flex gap-2 mt-2 flex-wrap">
                         <span className="text-xs bg-secondary px-2 py-1 rounded">

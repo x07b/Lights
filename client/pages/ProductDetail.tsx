@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductHeroPanel } from "@/components/product/ProductHeroPanel";
+import { ProductDetailsPanel } from "@/components/product/ProductDetailsPanel";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 interface Specification {
@@ -14,7 +15,6 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
   images: string[];
   category: string;
   slug: string;
@@ -83,24 +83,95 @@ export default function ProductDetail() {
     );
   }
 
+  const detailSections = [
+    {
+      title: "Description du produit",
+      content: product.description,
+    },
+    {
+      title: "Données techniques",
+      content: [
+        "Puissance : 10W à 50W selon modèle",
+        "Tension d'alimentation : 220V-240V AC",
+        "Fréquence : 50-60 Hz",
+        "Indice de protection : IP54",
+        "Température de couleur : 3000K - 6500K",
+        "Efficacité lumineuse : 130-150 lm/W",
+        "Durée de vie : 50 000 heures",
+        "Angle de diffusion : 120°",
+      ],
+    },
+    {
+      title: "Informations sur l'emballage",
+      content: [
+        "Dimensions de l'emballage : 25 x 25 x 10 cm",
+        "Poids brut : 500g",
+        "Matériel d'emballage : Carton recyclé avec mousse de protection",
+        "Contenu : Luminaire, câbles de connexion, matériel de montage, manuel d'installation",
+        "Emballage écologique et 100% recyclable",
+      ],
+    },
+    {
+      title: "Documents et certificats",
+      content: [
+        "Certification CE - Directive 2014/30/UE",
+        "Certification RoHS - Conformité toxicité",
+        "Certification FCC pour les modèles compatibles WiFi",
+        "Marquage énergétique UE",
+        "Déclaration de conformité disponible",
+        "Manuel d'installation multilingue",
+        "Schéma de connexion électrique",
+      ],
+    },
+    {
+      title: "Images et graphiques du produit",
+      content: [
+        "Vue de face du luminaire",
+        "Vue de profil avec dimensions",
+        "Vue démontée des composants",
+        "Diagramme de montage étape par étape",
+        "Interface de contrôle (si applicable)",
+        "Options de finition disponibles",
+        "Comparaison de luminosité avec autres modèles",
+      ],
+    },
+    {
+      title: "Images d'application",
+      content: [
+        "Installation en environnement professionnel (bureaux)",
+        "Utilisation en espaces résidentiels (salon, cuisine)",
+        "Installations commerciales (boutiques, galeries)",
+        "Ambiance lumineuse en conditions de faible éclairage",
+        "Montage mural et au plafond",
+        "Configurations multi-luminaires",
+        "Différents rendus de couleur et température",
+      ],
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <ScrollToTop />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16">
-        {/* Two-Column Hero Section: Gallery Left, Sticky Panel Right */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16 sm:mb-20">
-          {/* Left: Product Gallery (2 cols) */}
-          <div className="lg:col-span-2">
+        {/* Two-Column Section: Gallery + Details Left, Sticky Panel Right */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 sm:mb-20">
+          {/* Left: Product Gallery + Details Accordion */}
+          <div className="space-y-8">
             <ProductGallery
               images={product.images}
               productName={product.name}
             />
+            <ProductDetailsPanel
+              sections={detailSections}
+              sectionTitle="Détails du produit"
+              sectionSubtitle="Informations complètes"
+            />
           </div>
 
-          {/* Right: Sticky Product Info Panel (1 col) */}
-          <div className="lg:col-span-1">
+          {/* Right: Sticky Product Info Panel */}
+          <div>
             <ProductHeroPanel
               category={product.category}
               name={product.name}
@@ -109,15 +180,6 @@ export default function ProductDetail() {
               pdfFilename={product.pdfFilename}
             />
           </div>
-        </section>
-
-        {/* Product Details Accordion Section */}
-        <section className="mb-16 sm:mb-20">
-          <ProductDetailsPanel
-            sections={detailSections}
-            sectionTitle="Détails du produit"
-            sectionSubtitle="Informations complètes"
-          />
         </section>
 
         {/* Specifications Section */}

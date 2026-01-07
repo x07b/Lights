@@ -20,9 +20,7 @@ export function ProductGallery({
   };
 
   const handleNextImage = () => {
-    setMainImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setMainImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const goToImage = (index: number) => {
@@ -32,14 +30,14 @@ export function ProductGallery({
   return (
     <>
       {/* Main Gallery */}
-      <div className="product-gallery space-y-4">
+      <div className="product-gallery space-y-3">
         {/* Main Image Container */}
-        <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg hover:shadow-2xl transition-all duration-500 border border-border animate-fade-in relative group">
-          <div className="relative w-full">
+        <div className="flex items-center justify-center bg-white p-2 animate-fade-in relative group">
+          <div className="relative w-full flex justify-center">
             <img
               src={images[mainImageIndex]}
               alt={productName}
-              className="w-full h-auto max-w-md object-cover rounded-lg hover:scale-105 transition-transform duration-500 cursor-pointer"
+              className="h-auto w-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer"
               onClick={() => setIsFullscreen(true)}
             />
             <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />

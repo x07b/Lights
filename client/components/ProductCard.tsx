@@ -1,14 +1,12 @@
-import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
+import { Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
   name: string;
   description: string;
-  price: number;
   image?: string;
   images?: string[];
   category?: string;
@@ -19,36 +17,23 @@ export function ProductCard({
   id,
   name,
   description,
-  price,
   image,
   images = [],
   category,
   slug,
 }: ProductCardProps) {
-  const [isAdded, setIsAdded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
-  const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleRequestQuote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    try {
-      addItem({
-        id,
-        name,
-        price,
-        quantity: 1,
-        slug: slug || id,
-      });
-      setIsAdded(true);
-      toast.success(`${name} ajouté au panier`);
-      setTimeout(() => setIsAdded(false), 2000);
-    } catch (error) {
-      toast.error("Erreur lors de l'ajout au panier");
+    toast.success(`Demande de devis pour ${name} envoyée!`);
+    if (slug) {
+      navigate(`/product/${slug}`);
     }
   };
 
@@ -164,25 +149,14 @@ export function ProductCard({
           {description}
         </p>
 
-        {/* Price */}
-        <div className="pt-2 border-t border-border">
-          <span className="text-2xl font-futura font-bold text-accent">
-            {price.toFixed(2)} TND
-          </span>
-        </div>
-
-        {/* Add to Cart Button */}
+        {/* Request Quote Button */}
         <button
-          onClick={handleAddToCart}
-          title={isAdded ? "Ajouté !" : "Ajouter au panier"}
-          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold ${
-            isAdded
-              ? "bg-accent/90 scale-95 text-white"
-              : "bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
-          }`}
+          onClick={handleRequestQuote}
+          title="Demander un devis"
+          className="w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
         >
-          <ShoppingCart className="w-5 h-5" />
-          {isAdded ? "Ajouté !" : "Ajouter au panier"}
+          <Mail className="w-5 h-5" />
+          Demande de devis
         </button>
       </div>
     </div>

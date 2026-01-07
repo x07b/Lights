@@ -20,39 +20,8 @@ export function ProductDetailHero({
   category,
   description,
   features = [],
-  pdfFile,
-  pdfFilename,
-  onDownloadPDF,
-  onRequestQuote,
   children,
 }: ProductDetailHeroProps) {
-  const handleDownloadPDF = () => {
-    if (onDownloadPDF) {
-      onDownloadPDF();
-      return;
-    }
-
-    if (!pdfFile) {
-      toast.error("No PDF available for this product");
-      return;
-    }
-
-    const link = document.createElement("a");
-    link.href = pdfFile;
-    link.download = pdfFilename || "technical-sheet.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleRequestQuote = () => {
-    if (onRequestQuote) {
-      onRequestQuote();
-      return;
-    }
-
-    toast.success(`Demande de devis pour ${name} envoyée!`);
-  };
 
   return (
     <section className="py-16 px-4 sm:py-20 md:py-28">

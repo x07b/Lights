@@ -284,6 +284,7 @@ export async function updateProduct(req: any, res: any) {
     const {
       name,
       description,
+      price,
       images,
       category,
       collectionId,
@@ -307,6 +308,7 @@ export async function updateProduct(req: any, res: any) {
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
+    if (price !== undefined) updateData.price = price;
     if (category !== undefined) updateData.category = category;
     if (collectionId !== undefined) updateData.collection_id = collectionId;
     if (pdfFile !== undefined) updateData.pdf_file = pdfFile || null;

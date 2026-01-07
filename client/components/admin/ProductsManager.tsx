@@ -143,9 +143,6 @@ export default function ProductsManager() {
                       <p className="text-sm text-muted-foreground">
                         {product.description}
                       </p>
-                      <p className="text-sm text-accent font-semibold mt-2">
-                        {product.price.toFixed(2)} TND
-                      </p>
                       <div className="flex gap-2 mt-2 flex-wrap">
                         <span className="text-xs bg-secondary px-2 py-1 rounded">
                           {product.category}

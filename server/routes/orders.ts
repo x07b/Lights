@@ -130,6 +130,31 @@ export async function createOrder(req: any, res: any) {
 
     if (itemsError) throw itemsError;
 
+    // Send email notifications
+    const emailItems = validatedData.items.map((item) => ({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    // Send confirmation email to customer
+    await sendOrderConfirmationEmail(
+      validatedData.customer.email,
+      validatedData.customer.name,
+      panierCode,
+      emailItems,
+      validatedData.total,
+    );
+
+    // Send notification email to admin
+    await sendOrderAdminNotificationEmail(
+      validatedData.customer.name,
+      validatedData.customer.email,
+      panierCode,
+      emailItems,
+      validatedData.total,
+    );
+
     // Return success response with panier code
     res.status(201).json({
       success: true,

@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductHeroPanel } from "@/components/product/ProductHeroPanel";
+import { ProductDetailsPanel } from "@/components/product/ProductDetailsPanel";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 interface Specification {

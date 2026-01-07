@@ -47,8 +47,8 @@ export function ProductTitleSticky({
   };
 
   return (
-    <aside className="fixed right-0 top-20 w-80 h-auto z-30 hidden lg:block">
-      <div className="sticky top-20 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-border p-6 space-y-4">
+    <aside className="fixed right-0 top-20 w-80 h-auto z-30 hidden lg:block pr-4">
+      <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-border p-6 space-y-4 sticky top-20">
         {/* Category */}
         <div>
           <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">

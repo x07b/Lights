@@ -39,7 +39,7 @@ export function ProductGallery({
             <img
               src={images[mainImageIndex]}
               alt={productName}
-              className="h-auto max-h-56 w-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer"
+              className="h-auto w-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer"
               onClick={() => setIsFullscreen(true)}
             />
             <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl -z-10 blur-xl" />

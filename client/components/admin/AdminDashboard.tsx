@@ -184,32 +184,12 @@ export default function AdminDashboard() {
             </div>
             <p className="text-xs text-muted-foreground mt-3 font-roboto">
               {stats.totalOrders > 0
-                ? `Moyenne: ${(stats.totalRevenue / stats.totalOrders).toFixed(2)} TND`
+                ? `Commandes en attente: ${stats.totalOrders}`
                 : "Aucune commande"}
             </p>
           </CardContent>
         </Card>
 
-        {/* Total Revenue */}
-        <Card className="border-0 bg-gradient-to-br from-green-50 to-green-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-green-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Revenu Total
-            </CardTitle>
-            <div className="p-2 bg-green-400/20 rounded-lg">
-              <TrendingUp className="h-5 w-5 text-green-600" />
-            </div>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
-              {stats.totalRevenue.toFixed(2)}
-            </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
-              Dinars Tunisiens
-            </p>
-          </CardContent>
-        </Card>
 
         {/* Unique Customers */}
         <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
@@ -371,9 +351,6 @@ export default function AdminDashboard() {
                     <th className="text-left py-4 px-4 font-semibold text-foreground font-roboto">
                       Date
                     </th>
-                    <th className="text-right py-4 px-4 font-semibold text-foreground font-roboto">
-                      Montant
-                    </th>
                     <th className="text-center py-4 px-4 font-semibold text-foreground font-roboto">
                       Statut
                     </th>
@@ -395,9 +372,6 @@ export default function AdminDashboard() {
                       </td>
                       <td className="py-4 px-4 text-muted-foreground font-roboto">
                         {order.date}
-                      </td>
-                      <td className="py-4 px-4 text-right font-bold text-accent">
-                        {order.total.toFixed(2)} TND
                       </td>
                       <td className="py-4 px-4 text-center">
                         <span

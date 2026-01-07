@@ -34,7 +34,7 @@ export function ProductGallery({
       {/* Main Gallery */}
       <div className="product-gallery space-y-4">
         {/* Main Image Container */}
-        <div className="flex items-center justify-center bg-white rounded-2xl p-8 sm:p-12 shadow-lg hover:shadow-2xl transition-all duration-500 border border-border animate-fade-in relative group">
+        <div className="flex items-center justify-center bg-white p-4 sm:p-6 animate-fade-in relative group">
           <div className="relative w-full">
             <img
               src={images[mainImageIndex]}

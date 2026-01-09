@@ -287,6 +287,11 @@ CREATE POLICY "Hero slides are viewable by everyone"
   ON hero_slides FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Product details sections are viewable by everyone" ON product_details_sections;
+CREATE POLICY "Product details sections are viewable by everyone"
+  ON product_details_sections FOR SELECT
+  USING (true);
+
 -- Insert/Update/Delete policies - you may want to restrict these based on your auth setup
 -- For now, the service_role key (used in the backend API) bypasses RLS, so all operations
 -- will work. In production, you should create proper admin policies based on your authentication.

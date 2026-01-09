@@ -11,6 +11,11 @@ interface Specification {
   value: string;
 }
 
+interface DetailSection {
+  title: string;
+  content: string;
+}
+
 interface Product {
   id: string;
   name: string;

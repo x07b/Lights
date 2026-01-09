@@ -104,7 +104,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full h-screen min-h-screen overflow-hidden">
+    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
       {/* Background Image Carousel */}
       {slides.map((slide, index) => (
         <div
@@ -119,6 +119,8 @@ export function HeroSection() {
             src={slide.image}
             alt={slide.alt}
             className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
           />
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/40" />

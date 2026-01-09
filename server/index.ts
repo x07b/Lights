@@ -55,6 +55,7 @@ import {
   upsertProductDetails,
   deleteProductDetail,
 } from "./routes/product-details";
+import { trackVisitor, getVisitorStats } from "./routes/analytics";
 
 export function createServer() {
   const app = express();

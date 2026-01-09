@@ -4,7 +4,7 @@ export function AboutSection() {
   return (
     <section className="py-12 md:py-20 bg-gradient-to-br from-background via-background to-accent/5">
       <div className="container mx-auto px-4 w-full">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-in" style={{animation: "fade-in 0.8s ease-out forwards"}}>
           {/* Image */}
           <div className="order-2 md:order-1">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-80 md:h-96">

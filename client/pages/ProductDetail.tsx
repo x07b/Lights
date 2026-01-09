@@ -165,8 +165,6 @@ export default function ProductDetail() {
               name={product.name}
               description={product.description}
               price={product.price}
-              pdfFile={product.pdfFile}
-              pdfFilename={product.pdfFilename}
               slug={product.slug}
             />
           </div>

@@ -55,6 +55,7 @@ import {
   upsertProductDetails,
   deleteProductDetail,
 } from "./routes/product-details";
+import { trackVisitor, getVisitorStats } from "./routes/analytics";
 
 export function createServer() {
   const app = express();
@@ -163,6 +164,10 @@ export function createServer() {
     "/api/products/:productId/details/:sectionId",
     deleteProductDetail,
   );
+
+  // Analytics routes
+  app.post("/api/analytics/track-visitor", trackVisitor);
+  app.get("/api/analytics/visitors", getVisitorStats);
 
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));

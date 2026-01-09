@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShoppingCart, Users, TrendingUp, Package } from "lucide-react";
+import { ShoppingCart, Users, TrendingUp, Package, Eye } from "lucide-react";
+import { toast } from "sonner";
 import {
   BarChart,
   Bar,
@@ -21,6 +22,13 @@ interface DashboardStats {
   totalOrders: number;
   uniqueCustomers: number;
   totalProducts: number;
+  visitorStats: {
+    totalVisitors: number;
+    uniqueVisitors: number;
+    todayVisitors: number;
+    last7Days: number;
+    last30Days: number;
+  };
   ordersbyStatus: {
     enAttente: number;
     enCours: number;
@@ -40,6 +48,13 @@ export default function AdminDashboard() {
     totalOrders: 0,
     uniqueCustomers: 0,
     totalProducts: 0,
+    visitorStats: {
+      totalVisitors: 0,
+      uniqueVisitors: 0,
+      todayVisitors: 0,
+      last7Days: 0,
+      last30Days: 0,
+    },
     ordersbyStatus: {
       enAttente: 0,
       enCours: 0,
@@ -49,21 +64,37 @@ export default function AdminDashboard() {
     recentOrders: [],
   });
   const [loading, setLoading] = useState(true);
+  const previousOrderCountRef = useRef<number>(0);
+  const notificationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetchDashboardStats();
+
+    // Set up periodic refresh every 30 seconds to check for new orders
+    notificationIntervalRef.current = setInterval(() => {
+      fetchDashboardStats();
+    }, 30000);
+
+    return () => {
+      if (notificationIntervalRef.current) {
+        clearInterval(notificationIntervalRef.current);
+      }
+    };
   }, []);
 
   const fetchDashboardStats = async () => {
     try {
       setLoading(true);
-      const [ordersResponse, productsResponse] = await Promise.all([
-        fetch("/api/orders"),
-        fetch("/api/products"),
-      ]);
+      const [ordersResponse, productsResponse, visitorsResponse] =
+        await Promise.all([
+          fetch("/api/orders"),
+          fetch("/api/products"),
+          fetch("/api/analytics/visitors"),
+        ]);
 
       const ordersData = await ordersResponse.json();
       const productsData = await productsResponse.json();
+      const visitorsData = await visitorsResponse.json();
 
       const orders = ordersData.orders || [];
       const products = productsData || [];
@@ -95,13 +126,40 @@ export default function AdminDashboard() {
           date: new Date(order.createdAt).toLocaleDateString(),
         }));
 
+      const visitorStats = visitorsData || {
+        totalVisitors: 0,
+        uniqueVisitors: 0,
+        todayVisitors: 0,
+        last7Days: 0,
+        last30Days: 0,
+      };
+
       setStats({
         totalOrders,
         uniqueCustomers,
         totalProducts,
+        visitorStats,
         ordersbyStatus,
         recentOrders,
       });
+
+      // Check for new pending orders and notify
+      const currentPendingCount = ordersbyStatus.enAttente;
+      if (
+        previousOrderCountRef.current > 0 &&
+        currentPendingCount > previousOrderCountRef.current
+      ) {
+        const newOrdersCount =
+          currentPendingCount - previousOrderCountRef.current;
+        toast.success(
+          `🎉 ${newOrdersCount} nouvelle(s) commande(s) en attente!`,
+          {
+            description: `Total: ${currentPendingCount} commandes en attente`,
+            duration: 5000,
+          },
+        );
+      }
+      previousOrderCountRef.current = currentPendingCount;
     } catch (error) {
       console.error("Error fetching dashboard stats:", error);
     } finally {
@@ -143,97 +201,120 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Page Header */}
-      <div className="mb-8">
-        <h2 className="text-3xl font-futura font-bold text-foreground mb-2">
+      <div className="mb-6 pb-6 border-b-2 border-secondary">
+        <h2 className="text-3xl md:text-4xl font-futura font-bold text-foreground mb-2">
           Tableau de Bord
         </h2>
         <p className="text-muted-foreground font-roboto">
-          Bienvenue sur votre tableau de bord administrateur
+          Vue d'ensemble de votre activité commerciale
         </p>
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Orders */}
-        <Card className="border-0 bg-gradient-to-br from-orange-50 to-orange-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-accent/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Commandes Totales
+        <Card className="border-0 bg-gradient-to-br from-orange-50 via-white to-orange-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-accent/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Commandes
             </CardTitle>
-            <div className="p-2 bg-accent/20 rounded-lg">
-              <ShoppingCart className="h-5 w-5 text-accent" />
+            <div className="p-2.5 bg-accent/15 rounded-lg">
+              <ShoppingCart className="h-4 w-4 text-accent" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-accent mb-2">
               {stats.totalOrders}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
-              {stats.totalOrders > 0
-                ? `Commandes en attente: ${stats.totalOrders}`
-                : "Aucune commande"}
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              {stats.ordersbyStatus.enAttente > 0
+                ? `${stats.ordersbyStatus.enAttente} en attente`
+                : "Toutes traitées"}
             </p>
           </CardContent>
         </Card>
 
         {/* Unique Customers */}
-        <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Clients Uniques
+        <Card className="border-0 bg-gradient-to-br from-blue-50 via-white to-blue-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Clients
             </CardTitle>
-            <div className="p-2 bg-blue-400/20 rounded-lg">
-              <Users className="h-5 w-5 text-blue-600" />
+            <div className="p-2.5 bg-blue-400/15 rounded-lg">
+              <Users className="h-4 w-4 text-blue-600" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
               {stats.uniqueCustomers}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
               {stats.uniqueCustomers > 0 && stats.totalOrders > 0
-                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% du total`
+                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% conversions`
                 : "Aucun client"}
             </p>
           </CardContent>
         </Card>
 
         {/* Total Products */}
-        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-purple-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Produits
+        <Card className="border-0 bg-gradient-to-br from-purple-50 via-white to-purple-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-purple-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Catalogue
             </CardTitle>
-            <div className="p-2 bg-purple-400/20 rounded-lg">
-              <Package className="h-5 w-5 text-purple-600" />
+            <div className="p-2.5 bg-purple-400/15 rounded-lg">
+              <Package className="h-4 w-4 text-purple-600" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-purple-600 mb-2">
               {stats.totalProducts}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
-              Dans le catalogue
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              Produits actifs
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Visitors */}
+        <Card className="border-0 bg-gradient-to-br from-green-50 via-white to-green-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-green-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Visiteurs
+            </CardTitle>
+            <div className="p-2.5 bg-green-400/15 rounded-lg">
+              <Eye className="h-4 w-4 text-green-600" />
+            </div>
+          </CardHeader>
+          <CardContent className="relative z-10">
+            <div className="text-3xl lg:text-4xl font-bold text-green-600 mb-2">
+              {stats.visitorStats.uniqueVisitors}
+            </div>
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              {stats.visitorStats.todayVisitors > 0
+                ? `${stats.visitorStats.todayVisitors} aujourd'hui`
+                : "Aucun visiteur"}
             </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Order Status Distribution */}
-        <Card className="border-0 hover:shadow-xl transition-all duration-300">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">
-              Répartition des Commandes
+        <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3 border-b border-secondary">
+            <CardTitle className="text-lg font-futura font-bold text-foreground">
+              Répartition des Statuts
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">
-              Vue d'ensemble des statuts
+            <p className="text-xs text-muted-foreground mt-2">
+              Vue complète des commandes
             </p>
           </CardHeader>
           <CardContent>
@@ -262,13 +343,13 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Order Status List */}
-        <Card className="border-0 hover:shadow-xl transition-all duration-300">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">
-              Statut des Commandes
+        <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3 border-b border-secondary">
+            <CardTitle className="text-lg font-futura font-bold text-foreground">
+              Détail par Statut
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">
-              Détail par statut
+            <p className="text-xs text-muted-foreground mt-2">
+              Nombre et progression
             </p>
           </CardHeader>
           <CardContent>
@@ -306,13 +387,13 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <Card className="border-0 hover:shadow-xl transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-futura">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300 mt-4">
+        <CardHeader className="pb-4 border-b border-secondary">
+          <CardTitle className="text-lg font-futura font-bold text-foreground">
             Commandes Récentes
           </CardTitle>
-          <p className="text-xs text-muted-foreground mt-1">
-            Derniers paiements reçus
+          <p className="text-xs text-muted-foreground mt-2">
+            {stats.recentOrders.length} dernière(s) commande(s)
           </p>
         </CardHeader>
         <CardContent>

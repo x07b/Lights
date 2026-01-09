@@ -1,4 +1,4 @@
-import { FileText, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
 
@@ -8,8 +8,6 @@ interface ProductHeroPanelProps {
   name: string;
   description: string;
   price: number;
-  pdfFile?: string;
-  pdfFilename?: string;
   slug: string;
 }
 
@@ -19,8 +17,6 @@ export function ProductHeroPanel({
   name,
   description,
   price,
-  pdfFile,
-  pdfFilename,
   slug,
 }: ProductHeroPanelProps) {
   const { addItem } = useCart();
@@ -34,20 +30,6 @@ export function ProductHeroPanel({
       slug,
     });
     toast.success(`${name} ajouté à la demande de devis!`);
-  };
-
-  const handleDownloadPDF = () => {
-    if (!pdfFile) {
-      toast.error("Fiche technique non disponible");
-      return;
-    }
-
-    const link = document.createElement("a");
-    link.href = pdfFile;
-    link.download = pdfFilename || "fiche-technique.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (
@@ -80,17 +62,6 @@ export function ProductHeroPanel({
           <Mail className="w-5 h-5" />
           Demande de devis
         </button>
-
-        {/* Download PDF - Secondary */}
-        {pdfFile && (
-          <button
-            onClick={handleDownloadPDF}
-            className="w-full border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-          >
-            <FileText className="w-5 h-5" />
-            Fiche technique
-          </button>
-        )}
       </div>
 
       {/* Info Text */}

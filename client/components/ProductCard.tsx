@@ -1,4 +1,4 @@
-import { Download, ChevronLeft, ChevronRight, Sparkles, X } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -26,12 +26,6 @@ export function ProductCard({
   price = 0,
 }: ProductCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showQuoteModal, setShowQuoteModal] = useState(false);
-  const [quoteFormData, setQuoteFormData] = useState({
-    clientName: "",
-    clientEmail: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { addItem } = useCart();
 
@@ -39,49 +33,24 @@ export function ProductCard({
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleRequestQuote = async (e: React.MouseEvent) => {
+  const handleRequestQuote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setShowQuoteModal(true);
-  };
-
-  const handleSubmitQuote = async () => {
-    if (!quoteFormData.clientName.trim() || !quoteFormData.clientEmail.trim()) {
-      toast.error("Veuillez remplir tous les champs");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/quotes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          clientName: quoteFormData.clientName,
-          clientEmail: quoteFormData.clientEmail,
-          productId: id,
-          productName: name,
-          message: `Demande de devis pour ${name}`,
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Demande de devis envoyée avec succès!");
-        setShowQuoteModal(false);
-        setQuoteFormData({ clientName: "", clientEmail: "" });
-      } else {
-        toast.error("Erreur lors de l'envoi de la demande");
-      }
-    } catch (error) {
-      console.error("Error requesting quote:", error);
-      toast.error("Une erreur est survenue");
-    } finally {
-      setIsSubmitting(false);
-    }
+    addItem({
+      id,
+      name,
+      price: price || 0,
+      quantity: 1,
+      slug: slug || "",
+    });
+    toast.success(`${name} ajouté à la demande de devis!`);
   };
 
   const handleDownloadFile = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toast.success("Fichier technique téléchargé!");
+    if (slug) {
+      navigate(`/product/${slug}`);
+      toast.info("Accédez à la fiche technique sur la page produit");
+    }
   };
 
   const handleCardClick = () => {
@@ -218,92 +187,6 @@ export function ProductCard({
           </div>
         </div>
       </div>
-
-      {/* Quote Request Modal */}
-      {showQuoteModal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full animate-slide-up">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h3 className="text-xl font-futura font-bold text-foreground">
-                Demande de devis
-              </h3>
-              <button
-                onClick={() => {
-                  setShowQuoteModal(false);
-                  setQuoteFormData({ clientName: "", clientEmail: "" });
-                }}
-                className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-muted-foreground" />
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className="p-6 space-y-4">
-              <p className="text-sm text-muted-foreground">Pour {name}</p>
-
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Nom
-                  </label>
-                  <input
-                    type="text"
-                    value={quoteFormData.clientName}
-                    onChange={(e) =>
-                      setQuoteFormData({
-                        ...quoteFormData,
-                        clientName: e.target.value,
-                      })
-                    }
-                    placeholder="Votre nom"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={quoteFormData.clientEmail}
-                    onChange={(e) =>
-                      setQuoteFormData({
-                        ...quoteFormData,
-                        clientEmail: e.target.value,
-                      })
-                    }
-                    placeholder="votre@email.com"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex gap-3 p-6 border-t border-gray-200">
-              <button
-                onClick={() => {
-                  setShowQuoteModal(false);
-                  setQuoteFormData({ clientName: "", clientEmail: "" });
-                }}
-                className="flex-1 px-4 py-2 border border-gray-300 text-foreground rounded-lg hover:bg-gray-50 transition-colors font-medium"
-              >
-                Annuler
-              </button>
-              <button
-                onClick={handleSubmitQuote}
-                disabled={isSubmitting}
-                className="flex-1 px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? "Envoi..." : "Envoyer"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

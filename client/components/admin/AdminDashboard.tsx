@@ -70,10 +70,6 @@ export default function AdminDashboard() {
 
       // Calculate statistics
       const totalOrders = orders.length;
-      const totalRevenue = orders.reduce(
-        (sum: number, order: any) => sum + order.total,
-        0,
-      );
       const uniqueCustomers = new Set(
         orders.map((order: any) => order.customer.email),
       ).size;
@@ -95,14 +91,12 @@ export default function AdminDashboard() {
         .map((order: any) => ({
           panierCode: order.panierCode,
           customerName: order.customer.name,
-          total: order.total,
           status: order.status,
           date: new Date(order.createdAt).toLocaleDateString(),
         }));
 
       setStats({
         totalOrders,
-        totalRevenue,
         uniqueCustomers,
         totalProducts,
         ordersbyStatus,

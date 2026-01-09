@@ -33,9 +33,30 @@ export function ProductCard({
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleRequestQuote = (e: React.MouseEvent) => {
+  const handleRequestQuote = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    toast.info(`Demande de devis pour ${name} envoyée!`);
+    try {
+      const response = await fetch("/api/quotes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientName: "Client",
+          clientEmail: "client@example.com",
+          productId: id,
+          productName: name,
+          message: `Demande de devis pour ${name}`,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success(`Demande de devis pour ${name} envoyée avec succès!`);
+      } else {
+        toast.error("Erreur lors de l'envoi de la demande de devis");
+      }
+    } catch (error) {
+      console.error("Error requesting quote:", error);
+      toast.error("Une erreur est survenue");
+    }
   };
 
   const handleDownloadFile = (e: React.MouseEvent) => {

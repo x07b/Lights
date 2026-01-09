@@ -89,8 +89,8 @@ export default function OrderDetailModal({
         <div className="flex-1 overflow-y-auto">
           <div className="p-3 space-y-3">
             {/* Status Section */}
-            <div className="bg-secondary/50 rounded-lg p-3">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+            <div className="bg-secondary/50 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">
                 Statut
               </p>
               <div className="flex items-center gap-2 flex-wrap">

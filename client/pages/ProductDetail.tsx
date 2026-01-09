@@ -127,7 +127,7 @@ export default function ProductDetail() {
               productName={product.name}
             />
             <ProductDetailsPanel
-              sections={detailSections}
+              sections={displaySections}
               sectionTitle="Détails du produit"
               sectionSubtitle="Informations complètes"
             />

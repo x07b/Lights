@@ -63,11 +63,11 @@ export function ProductDetailsPanel({
             {pdfFile && (
               <button
                 onClick={handleDownloadPDF}
-                className="flex-shrink-0 px-4 py-2 bg-accent hover:bg-accent/90 text-white font-roboto font-bold rounded-lg flex items-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95 whitespace-nowrap"
+                className="flex-shrink-0 px-6 py-3 border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95 whitespace-nowrap"
                 title="Télécharger la fiche technique"
               >
-                <FileText className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm">Télécharger</span>
+                <FileText className="w-5 h-5" />
+                <span>Fiche technique</span>
               </button>
             )}
           </div>

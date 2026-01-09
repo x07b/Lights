@@ -128,6 +128,8 @@ export function ProductCard({
                     src={imgUrl}
                     alt={`${name} - ${index + 1}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </button>
               ))}

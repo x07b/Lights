@@ -189,7 +189,7 @@ export default function HeroSlidesManager() {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading hero slides...</div>;
+    return <div className="text-center py-8">Chargement des diapositives...</div>;
   }
 
   return (

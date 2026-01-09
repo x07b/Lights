@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search, Eye, Filter, Trash2, Edit2 } from "lucide-react";
-import OrderDetail from "./OrderDetail";
+import OrderDetailModal from "./OrderDetailModal";
 import OrderEditModal from "./OrderEditModal";
 
 interface Order {

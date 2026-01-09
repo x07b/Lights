@@ -26,7 +26,6 @@ export function ProductCard({
   price = 0,
 }: ProductCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const navigate = useNavigate();
   const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop

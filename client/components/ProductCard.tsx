@@ -1,4 +1,4 @@
-import { Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShoppingCart, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -72,107 +72,113 @@ export function ProductCard({
   return (
     <div
       onClick={handleCardClick}
-      className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 cursor-pointer"
+      className="group h-full flex flex-col bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border border-gray-100 cursor-pointer animate-fade-in"
     >
-      {/* Image Container */}
-      <div className="product-image-container relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 p-8 flex items-center justify-center h-72">
-        <img
-          src={currentImage}
-          alt={name}
-          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out"
-          loading="lazy"
-          decoding="async"
-        />
-        {/* Overlay gradient on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Image Container - Simplified */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center h-64">
+        {/* Main Image */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={currentImage}
+            alt={name}
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
 
-        {/* Image Navigation Arrows - Show only on hover with multiple images */}
+        {/* Overlay gradient on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Image Navigation Arrows - Only show on hover with multiple images */}
         {productImages.length > 1 && (
           <>
             <button
               onClick={handlePrevImage}
-              className="product-nav-arrow absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-foreground p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-accent text-foreground hover:text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110"
               title="Previous image"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={handleNextImage}
-              className="product-nav-arrow absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-foreground p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+              onClick={nextSlide}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-accent text-foreground hover:text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110"
               title="Next image"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
 
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {currentImageIndex + 1} / {productImages.length}
-            </div>
-
-            {/* Image Thumbnails - Show on hover */}
-            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 p-3 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {productImages.map((imgUrl, index) => (
+            {/* Dot Indicators - Cleaner design */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
+              {productImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => {
                     e.stopPropagation();
                     setCurrentImageIndex(index);
                   }}
-                  className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentImageIndex
-                      ? "border-white scale-105"
-                      : "border-white/50 opacity-70 hover:opacity-100"
+                      ? "bg-accent w-6"
+                      : "bg-white/60 hover:bg-white/80 w-2"
                   }`}
-                >
-                  <img
-                    src={imgUrl}
-                    alt={`${name} - ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
+                  aria-label={`Go to image ${index + 1}`}
+                />
               ))}
             </div>
           </>
         )}
       </div>
 
-      {/* Content Container */}
-      <div className="flex flex-col flex-1 p-6 space-y-4">
-        {/* Category */}
+      {/* Content Container - More Compact */}
+      <div className="flex flex-col flex-1 p-4 space-y-3">
+        {/* Category Badge */}
         {category && (
-          <p className="text-xs text-accent uppercase tracking-widest font-roboto font-semibold opacity-80">
-            {category}
-          </p>
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-accent" />
+            <p className="text-xs text-accent uppercase tracking-widest font-roboto font-semibold">
+              {category}
+            </p>
+          </div>
         )}
 
         {/* Title */}
         {slug ? (
           <Link to={`/product/${slug}`} className="group/title">
-            <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover/title:text-accent transition-colors duration-300 cursor-pointer">
+            <h3 className="text-lg font-futura font-bold text-foreground line-clamp-2 group-hover/title:text-accent transition-colors duration-300 cursor-pointer">
               {name}
             </h3>
           </Link>
         ) : (
-          <h3 className="text-xl font-futura font-bold text-foreground line-clamp-2 group-hover:text-accent transition-colors duration-300">
+          <h3 className="text-lg font-futura font-bold text-foreground line-clamp-2 group-hover:text-accent transition-colors duration-300">
             {name}
           </h3>
         )}
 
-        {/* Description */}
-        <p className="text-sm text-muted-foreground font-roboto line-clamp-2 flex-grow leading-relaxed">
-          {description}
-        </p>
+        {/* Compact Description with Icon */}
+        {description && (
+          <div className="flex items-start gap-2 text-xs text-muted-foreground font-roboto opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="w-1 h-1 bg-accent rounded-full mt-1.5 flex-shrink-0" />
+            <p className="line-clamp-1">{description.substring(0, 40)}...</p>
+          </div>
+        )}
 
-        {/* Add to Cart Button */}
-        <button
-          onClick={handleAddToCart}
-          title="Ajouter au panier"
-          className="w-full py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg"
-        >
-          Ajouter au panier
-        </button>
+        {/* Price and Cart Button */}
+        <div className="flex items-center justify-between gap-2 mt-auto pt-2">
+          {price > 0 && (
+            <span className="text-lg font-futura font-bold text-foreground">
+              ${price}
+            </span>
+          )}
+          <button
+            onClick={handleAddToCart}
+            title="Ajouter au panier"
+            className="ml-auto px-3 py-2 rounded-lg transition-all duration-300 flex items-center gap-1.5 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg text-sm group/btn"
+          >
+            <ShoppingCart className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" />
+            Ajouter
+          </button>
+        </div>
       </div>
     </div>
   );

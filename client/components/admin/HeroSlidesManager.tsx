@@ -113,10 +113,15 @@ export default function HeroSlidesManager() {
         await fetchSlides();
         setEditingId(null);
         setEditData({});
-        toast.success(isEditing ? "Diapositive mise à jour" : "Diapositive créée");
+        toast.success(
+          isEditing ? "Diapositive mise à jour" : "Diapositive créée",
+        );
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || "Erreur lors de l'enregistrement de la diapositive");
+        toast.error(
+          errorData.error ||
+            "Erreur lors de l'enregistrement de la diapositive",
+        );
       }
     } catch (error) {
       console.error("Error saving slide:", error);
@@ -189,14 +194,18 @@ export default function HeroSlidesManager() {
   };
 
   if (loading) {
-    return <div className="text-center py-8">Chargement des diapositives...</div>;
+    return (
+      <div className="text-center py-8">Chargement des diapositives...</div>
+    );
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Diapositives Hero</h2>
+          <h2 className="text-2xl font-bold text-foreground">
+            Diapositives Hero
+          </h2>
           <p className="text-sm text-muted-foreground mt-1">
             Gérez les images de la section hero de la page d'accueil
           </p>
@@ -229,7 +238,9 @@ export default function HeroSlidesManager() {
         <Card className="bg-accent/5 border-accent">
           <CardHeader>
             <CardTitle>
-              {editingId === "new" ? "Ajouter une nouvelle diapositive" : "Modifier la diapositive"}
+              {editingId === "new"
+                ? "Ajouter une nouvelle diapositive"
+                : "Modifier la diapositive"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

@@ -154,6 +154,8 @@ export default function ProductDetail() {
               sections={displaySections}
               sectionTitle="Détails du produit"
               sectionSubtitle="Informations complètes"
+              pdfFile={product.pdfFile}
+              pdfFilename={product.pdfFilename}
             />
           </div>
 

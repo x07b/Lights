@@ -1,9 +1,20 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Admin email address
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "itsazizsaidi@gmail.com";
+
+// Lazy initialize Resend client only when needed
+let resend: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resend) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY environment variable is not set");
+    }
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 export interface SendEmailParams {
   to: string;

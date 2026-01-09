@@ -66,9 +66,9 @@ export default function OrderDetailModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full max-h-[85vh] overflow-hidden flex flex-col animate-slide-up">
+      <div className="bg-white rounded-xl shadow-2xl max-w-xs w-full max-h-[80vh] overflow-hidden flex flex-col animate-slide-up">
         {/* Header */}
-        <div className="bg-gradient-to-r from-accent to-accent/80 text-white px-5 py-4 flex items-center justify-between flex-shrink-0">
+        <div className="bg-gradient-to-r from-accent to-accent/80 text-white px-4 py-3 flex items-center justify-between flex-shrink-0">
           <div className="flex-1 min-w-0">
             <p className="text-xs text-white/80 font-semibold uppercase tracking-wide mb-0.5">
               Commande

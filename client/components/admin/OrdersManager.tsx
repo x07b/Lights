@@ -136,20 +136,6 @@ export default function OrdersManager() {
     return <div className="text-center py-8">Chargement des commandes...</div>;
   }
 
-  if (showDetail && selectedOrder) {
-    return (
-      <OrderDetail
-        order={selectedOrder}
-        onBack={() => {
-          setShowDetail(false);
-          setSelectedOrder(null);
-          fetchOrders();
-        }}
-        onStatusChange={handleStatusChange}
-      />
-    );
-  }
-
   if (showEditModal && editingOrder) {
     return (
       <OrderEditModal
@@ -165,6 +151,18 @@ export default function OrdersManager() {
 
   return (
     <div className="space-y-6">
+      {/* Order Detail Modal */}
+      {showDetail && selectedOrder && (
+        <OrderDetailModal
+          order={selectedOrder}
+          onClose={() => {
+            setShowDetail(false);
+            setSelectedOrder(null);
+            fetchOrders();
+          }}
+          onStatusChange={handleStatusChange}
+        />
+      )}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

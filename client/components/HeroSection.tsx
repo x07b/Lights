@@ -148,7 +148,8 @@ export function HeroSection() {
               className="text-sm md:text-base text-white/90 font-roboto leading-relaxed animate-slide-up opacity-0"
               style={{ animation: "slide-up 0.6s ease-out 0.4s forwards" }}
             >
-              {slides[currentSlide]?.description || "Des luminaires élégants pour sublimer vos intérieurs."}
+              {slides[currentSlide]?.description ||
+                "Des luminaires élégants pour sublimer vos intérieurs."}
             </p>
 
             <div

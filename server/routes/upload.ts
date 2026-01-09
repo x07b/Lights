@@ -15,9 +15,10 @@ export async function uploadFile(req: any, res: any) {
   const filename = req.get("x-filename") || `file-${Date.now()}`;
 
   // Allow image MIME types and application/octet-stream
-  const isValidContentType = contentType.startsWith("image/") ||
-                             contentType === "application/octet-stream" ||
-                             contentType === "application/pdf";
+  const isValidContentType =
+    contentType.startsWith("image/") ||
+    contentType === "application/octet-stream" ||
+    contentType === "application/pdf";
 
   if (!isValidContentType && !filename) {
     res.status(400).json({ error: "No file provided" });

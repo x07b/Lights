@@ -36,11 +36,16 @@ function apiSlideToDb(apiSlide: Partial<HeroSlide>): any {
   if (apiSlide.alt !== undefined) dbSlide.alt = apiSlide.alt;
   if (apiSlide.order !== undefined) dbSlide.order_index = apiSlide.order;
   if (apiSlide.title !== undefined) dbSlide.title = apiSlide.title;
-  if (apiSlide.description !== undefined) dbSlide.description = apiSlide.description;
-  if (apiSlide.button1_text !== undefined) dbSlide.button1_text = apiSlide.button1_text;
-  if (apiSlide.button1_link !== undefined) dbSlide.button1_link = apiSlide.button1_link;
-  if (apiSlide.button2_text !== undefined) dbSlide.button2_text = apiSlide.button2_text;
-  if (apiSlide.button2_link !== undefined) dbSlide.button2_link = apiSlide.button2_link;
+  if (apiSlide.description !== undefined)
+    dbSlide.description = apiSlide.description;
+  if (apiSlide.button1_text !== undefined)
+    dbSlide.button1_text = apiSlide.button1_text;
+  if (apiSlide.button1_link !== undefined)
+    dbSlide.button1_link = apiSlide.button1_link;
+  if (apiSlide.button2_text !== undefined)
+    dbSlide.button2_text = apiSlide.button2_text;
+  if (apiSlide.button2_link !== undefined)
+    dbSlide.button2_link = apiSlide.button2_link;
   return dbSlide;
 }
 

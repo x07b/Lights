@@ -298,9 +298,7 @@ export default function HeroSlidesManager() {
               <h3 className="font-semibold text-sm mb-4">Slide Content</h3>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  Title
-                </label>
+                <label className="block text-sm font-medium mb-2">Title</label>
                 <input
                   type="text"
                   value={editData.title || ""}
@@ -334,7 +332,9 @@ export default function HeroSlidesManager() {
               </div>
 
               <div className="mt-4 space-y-3 border-t border-border pt-4">
-                <h4 className="font-medium text-xs uppercase text-muted-foreground">Button 1</h4>
+                <h4 className="font-medium text-xs uppercase text-muted-foreground">
+                  Button 1
+                </h4>
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Button 1 Text
@@ -372,7 +372,9 @@ export default function HeroSlidesManager() {
               </div>
 
               <div className="mt-4 space-y-3 border-t border-border pt-4">
-                <h4 className="font-medium text-xs uppercase text-muted-foreground">Button 2</h4>
+                <h4 className="font-medium text-xs uppercase text-muted-foreground">
+                  Button 2
+                </h4>
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Button 2 Text

@@ -247,8 +247,8 @@ export default function ProductDetail() {
                   </h3>
                   <p className="font-roboto text-muted-foreground leading-relaxed">
                     Nous garantissons la performance constante de ce luminaire
-                    avec une couverture complète et un support technique réactif.
-                    Votre investissement est protégé.
+                    avec une couverture complète et un support technique
+                    réactif. Votre investissement est protégé.
                   </p>
                 </div>
                 <div>
@@ -333,8 +333,8 @@ export default function ProductDetail() {
                     Espaces professionnels
                   </h3>
                   <p className="font-roboto text-muted-foreground">
-                    Bureau, open space, salles de réunion. Créez un environnement
-                    productif et confortable pour vos équipes.
+                    Bureau, open space, salles de réunion. Créez un
+                    environnement productif et confortable pour vos équipes.
                   </p>
                 </div>
                 <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">

@@ -143,19 +143,19 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Page Header */}
-      <div className="mb-8">
-        <h2 className="text-3xl font-futura font-bold text-foreground mb-2">
+      <div className="mb-6 pb-6 border-b-2 border-secondary">
+        <h2 className="text-3xl md:text-4xl font-futura font-bold text-foreground mb-2">
           Tableau de Bord
         </h2>
         <p className="text-muted-foreground font-roboto">
-          Bienvenue sur votre tableau de bord administrateur
+          Vue d'ensemble de votre activité commerciale
         </p>
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Orders */}
         <Card className="border-0 bg-gradient-to-br from-orange-50 to-orange-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
           <div className="absolute -right-8 -top-8 w-24 h-24 bg-accent/10 rounded-full group-hover:scale-110 transition-transform duration-500" />

@@ -44,50 +44,42 @@ export default function HeroSlidesManager() {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const imageData = event.target?.result as string;
+    try {
+      setIsUploading(true);
 
-      try {
-        setIsUploading(true);
+      // Read file as array buffer
+      const arrayBuffer = await file.arrayBuffer();
 
-        // Convert data URL to blob
-        const response = await fetch(imageData);
-        const blob = await response.blob();
+      // Upload to server
+      const uploadResponse = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "content-type": file.type || "image/jpeg",
+          "x-filename": file.name,
+        },
+        body: arrayBuffer,
+      });
 
-        // Upload to server
-        const uploadResponse = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "content-type": blob.type || "image/jpeg",
-            "x-filename": file.name,
-          },
-          body: blob,
-        });
-
-        if (uploadResponse.ok) {
-          const result = await uploadResponse.json();
-          setEditData((prev) => ({
-            ...prev,
-            image: result.url,
-          }));
-          toast.success("Image uploaded successfully");
-        } else {
-          toast.error("Failed to upload image");
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        toast.error("Error uploading image");
-      } finally {
-        setIsUploading(false);
+      if (uploadResponse.ok) {
+        const result = await uploadResponse.json();
+        setEditData((prev) => ({
+          ...prev,
+          image: result.url,
+        }));
+        toast.success("Image uploaded successfully");
+      } else {
+        toast.error("Failed to upload image");
       }
-    };
-
-    reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Error uploading image");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSaveSlide = async () => {

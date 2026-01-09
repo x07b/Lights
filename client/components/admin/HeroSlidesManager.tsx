@@ -184,7 +184,7 @@ export default function HeroSlidesManager() {
       await fetchSlides();
     } catch (error) {
       console.error("Error reordering slides:", error);
-      toast.error("Failed to reorder slides");
+      toast.error("Erreur lors du ré-ordonnancement des diapositives");
     }
   };
 

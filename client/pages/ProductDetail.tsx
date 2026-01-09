@@ -32,6 +32,7 @@ interface Product {
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [product, setProduct] = useState<Product | null>(null);
+  const [detailSections, setDetailSections] = useState<DetailSection[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,12 +42,23 @@ export default function ProductDetail() {
         if (response.ok) {
           const data = await response.json();
           setProduct(data);
+
+          // Fetch detail sections
+          const detailResponse = await fetch(
+            `/api/products/${data.id}/details`,
+          );
+          if (detailResponse.ok) {
+            const details = await detailResponse.json();
+            setDetailSections(details);
+          }
         } else {
           setProduct(null);
+          setDetailSections([]);
         }
       } catch (error) {
         console.error("Error fetching product:", error);
         setProduct(null);
+        setDetailSections([]);
       } finally {
         setLoading(false);
       }

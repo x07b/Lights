@@ -233,6 +233,34 @@ export default function ProductForm({
     }));
   };
 
+  const addDetailSection = () => {
+    setDetailSections((prev) => [
+      ...prev,
+      { title: "", content: "", order: prev.length },
+    ]);
+  };
+
+  const updateDetailSection = (
+    index: number,
+    field: "title" | "content",
+    value: string,
+  ) => {
+    setDetailSections((prev) => {
+      const newSections = [...prev];
+      newSections[index] = {
+        ...newSections[index],
+        [field]: value,
+      };
+      return newSections;
+    });
+  };
+
+  const removeDetailSection = (index: number) => {
+    setDetailSections((prev) =>
+      prev.filter((_, i) => i !== index).map((s, i) => ({ ...s, order: i })),
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 

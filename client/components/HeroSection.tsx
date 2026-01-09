@@ -56,7 +56,7 @@ export function HeroSection() {
 
   // Auto-play carousel
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (!isAutoPlay || slides.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);

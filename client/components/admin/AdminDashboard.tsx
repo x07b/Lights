@@ -306,13 +306,13 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders */}
-      <Card className="border-0 hover:shadow-xl transition-all duration-300">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-futura">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300 mt-4">
+        <CardHeader className="pb-4 border-b border-secondary">
+          <CardTitle className="text-lg font-futura font-bold text-foreground">
             Commandes Récentes
           </CardTitle>
-          <p className="text-xs text-muted-foreground mt-1">
-            Derniers paiements reçus
+          <p className="text-xs text-muted-foreground mt-2">
+            {stats.recentOrders.length} dernière(s) commande(s)
           </p>
         </CardHeader>
         <CardContent>

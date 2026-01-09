@@ -154,14 +154,19 @@ export async function deleteHeroSlide(req: any, res: any) {
       return res.status(404).json({ error: "Slide not found" });
     }
 
-    const { data: deletedSlide, error: deleteError } = await supabase
+    const { data, error: deleteError } = await supabase
       .from("hero_slides")
       .delete()
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (deleteError) throw deleteError;
+
+    // Handle array response from delete().select()
+    const deletedSlide = Array.isArray(data) ? data[0] : data;
+    if (!deletedSlide) {
+      return res.status(404).json({ error: "Slide not found" });
+    }
 
     const apiSlide = dbSlideToApi(deletedSlide);
     res.json(apiSlide);

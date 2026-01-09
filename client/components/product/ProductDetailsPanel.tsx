@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { FileText } from "lucide-react";
-import { toast } from "sonner";
 import {
   Accordion,
   AccordionContent,
@@ -17,33 +15,14 @@ interface ProductDetailsPanelProps {
   sections: DetailSection[];
   sectionTitle?: string;
   sectionSubtitle?: string;
-  pdfFile?: string;
-  pdfFilename?: string;
 }
 
 export function ProductDetailsPanel({
   sections,
   sectionTitle = "Détails du produit",
   sectionSubtitle = "Informations complètes",
-  pdfFile,
-  pdfFilename,
 }: ProductDetailsPanelProps) {
   const [openSections, setOpenSections] = useState<string[]>([]);
-
-  const handleDownloadPDF = () => {
-    if (!pdfFile) {
-      toast.error("Fiche technique non disponible");
-      return;
-    }
-
-    const link = document.createElement("a");
-    link.href = pdfFile;
-    link.download = pdfFilename || "fiche-technique.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success(`${pdfFilename || "Fiche technique"} téléchargée!`);
-  };
 
   return (
     <section className="product-details-panel py-16 md:py-24 px-4 bg-white">

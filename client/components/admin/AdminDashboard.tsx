@@ -142,8 +142,6 @@ export default function AdminDashboard() {
     { name: "Annulé", value: stats.ordersbyStatus.annule, color: "#ef4444" },
   ];
 
-  const revenueData = [{ name: "Revenu Total", value: stats.totalRevenue }];
-
   return (
     <div className="space-y-8">
       {/* Page Header */}

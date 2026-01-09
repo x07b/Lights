@@ -15,6 +15,12 @@ interface HeroSlide {
   image: string;
   alt: string;
   order: number;
+  title: string;
+  description: string;
+  button1_text: string;
+  button1_link: string;
+  button2_text: string;
+  button2_link: string;
 }
 
 export default function HeroSlidesManager() {

@@ -204,7 +204,6 @@ export default function ProductForm({
 
     onSave({
       ...formData,
-      price: parseFloat(formData.price),
       images: filteredImages,
       specifications: filteredSpecs,
     });

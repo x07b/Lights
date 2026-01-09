@@ -241,9 +241,7 @@ export function ProductCard({
 
             {/* Body */}
             <div className="p-6 space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Pour {name}
-              </p>
+              <p className="text-sm text-muted-foreground">Pour {name}</p>
 
               <div className="space-y-3">
                 <div>

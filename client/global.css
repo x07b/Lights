@@ -278,7 +278,8 @@
 
   /* Bounce Scale Animation */
   @keyframes bounceScale {
-    0%, 100% {
+    0%,
+    100% {
       transform: scale(1);
     }
     50% {
@@ -291,7 +292,8 @@
   }
 
   /* Smooth Hover Effects */
-  button, a {
+  button,
+  a {
     @apply transition-all duration-300 ease-out;
   }
 

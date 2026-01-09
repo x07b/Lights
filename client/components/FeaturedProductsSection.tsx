@@ -42,7 +42,10 @@ export function FeaturedProductsSection() {
     <section className="py-12 md:py-16 bg-gradient-to-b from-white via-white to-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-12 space-y-3 animate-fade-in opacity-0" style={{animation: "fade-in 0.6s ease-out forwards"}}>
+        <div
+          className="text-center mb-10 md:mb-12 space-y-3 animate-fade-in opacity-0"
+          style={{ animation: "fade-in 0.6s ease-out forwards" }}
+        >
           <p className="text-accent font-roboto text-xs md:text-sm font-semibold uppercase tracking-widest">
             Notre Collection
           </p>

@@ -46,13 +46,6 @@ export default function OrderEditModal({
     setItems(newItems);
   };
 
-  const handleItemPriceChange = (index: number, price: number) => {
-    if (price < 0) return;
-    const newItems = [...items];
-    newItems[index].price = price;
-    setItems(newItems);
-  };
-
   const handleRemoveItem = (index: number) => {
     const newItems = items.filter((_, i) => i !== index);
     setItems(newItems);
@@ -228,21 +221,6 @@ export default function OrderEditModal({
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-1">
-                          Prix unitaire (TND)
-                        </label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={item.price}
-                          onChange={(e) =>
-                            handleItemPriceChange(index, parseFloat(e.target.value))
-                          }
-                          className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1">
                           Quantité
                         </label>
                         <input
@@ -257,24 +235,8 @@ export default function OrderEditModal({
                         />
                       </div>
                     </div>
-                    <div className="text-right">
-                      <span className="text-sm text-muted-foreground">Sous-total: </span>
-                      <span className="font-semibold text-accent">
-                        {(item.price * item.quantity).toFixed(2)} TND
-                      </span>
-                    </div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Total */}
-            <div className="border-t border-border pt-4">
-              <div className="flex justify-end gap-6">
-                <span className="text-lg font-semibold">Total:</span>
-                <span className="text-2xl font-bold text-accent">
-                  {calculateTotal().toFixed(2)} TND
-                </span>
               </div>
             </div>
 

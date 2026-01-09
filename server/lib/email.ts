@@ -33,7 +33,8 @@ export async function sendEmail({
       return { success: false, error: "Email service not configured" };
     }
 
-    const response = await resend.emails.send({
+    const client = getResendClient();
+    const response = await client.emails.send({
       from: "notifications@luxence.fr",
       to,
       subject,

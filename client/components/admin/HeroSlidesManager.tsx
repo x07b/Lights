@@ -44,7 +44,7 @@ export default function HeroSlidesManager() {
       }
     } catch (error) {
       console.error("Error fetching hero slides:", error);
-      toast.error("Failed to load hero slides");
+      toast.error("Erreur lors du chargement des diapositives");
     } finally {
       setLoading(false);
     }
@@ -76,13 +76,13 @@ export default function HeroSlidesManager() {
           ...prev,
           image: result.url,
         }));
-        toast.success("Image uploaded successfully");
+        toast.success("Image téléchargée avec succès");
       } else {
-        toast.error("Failed to upload image");
+        toast.error("Erreur lors du téléchargement de l'image");
       }
     } catch (error) {
       console.error("Error uploading image:", error);
-      toast.error("Error uploading image");
+      toast.error("Erreur lors du téléchargement de l'image");
     } finally {
       setIsUploading(false);
     }
@@ -90,7 +90,7 @@ export default function HeroSlidesManager() {
 
   const handleSaveSlide = async () => {
     if (!editData.image) {
-      toast.error("Image URL is required");
+      toast.error("L'URL de l'image est requise");
       return;
     }
 
@@ -113,19 +113,19 @@ export default function HeroSlidesManager() {
         await fetchSlides();
         setEditingId(null);
         setEditData({});
-        toast.success(isEditing ? "Slide updated" : "Slide created");
+        toast.success(isEditing ? "Diapositive mise à jour" : "Diapositive créée");
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || "Failed to save slide");
+        toast.error(errorData.error || "Erreur lors de l'enregistrement de la diapositive");
       }
     } catch (error) {
       console.error("Error saving slide:", error);
-      toast.error("Failed to save slide");
+      toast.error("Erreur lors de l'enregistrement de la diapositive");
     }
   };
 
   const handleDeleteSlide = async (id: string) => {
-    if (!window.confirm("Delete this slide?")) return;
+    if (!window.confirm("Supprimer cette diapositive ?")) return;
 
     try {
       const response = await fetch(`/api/slides/${id}`, {
@@ -134,11 +134,11 @@ export default function HeroSlidesManager() {
 
       if (response.ok) {
         setSlides(slides.filter((s) => s.id !== id));
-        toast.success("Slide deleted");
+        toast.success("Diapositive supprimée");
       }
     } catch (error) {
       console.error("Error deleting slide:", error);
-      toast.error("Failed to delete slide");
+      toast.error("Erreur lors de la suppression de la diapositive");
     }
   };
 

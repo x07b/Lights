@@ -262,6 +262,10 @@ export default function Admin() {
               <TabsContent value="collections" className="space-y-4">
                 <CollectionsManager />
               </TabsContent>
+
+              <TabsContent value="hero-slides" className="space-y-4">
+                <HeroSlidesManager />
+              </TabsContent>
             </Tabs>
           </div>
         </div>

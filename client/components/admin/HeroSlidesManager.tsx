@@ -89,8 +89,9 @@ export default function HeroSlidesManager() {
     }
 
     try {
-      const method = editingId ? "PUT" : "POST";
-      const url = editingId
+      const isEditing = editingId && editingId !== "new";
+      const method = isEditing ? "PUT" : "POST";
+      const url = isEditing
         ? `/api/slides/${editingId}`
         : "/api/slides";
 
@@ -108,7 +109,10 @@ export default function HeroSlidesManager() {
         await fetchSlides();
         setEditingId(null);
         setEditData({});
-        toast.success(editingId ? "Slide updated" : "Slide created");
+        toast.success(isEditing ? "Slide updated" : "Slide created");
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || "Failed to save slide");
       }
     } catch (error) {
       console.error("Error saving slide:", error);

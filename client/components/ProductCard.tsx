@@ -1,4 +1,4 @@
-import { Download, ChevronLeft, ChevronRight, Sparkles, X } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";

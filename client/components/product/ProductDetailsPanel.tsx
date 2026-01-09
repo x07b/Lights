@@ -25,21 +25,52 @@ export function ProductDetailsPanel({
   sections,
   sectionTitle = "Détails du produit",
   sectionSubtitle = "Informations complètes",
+  pdfFile,
+  pdfFilename,
 }: ProductDetailsPanelProps) {
   const [openSections, setOpenSections] = useState<string[]>([]);
+
+  const handleDownloadPDF = () => {
+    if (!pdfFile) {
+      toast.error("Fiche technique non disponible");
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = pdfFile;
+    link.download = pdfFilename || "fiche-technique.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success(`${pdfFilename || "Fiche technique"} téléchargée!`);
+  };
 
   return (
     <section className="product-details-panel py-16 md:py-24 px-4 bg-white">
       <div className="max-w-4xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header with Download Button */}
         <div className="mb-12 space-y-3">
-          <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">
-            {sectionSubtitle}
-          </p>
-          <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
-            {sectionTitle}
-          </h2>
-          <div className="h-1 w-20 bg-accent rounded-full" />
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">
+                {sectionSubtitle}
+              </p>
+              <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+                {sectionTitle}
+              </h2>
+              <div className="h-1 w-20 bg-accent rounded-full" />
+            </div>
+            {pdfFile && (
+              <button
+                onClick={handleDownloadPDF}
+                className="flex-shrink-0 px-4 py-2 bg-accent hover:bg-accent/90 text-white font-roboto font-bold rounded-lg flex items-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95 whitespace-nowrap"
+                title="Télécharger la fiche technique"
+              >
+                <FileText className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm">Télécharger</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Accordion Sections */}

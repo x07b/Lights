@@ -25,13 +25,13 @@ export function ProductTitleSticky({
     }
 
     if (!pdfFile) {
-      toast.error("No PDF available for this product");
+      toast.error("Aucun fichier PDF disponible pour ce produit");
       return;
     }
 
     const link = document.createElement("a");
     link.href = pdfFile;
-    link.download = pdfFilename || "technical-sheet.pdf";
+    link.download = pdfFilename || "fiche-technique.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

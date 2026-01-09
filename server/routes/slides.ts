@@ -69,7 +69,7 @@ export async function createHeroSlide(req: any, res: any) {
 
     const slideId = `slide_${Date.now()}`;
 
-    const { data: slide, error } = await supabase
+    const { data, error } = await supabase
       .from("hero_slides")
       .insert({
         id: slideId,
@@ -77,10 +77,15 @@ export async function createHeroSlide(req: any, res: any) {
         alt: alt || "Hero slide",
         order_index: orderIndex,
       })
-      .select()
-      .single();
+      .select();
 
     if (error) throw error;
+
+    // Handle array response from insert().select()
+    const slide = Array.isArray(data) ? data[0] : data;
+    if (!slide) {
+      throw new Error("Failed to retrieve inserted slide");
+    }
 
     const apiSlide = dbSlideToApi(slide);
     res.status(201).json(apiSlide);

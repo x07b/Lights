@@ -33,20 +33,14 @@ export function ProductCard({
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleRequestQuote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (slug && price > 0) {
-      addItem({
-        id,
-        name,
-        price,
-        quantity: 1,
-        slug,
-      });
-      toast.success(`${name} ajouté au panier!`);
-    } else {
-      toast.error("Produit invalide");
-    }
+    toast.info(`Demande de devis pour ${name} envoyée!`);
+  };
+
+  const handleDownloadFile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toast.success(`Fichier technique téléchargé!`);
   };
 
   const handleCardClick = () => {

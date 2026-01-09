@@ -261,7 +261,7 @@ export default function ProductForm({
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const filteredImages = formData.images.filter((img) => img.trim());
@@ -269,10 +269,12 @@ export default function ProductForm({
       (spec) => spec.label && spec.value,
     );
 
+    // Call onSave with product data (this will handle the product creation/update)
     onSave({
       ...formData,
       images: filteredImages,
       specifications: filteredSpecs,
+      detailSections,
     });
   };
 

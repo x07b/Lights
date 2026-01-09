@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FileText } from "lucide-react";
+import { toast } from "sonner";
 import {
   Accordion,
   AccordionContent,
@@ -15,6 +17,8 @@ interface ProductDetailsPanelProps {
   sections: DetailSection[];
   sectionTitle?: string;
   sectionSubtitle?: string;
+  pdfFile?: string;
+  pdfFilename?: string;
 }
 
 export function ProductDetailsPanel({

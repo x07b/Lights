@@ -44,7 +44,7 @@ export default function HeroSlidesManager() {
       }
     } catch (error) {
       console.error("Error fetching hero slides:", error);
-      toast.error("Failed to load hero slides");
+      toast.error("Erreur lors du chargement des diapositives");
     } finally {
       setLoading(false);
     }
@@ -76,13 +76,13 @@ export default function HeroSlidesManager() {
           ...prev,
           image: result.url,
         }));
-        toast.success("Image uploaded successfully");
+        toast.success("Image téléchargée avec succès");
       } else {
-        toast.error("Failed to upload image");
+        toast.error("Erreur lors du téléchargement de l'image");
       }
     } catch (error) {
       console.error("Error uploading image:", error);
-      toast.error("Error uploading image");
+      toast.error("Erreur lors du téléchargement de l'image");
     } finally {
       setIsUploading(false);
     }
@@ -90,7 +90,7 @@ export default function HeroSlidesManager() {
 
   const handleSaveSlide = async () => {
     if (!editData.image) {
-      toast.error("Image URL is required");
+      toast.error("L'URL de l'image est requise");
       return;
     }
 
@@ -113,19 +113,24 @@ export default function HeroSlidesManager() {
         await fetchSlides();
         setEditingId(null);
         setEditData({});
-        toast.success(isEditing ? "Slide updated" : "Slide created");
+        toast.success(
+          isEditing ? "Diapositive mise à jour" : "Diapositive créée",
+        );
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || "Failed to save slide");
+        toast.error(
+          errorData.error ||
+            "Erreur lors de l'enregistrement de la diapositive",
+        );
       }
     } catch (error) {
       console.error("Error saving slide:", error);
-      toast.error("Failed to save slide");
+      toast.error("Erreur lors de l'enregistrement de la diapositive");
     }
   };
 
   const handleDeleteSlide = async (id: string) => {
-    if (!window.confirm("Delete this slide?")) return;
+    if (!window.confirm("Supprimer cette diapositive ?")) return;
 
     try {
       const response = await fetch(`/api/slides/${id}`, {
@@ -134,11 +139,11 @@ export default function HeroSlidesManager() {
 
       if (response.ok) {
         setSlides(slides.filter((s) => s.id !== id));
-        toast.success("Slide deleted");
+        toast.success("Diapositive supprimée");
       }
     } catch (error) {
       console.error("Error deleting slide:", error);
-      toast.error("Failed to delete slide");
+      toast.error("Erreur lors de la suppression de la diapositive");
     }
   };
 
@@ -184,21 +189,25 @@ export default function HeroSlidesManager() {
       await fetchSlides();
     } catch (error) {
       console.error("Error reordering slides:", error);
-      toast.error("Failed to reorder slides");
+      toast.error("Erreur lors du ré-ordonnancement des diapositives");
     }
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading hero slides...</div>;
+    return (
+      <div className="text-center py-8">Chargement des diapositives...</div>
+    );
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Hero Slides</h2>
+          <h2 className="text-2xl font-bold text-foreground">
+            Diapositives Hero
+          </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Manage the images in the homepage hero section
+            Gérez les images de la section hero de la page d'accueil
           </p>
         </div>
         {!editingId && (
@@ -209,8 +218,8 @@ export default function HeroSlidesManager() {
                 image: "",
                 alt: "",
                 order: slides.length || 0,
-                title: "Slide Title",
-                description: "Slide description",
+                title: "Titre de la diapositive",
+                description: "Description de la diapositive",
                 button1_text: "Découvrir",
                 button1_link: "/products",
                 button2_text: "En savoir plus",
@@ -220,7 +229,7 @@ export default function HeroSlidesManager() {
             className="flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
-            Add Slide
+            Ajouter une diapositive
           </Button>
         )}
       </div>
@@ -229,7 +238,9 @@ export default function HeroSlidesManager() {
         <Card className="bg-accent/5 border-accent">
           <CardHeader>
             <CardTitle>
-              {editingId === "new" ? "Add New Slide" : "Edit Slide"}
+              {editingId === "new"
+                ? "Ajouter une nouvelle diapositive"
+                : "Modifier la diapositive"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

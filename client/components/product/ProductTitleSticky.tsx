@@ -25,13 +25,13 @@ export function ProductTitleSticky({
     }
 
     if (!pdfFile) {
-      toast.error("No PDF available for this product");
+      toast.error("Aucun fichier PDF disponible pour ce produit");
       return;
     }
 
     const link = document.createElement("a");
     link.href = pdfFile;
-    link.download = pdfFilename || "technical-sheet.pdf";
+    link.download = pdfFilename || "fiche-technique.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -82,7 +82,7 @@ export function ProductTitleSticky({
               className="w-full border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-roboto font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
             >
               <FileText className="w-5 h-5" />
-              Fiche technique
+              Télécharger fiche technique
             </button>
           )}
         </div>

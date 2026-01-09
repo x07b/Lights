@@ -1,6 +1,6 @@
-import { Download, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
 
@@ -26,7 +26,6 @@ export function ProductCard({
   price = 0,
 }: ProductCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const navigate = useNavigate();
   const { addItem } = useCart();
 
   // Use images array if available, otherwise create array from image prop
@@ -45,17 +44,9 @@ export function ProductCard({
     toast.success(`${name} ajouté à la demande de devis!`);
   };
 
-  const handleDownloadFile = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (slug) {
-      navigate(`/product/${slug}`);
-      toast.info("Accédez à la fiche technique sur la page produit");
-    }
-  };
-
   const handleCardClick = () => {
     if (slug) {
-      navigate(`/product/${slug}`);
+      window.location.href = `/product/${slug}`;
     }
   };
 
@@ -101,14 +92,14 @@ export function ProductCard({
               <button
                 onClick={handlePrevImage}
                 className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-accent text-foreground hover:text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110"
-                title="Previous image"
+                title="Image précédente"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNextImage}
                 className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-accent text-foreground hover:text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110"
-                title="Next image"
+                title="Image suivante"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -169,20 +160,13 @@ export function ProductCard({
           )}
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2 mt-auto pt-2">
+          <div className="mt-auto pt-2">
             <button
               onClick={handleRequestQuote}
               title="Demande de devis"
-              className="flex-1 px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg text-sm"
+              className="w-full px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg text-sm"
             >
               Demande devis
-            </button>
-            <button
-              onClick={handleDownloadFile}
-              title="Télécharger fichier technique"
-              className="px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center bg-white hover:bg-gray-50 text-foreground hover:text-accent border border-gray-200 shadow-sm hover:shadow-md active:scale-95"
-            >
-              <Download className="w-4 h-4" />
             </button>
           </div>
         </div>

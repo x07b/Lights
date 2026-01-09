@@ -196,9 +196,9 @@ export default function HeroSlidesManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Hero Slides</h2>
+          <h2 className="text-2xl font-bold text-foreground">Diapositives Hero</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Manage the images in the homepage hero section
+            Gérez les images de la section hero de la page d'accueil
           </p>
         </div>
         {!editingId && (

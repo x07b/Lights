@@ -225,15 +225,15 @@ export default function AdminDashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Order Status Distribution */}
-        <Card className="border-0 hover:shadow-xl transition-all duration-300">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">
-              Répartition des Commandes
+        <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3 border-b border-secondary">
+            <CardTitle className="text-lg font-futura font-bold text-foreground">
+              Répartition des Statuts
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">
-              Vue d'ensemble des statuts
+            <p className="text-xs text-muted-foreground mt-2">
+              Vue complète des commandes
             </p>
           </CardHeader>
           <CardContent>

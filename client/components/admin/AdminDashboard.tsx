@@ -141,6 +141,20 @@ export default function AdminDashboard() {
         ordersbyStatus,
         recentOrders,
       });
+
+      // Check for new pending orders and notify
+      const currentPendingCount = ordersbyStatus.enAttente;
+      if (previousOrderCountRef.current > 0 && currentPendingCount > previousOrderCountRef.current) {
+        const newOrdersCount = currentPendingCount - previousOrderCountRef.current;
+        toast.success(
+          `🎉 ${newOrdersCount} nouvelle(s) commande(s) en attente!`,
+          {
+            description: `Total: ${currentPendingCount} commandes en attente`,
+            duration: 5000,
+          },
+        );
+      }
+      previousOrderCountRef.current = currentPendingCount;
     } catch (error) {
       console.error("Error fetching dashboard stats:", error);
     } finally {

@@ -117,14 +117,19 @@ export async function updateHeroSlide(req: any, res: any) {
     if (alt !== undefined) updateData.alt = alt;
     if (order !== undefined) updateData.order_index = order;
 
-    const { data: slide, error } = await supabase
+    const { data, error } = await supabase
       .from("hero_slides")
       .update(updateData)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) throw error;
+
+    // Handle array response from update().select()
+    const slide = Array.isArray(data) ? data[0] : data;
+    if (!slide) {
+      return res.status(404).json({ error: "Slide not found after update" });
+    }
 
     const apiSlide = dbSlideToApi(slide);
     res.json(apiSlide);

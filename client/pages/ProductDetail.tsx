@@ -101,16 +101,40 @@ export default function ProductDetail() {
     );
   }
 
-  // Use fetched detail sections or provide defaults
-  const displaySections: DetailSection[] =
+  // Separate benefit and application sections from other details
+  const benefitsSection = detailSections.find(
+    (s) =>
+      s.title.toLowerCase().includes("pourquoi") ||
+      s.title.toLowerCase().includes("benefit") ||
+      s.title.toLowerCase().includes("avantage"),
+  );
+
+  const applicationsSection = detailSections.find(
+    (s) =>
+      s.title.toLowerCase().includes("application") ||
+      s.title.toLowerCase().includes("use case") ||
+      s.title.toLowerCase().includes("cas d"),
+  );
+
+  const otherSections =
     detailSections.length > 0
-      ? detailSections
+      ? detailSections.filter(
+          (s) =>
+            !s.title.toLowerCase().includes("pourquoi") &&
+            !s.title.toLowerCase().includes("benefit") &&
+            !s.title.toLowerCase().includes("avantage") &&
+            !s.title.toLowerCase().includes("application") &&
+            !s.title.toLowerCase().includes("use case") &&
+            !s.title.toLowerCase().includes("cas d"),
+        )
       : [
           {
             title: "Description du produit",
             content: product?.description || "",
           },
         ];
+
+  const displaySections = otherSections;
 
   return (
     <div className="min-h-screen bg-white">

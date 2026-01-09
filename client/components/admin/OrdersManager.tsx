@@ -277,7 +277,7 @@ export default function OrdersManager() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     {/* Panier Code */}
-                    <div className="mb-3">
+                    <div className="mb-4">
                       <p className="text-xs text-muted-foreground font-semibold">
                         CODE PANIER
                       </p>
@@ -286,59 +286,28 @@ export default function OrdersManager() {
                       </p>
                     </div>
 
-                    {/* Customer Info */}
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    {/* Customer and Articles Info - Side by side */}
+                    <div className="grid grid-cols-2 gap-6 mb-4">
                       <div>
-                        <p className="text-xs text-muted-foreground font-semibold mb-1">
+                        <p className="text-xs text-muted-foreground font-semibold mb-2">
                           CLIENT
                         </p>
-                        <p className="font-semibold text-foreground">
+                        <p className="font-semibold text-foreground text-sm">
                           {order.customer.name}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           {order.customer.email}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {order.customer.phone}
                         </p>
                       </div>
 
-                      {/* Order Info */}
                       <div>
-                        <p className="text-xs text-muted-foreground font-semibold mb-1">
+                        <p className="text-xs text-muted-foreground font-semibold mb-2">
                           ARTICLES
                         </p>
-                        <p className="font-semibold text-foreground">
+                        <p className="font-semibold text-foreground text-sm">
                           {order.items.length} article(s)
                         </p>
                       </div>
-                    </div>
-
-                    {/* Items List */}
-                    <div className="bg-secondary/50 rounded-lg p-3 mb-4">
-                      <p className="text-xs text-muted-foreground font-semibold mb-2">
-                        PRODUITS COMMANDÉS
-                      </p>
-                      <ul className="space-y-1">
-                        {order.items.map((item) => (
-                          <li key={item.id} className="text-sm">
-                            <span className="text-foreground">
-                              {item.name} x {item.quantity}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Timestamps */}
-                    <div className="flex gap-6 text-xs text-muted-foreground">
-                      <span>
-                        Créée: {new Date(order.createdAt).toLocaleDateString()}
-                      </span>
-                      <span>
-                        Mise à jour:{" "}
-                        {new Date(order.updatedAt).toLocaleDateString()}
-                      </span>
                     </div>
                   </div>
 

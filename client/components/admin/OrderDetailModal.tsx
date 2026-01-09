@@ -122,7 +122,7 @@ export default function OrderDetailModal({
 
             {/* Customer Information */}
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 Informations Client
               </p>
               <div className="space-y-1.5 text-xs">

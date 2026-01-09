@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
 import OrdersManager from "../components/admin/OrdersManager";

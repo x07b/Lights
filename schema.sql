@@ -258,6 +258,7 @@ ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE quote_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE hero_slides ENABLE ROW LEVEL SECURITY;
+ALTER TABLE product_details_sections ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for collections (products are public)
 -- Drop existing policies if they exist, then create new ones

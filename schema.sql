@@ -239,6 +239,12 @@ CREATE TRIGGER update_hero_slides_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_product_details_sections_updated_at ON product_details_sections;
+CREATE TRIGGER update_product_details_sections_updated_at
+  BEFORE UPDATE ON product_details_sections
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
 -- ============================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
 -- ============================================

@@ -63,7 +63,17 @@ export async function getHeroSlides(_req: any, res: any) {
 
 export async function createHeroSlide(req: any, res: any) {
   try {
-    const { image, alt, order } = req.body;
+    const {
+      image,
+      alt,
+      order,
+      title,
+      description,
+      button1_text,
+      button1_link,
+      button2_text,
+      button2_link,
+    } = req.body;
 
     if (!image) {
       res.status(400).json({ error: "Image URL is required" });
@@ -94,6 +104,12 @@ export async function createHeroSlide(req: any, res: any) {
         image,
         alt: alt || "Hero slide",
         order_index: orderIndex,
+        title: title || "Slide Title",
+        description: description || "Slide description",
+        button1_text: button1_text || "Découvrir",
+        button1_link: button1_link || "/products",
+        button2_text: button2_text || "En savoir plus",
+        button2_link: button2_link || "/about",
       })
       .select();
 

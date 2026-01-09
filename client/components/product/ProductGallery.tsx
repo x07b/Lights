@@ -46,7 +46,7 @@ export function ProductGallery({
             <button
               onClick={() => setIsFullscreen(true)}
               className="absolute top-4 right-4 bg-white/90 hover:bg-white text-foreground p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
-              title="View fullscreen"
+              title="Voir en plein écran"
             >
               <Maximize2 className="w-5 h-5" />
             </button>
@@ -64,14 +64,14 @@ export function ProductGallery({
                 <button
                   onClick={handlePrevImage}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-foreground p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
-                  title="Previous image"
+                  title="Image précédente"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={handleNextImage}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-foreground p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
-                  title="Next image"
+                  title="Image suivante"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
@@ -110,7 +110,7 @@ export function ProductGallery({
           <button
             onClick={() => setIsFullscreen(false)}
             className="absolute top-6 right-6 bg-white text-foreground p-2 rounded-lg hover:bg-gray-200 transition-colors"
-            title="Close fullscreen"
+            title="Fermer le plein écran"
           >
             <svg
               className="w-6 h-6"

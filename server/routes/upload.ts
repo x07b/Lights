@@ -24,8 +24,7 @@ export async function uploadFile(req: any, res: any) {
     return;
   }
 
-  // Get filename from header or body
-  const filename = req.get("x-filename") || `file-${Date.now()}`;
+  // Get file extension
   const fileExt = path.extname(filename);
 
   // Validate file extension

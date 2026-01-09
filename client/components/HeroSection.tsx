@@ -7,6 +7,12 @@ interface Slide {
   image: string;
   alt: string;
   order: number;
+  title: string;
+  description: string;
+  button1_text: string;
+  button1_link: string;
+  button2_text: string;
+  button2_link: string;
 }
 
 export function HeroSection() {
@@ -23,6 +29,12 @@ export function HeroSection() {
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
       alt: "Luxence Brand Banner 1",
       order: 0,
+      title: "Illuminez vos espaces",
+      description: "Des luminaires élégants pour sublimer vos intérieurs.",
+      button1_text: "Découvrir",
+      button1_link: "/products",
+      button2_text: "En savoir plus",
+      button2_link: "/about",
     },
     {
       id: "2",
@@ -30,6 +42,12 @@ export function HeroSection() {
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
       alt: "Luxence Brand Banner 2",
       order: 1,
+      title: "Luxe et Innovation",
+      description: "Découvrez notre collection premium de luminaires.",
+      button1_text: "Voir la collection",
+      button1_link: "/products",
+      button2_text: "En savoir plus",
+      button2_link: "/about",
     },
   ];
 
@@ -122,7 +140,7 @@ export function HeroSection() {
                 className="text-4xl md:text-5xl lg:text-6xl font-futura font-bold leading-tight text-white animate-slide-up opacity-0"
                 style={{ animation: "slide-up 0.6s ease-out 0.3s forwards" }}
               >
-                Illuminez vos espaces
+                {slides[currentSlide]?.title || "Illuminez vos espaces"}
               </h1>
             </div>
 
@@ -130,7 +148,8 @@ export function HeroSection() {
               className="text-sm md:text-base text-white/90 font-roboto leading-relaxed animate-slide-up opacity-0"
               style={{ animation: "slide-up 0.6s ease-out 0.4s forwards" }}
             >
-              Des luminaires élégants pour sublimer vos intérieurs.
+              {slides[currentSlide]?.description ||
+                "Des luminaires élégants pour sublimer vos intérieurs."}
             </p>
 
             <div
@@ -138,17 +157,17 @@ export function HeroSection() {
               style={{ animation: "slide-up 0.6s ease-out 0.5s forwards" }}
             >
               <Link
-                to="/products"
+                to={slides[currentSlide]?.button1_link || "/products"}
                 className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg group active:scale-95"
               >
-                Découvrir
+                {slides[currentSlide]?.button1_text || "Découvrir"}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
               <Link
-                to="/about"
+                to={slides[currentSlide]?.button2_link || "/about"}
                 className="inline-flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white/10 px-6 py-3 rounded-lg font-futura font-bold text-sm transition-all duration-300 hover:shadow-lg active:scale-95"
               >
-                En savoir plus
+                {slides[currentSlide]?.button2_text || "En savoir plus"}
               </Link>
             </div>
           </div>

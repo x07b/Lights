@@ -12,14 +12,20 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 export async function uploadFile(req: any, res: any) {
   // Handle file from fetch with FormData
   const contentType = req.get("content-type") || "";
+  const filename = req.get("x-filename") || `file-${Date.now()}`;
 
-  if (!contentType.includes("application/octet-stream")) {
+  // Allow image MIME types and application/octet-stream
+  const isValidContentType =
+    contentType.startsWith("image/") ||
+    contentType === "application/octet-stream" ||
+    contentType === "application/pdf";
+
+  if (!isValidContentType && !filename) {
     res.status(400).json({ error: "No file provided" });
     return;
   }
 
-  // Get filename from header or body
-  const filename = req.get("x-filename") || `file-${Date.now()}`;
+  // Get file extension
   const fileExt = path.extname(filename);
 
   // Validate file extension

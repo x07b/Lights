@@ -1,8 +1,5 @@
--- ============================================
--- PRODUCT DETAILS SECTIONS TABLE
--- ============================================
--- Add this table to store product detail sections ("Détails du produit")
--- These are the accordion sections that appear on the product detail page
+-- Create product_details_sections table
+-- Run this in the Supabase SQL Editor
 
 CREATE TABLE IF NOT EXISTS product_details_sections (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -14,22 +11,29 @@ CREATE TABLE IF NOT EXISTS product_details_sections (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Create indexes
+-- Create index for faster queries
 CREATE INDEX IF NOT EXISTS idx_product_details_sections_product_id ON product_details_sections(product_id);
 CREATE INDEX IF NOT EXISTS idx_product_details_sections_order ON product_details_sections(product_id, order_index);
 
 -- Enable RLS
 ALTER TABLE product_details_sections ENABLE ROW LEVEL SECURITY;
 
--- Public read access
-DROP POLICY IF EXISTS "Product details sections are viewable by everyone" ON product_details_sections;
+-- Create policy for public SELECT
 CREATE POLICY "Product details sections are viewable by everyone"
   ON product_details_sections FOR SELECT
   USING (true);
 
--- Add trigger for updated_at
-DROP TRIGGER IF EXISTS update_product_details_sections_updated_at ON product_details_sections;
-CREATE TRIGGER update_product_details_sections_updated_at
-  BEFORE UPDATE ON product_details_sections
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
+-- Create policy for authenticated INSERT
+CREATE POLICY "Authenticated users can insert product details sections"
+  ON product_details_sections FOR INSERT
+  WITH CHECK (true);
+
+-- Create policy for authenticated UPDATE
+CREATE POLICY "Authenticated users can update product details sections"
+  ON product_details_sections FOR UPDATE
+  USING (true);
+
+-- Create policy for authenticated DELETE
+CREATE POLICY "Authenticated users can delete product details sections"
+  ON product_details_sections FOR DELETE
+  USING (true);

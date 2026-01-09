@@ -101,16 +101,40 @@ export default function ProductDetail() {
     );
   }
 
-  // Use fetched detail sections or provide defaults
-  const displaySections: DetailSection[] =
+  // Separate benefit and application sections from other details
+  const benefitsSection = detailSections.find(
+    (s) =>
+      s.title.toLowerCase().includes("pourquoi") ||
+      s.title.toLowerCase().includes("benefit") ||
+      s.title.toLowerCase().includes("avantage"),
+  );
+
+  const applicationsSection = detailSections.find(
+    (s) =>
+      s.title.toLowerCase().includes("application") ||
+      s.title.toLowerCase().includes("use case") ||
+      s.title.toLowerCase().includes("cas d"),
+  );
+
+  const otherSections =
     detailSections.length > 0
-      ? detailSections
+      ? detailSections.filter(
+          (s) =>
+            !s.title.toLowerCase().includes("pourquoi") &&
+            !s.title.toLowerCase().includes("benefit") &&
+            !s.title.toLowerCase().includes("avantage") &&
+            !s.title.toLowerCase().includes("application") &&
+            !s.title.toLowerCase().includes("use case") &&
+            !s.title.toLowerCase().includes("cas d"),
+        )
       : [
           {
             title: "Description du produit",
             content: product?.description || "",
           },
         ];
+
+  const displaySections = otherSections;
 
   return (
     <div className="min-h-screen bg-white">
@@ -178,98 +202,163 @@ export default function ProductDetail() {
         )}
 
         {/* Benefits Section */}
-        <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
-          <div className="space-y-8">
-            <div>
-              <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
-                Pourquoi choisir ce produit ?
-              </h2>
-              <div className="h-1 w-20 bg-accent rounded-full" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {benefitsSection ? (
+          <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
+            <div className="space-y-8">
               <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Performance garantie
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Nous garantissons la performance constante de ce luminaire
-                  avec une couverture complète et un support technique réactif.
-                  Votre investissement est protégé.
-                </p>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  {benefitsSection.title}
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
               </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Solution économique
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Réduisez vos coûts énergétiques tout en profitant d'une
-                  qualité d'éclairage supérieure. Amortissement rapide et
-                  rentabilité garantie.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Respect de l'environnement
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Solution écologique et durable, recyclable et certifiée.
-                  Contribuez à la préservation de l'environnement sans
-                  compromis.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Support expert
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Équipe d'experts disponible pour assistance, conseil et
-                  maintenance. Satisfaction client garantie à 100%.
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {benefitsSection.content
+                  .split("\n\n")
+                  .filter((item: string) => item.trim())
+                  .map((item: string, index: number) => {
+                    const [title, ...descLines] = item.split("\n");
+                    return (
+                      <div key={index}>
+                        <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                          {title}
+                        </h3>
+                        <p className="font-roboto text-muted-foreground leading-relaxed">
+                          {descLines.join(" ")}
+                        </p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
+            <div className="space-y-8">
+              <div>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  Pourquoi choisir ce produit ?
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Performance garantie
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Nous garantissons la performance constante de ce luminaire
+                    avec une couverture complète et un support technique
+                    réactif. Votre investissement est protégé.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Solution économique
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Réduisez vos coûts énergétiques tout en profitant d'une
+                    qualité d'éclairage supérieure. Amortissement rapide et
+                    rentabilité garantie.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Respect de l'environnement
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Solution écologique et durable, recyclable et certifiée.
+                    Contribuez à la préservation de l'environnement sans
+                    compromis.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Support expert
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Équipe d'experts disponible pour assistance, conseil et
+                    maintenance. Satisfaction client garantie à 100%.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Applications Section */}
-        <section className="mb-16 sm:mb-20">
-          <div className="space-y-6">
-            <div>
-              <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
-                Cas d'application
-              </h2>
-              <div className="h-1 w-20 bg-accent rounded-full" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Espaces professionnels
-                </h3>
-                <p className="font-roboto text-muted-foreground">
-                  Bureau, open space, salles de réunion. Créez un environnement
-                  productif et confortable pour vos équipes.
-                </p>
+        {applicationsSection ? (
+          <section className="mb-16 sm:mb-20">
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  {applicationsSection.title}
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
               </div>
-              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Espaces résidentiels
-                </h3>
-                <p className="font-roboto text-muted-foreground">
-                  Salon, cuisine, chambre. Transformez votre habitat avec un
-                  éclairage adapté à votre style de vie.
-                </p>
-              </div>
-              <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Environnements commerciaux
-                </h3>
-                <p className="font-roboto text-muted-foreground">
-                  Boutique, galerie, showroom. Mettez en valeur vos produits
-                  avec un éclairage professionnel et élégant.
-                </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {applicationsSection.content
+                  .split("\n\n")
+                  .filter((item: string) => item.trim())
+                  .map((item: string, index: number) => {
+                    const [title, ...descLines] = item.split("\n");
+                    return (
+                      <div
+                        key={index}
+                        className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300"
+                      >
+                        <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                          {title}
+                        </h3>
+                        <p className="font-roboto text-muted-foreground">
+                          {descLines.join(" ")}
+                        </p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="mb-16 sm:mb-20">
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  Cas d'application
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Espaces professionnels
+                  </h3>
+                  <p className="font-roboto text-muted-foreground">
+                    Bureau, open space, salles de réunion. Créez un
+                    environnement productif et confortable pour vos équipes.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Espaces résidentiels
+                  </h3>
+                  <p className="font-roboto text-muted-foreground">
+                    Salon, cuisine, chambre. Transformez votre habitat avec un
+                    éclairage adapté à votre style de vie.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border p-6 hover:shadow-lg hover:border-accent/50 transition-all duration-300">
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Environnements commerciaux
+                  </h3>
+                  <p className="font-roboto text-muted-foreground">
+                    Boutique, galerie, showroom. Mettez en valeur vos produits
+                    avec un éclairage professionnel et élégant.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className="bg-gradient-to-r from-accent to-accent/80 rounded-lg p-8 sm:p-12 text-center text-white space-y-6">

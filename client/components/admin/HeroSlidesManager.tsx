@@ -15,6 +15,12 @@ interface HeroSlide {
   image: string;
   alt: string;
   order: number;
+  title: string;
+  description: string;
+  button1_text: string;
+  button1_link: string;
+  button2_text: string;
+  button2_link: string;
 }
 
 export default function HeroSlidesManager() {
@@ -199,7 +205,17 @@ export default function HeroSlidesManager() {
           <Button
             onClick={() => {
               setEditingId("new");
-              setEditData({ image: "", alt: "", order: slides.length || 0 });
+              setEditData({
+                image: "",
+                alt: "",
+                order: slides.length || 0,
+                title: "Slide Title",
+                description: "Slide description",
+                button1_text: "Découvrir",
+                button1_link: "/products",
+                button2_text: "En savoir plus",
+                button2_link: "/about",
+              });
             }}
             className="flex items-center gap-2"
           >
@@ -278,6 +294,124 @@ export default function HeroSlidesManager() {
               />
             </div>
 
+            <div className="border-t border-border pt-4">
+              <h3 className="font-semibold text-sm mb-4">Slide Content</h3>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Title</label>
+                <input
+                  type="text"
+                  value={editData.title || ""}
+                  onChange={(e) =>
+                    setEditData((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
+                  placeholder="Main title of the slide"
+                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                />
+              </div>
+
+              <div className="mt-3">
+                <label className="block text-sm font-medium mb-2">
+                  Description
+                </label>
+                <textarea
+                  value={editData.description || ""}
+                  onChange={(e) =>
+                    setEditData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
+                  placeholder="Slide description"
+                  rows={3}
+                  className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                />
+              </div>
+
+              <div className="mt-4 space-y-3 border-t border-border pt-4">
+                <h4 className="font-medium text-xs uppercase text-muted-foreground">
+                  Button 1
+                </h4>
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Button 1 Text
+                  </label>
+                  <input
+                    type="text"
+                    value={editData.button1_text || ""}
+                    onChange={(e) =>
+                      setEditData((prev) => ({
+                        ...prev,
+                        button1_text: e.target.value,
+                      }))
+                    }
+                    placeholder="Button text"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Button 1 Link
+                  </label>
+                  <input
+                    type="text"
+                    value={editData.button1_link || ""}
+                    onChange={(e) =>
+                      setEditData((prev) => ({
+                        ...prev,
+                        button1_link: e.target.value,
+                      }))
+                    }
+                    placeholder="/products"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-3 border-t border-border pt-4">
+                <h4 className="font-medium text-xs uppercase text-muted-foreground">
+                  Button 2
+                </h4>
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Button 2 Text
+                  </label>
+                  <input
+                    type="text"
+                    value={editData.button2_text || ""}
+                    onChange={(e) =>
+                      setEditData((prev) => ({
+                        ...prev,
+                        button2_text: e.target.value,
+                      }))
+                    }
+                    placeholder="Button text"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Button 2 Link
+                  </label>
+                  <input
+                    type="text"
+                    value={editData.button2_link || ""}
+                    onChange={(e) =>
+                      setEditData((prev) => ({
+                        ...prev,
+                        button2_link: e.target.value,
+                      }))
+                    }
+                    placeholder="/about"
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="flex gap-2 pt-4 border-t border-border">
               <Button
                 onClick={handleSaveSlide}
@@ -330,14 +464,20 @@ export default function HeroSlidesManager() {
                     </div>
                     <div className="flex-1">
                       <div className="space-y-2 mb-4">
-                        <p className="text-sm text-muted-foreground">
-                          <strong>Order:</strong> {index + 1}
+                        <p className="text-sm font-medium text-foreground">
+                          {slide.title}
                         </p>
-                        {slide.alt && (
-                          <p className="text-sm text-muted-foreground">
-                            <strong>Alt:</strong> {slide.alt}
-                          </p>
-                        )}
+                        <p className="text-xs text-muted-foreground">
+                          {slide.description}
+                        </p>
+                        <div className="flex gap-2 pt-2">
+                          <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
+                            {slide.button1_text}
+                          </span>
+                          <span className="text-xs bg-muted px-2 py-1 rounded">
+                            {slide.button2_text}
+                          </span>
+                        </div>
                       </div>
                       <div className="flex gap-2 flex-wrap">
                         {index > 0 && (

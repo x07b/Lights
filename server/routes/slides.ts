@@ -5,6 +5,12 @@ export interface HeroSlide {
   image: string;
   alt: string;
   order: number;
+  title: string;
+  description: string;
+  button1_text: string;
+  button1_link: string;
+  button2_text: string;
+  button2_link: string;
 }
 
 // Helper function to convert DB slide to API format
@@ -14,6 +20,12 @@ function dbSlideToApi(dbSlide: any): HeroSlide {
     image: dbSlide.image,
     alt: dbSlide.alt || "Hero slide",
     order: dbSlide.order_index || 0,
+    title: dbSlide.title || "Slide Title",
+    description: dbSlide.description || "Slide description",
+    button1_text: dbSlide.button1_text || "Découvrir",
+    button1_link: dbSlide.button1_link || "/products",
+    button2_text: dbSlide.button2_text || "En savoir plus",
+    button2_link: dbSlide.button2_link || "/about",
   };
 }
 
@@ -23,6 +35,17 @@ function apiSlideToDb(apiSlide: Partial<HeroSlide>): any {
   if (apiSlide.image !== undefined) dbSlide.image = apiSlide.image;
   if (apiSlide.alt !== undefined) dbSlide.alt = apiSlide.alt;
   if (apiSlide.order !== undefined) dbSlide.order_index = apiSlide.order;
+  if (apiSlide.title !== undefined) dbSlide.title = apiSlide.title;
+  if (apiSlide.description !== undefined)
+    dbSlide.description = apiSlide.description;
+  if (apiSlide.button1_text !== undefined)
+    dbSlide.button1_text = apiSlide.button1_text;
+  if (apiSlide.button1_link !== undefined)
+    dbSlide.button1_link = apiSlide.button1_link;
+  if (apiSlide.button2_text !== undefined)
+    dbSlide.button2_text = apiSlide.button2_text;
+  if (apiSlide.button2_link !== undefined)
+    dbSlide.button2_link = apiSlide.button2_link;
   return dbSlide;
 }
 
@@ -45,7 +68,17 @@ export async function getHeroSlides(_req: any, res: any) {
 
 export async function createHeroSlide(req: any, res: any) {
   try {
-    const { image, alt, order } = req.body;
+    const {
+      image,
+      alt,
+      order,
+      title,
+      description,
+      button1_text,
+      button1_link,
+      button2_text,
+      button2_link,
+    } = req.body;
 
     if (!image) {
       res.status(400).json({ error: "Image URL is required" });
@@ -69,18 +102,29 @@ export async function createHeroSlide(req: any, res: any) {
 
     const slideId = `slide_${Date.now()}`;
 
-    const { data: slide, error } = await supabase
+    const { data, error } = await supabase
       .from("hero_slides")
       .insert({
         id: slideId,
         image,
         alt: alt || "Hero slide",
         order_index: orderIndex,
+        title: title || "Slide Title",
+        description: description || "Slide description",
+        button1_text: button1_text || "Découvrir",
+        button1_link: button1_link || "/products",
+        button2_text: button2_text || "En savoir plus",
+        button2_link: button2_link || "/about",
       })
-      .select()
-      .single();
+      .select();
 
     if (error) throw error;
+
+    // Handle array response from insert().select()
+    const slide = Array.isArray(data) ? data[0] : data;
+    if (!slide) {
+      throw new Error("Failed to retrieve inserted slide");
+    }
 
     const apiSlide = dbSlideToApi(slide);
     res.status(201).json(apiSlide);
@@ -93,7 +137,17 @@ export async function createHeroSlide(req: any, res: any) {
 export async function updateHeroSlide(req: any, res: any) {
   try {
     const { id } = req.params;
-    const { image, alt, order } = req.body;
+    const {
+      image,
+      alt,
+      order,
+      title,
+      description,
+      button1_text,
+      button1_link,
+      button2_text,
+      button2_link,
+    } = req.body;
 
     // Check if slide exists
     const { data: existingSlide, error: checkError } = await supabase
@@ -111,15 +165,26 @@ export async function updateHeroSlide(req: any, res: any) {
     if (image !== undefined) updateData.image = image;
     if (alt !== undefined) updateData.alt = alt;
     if (order !== undefined) updateData.order_index = order;
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (button1_text !== undefined) updateData.button1_text = button1_text;
+    if (button1_link !== undefined) updateData.button1_link = button1_link;
+    if (button2_text !== undefined) updateData.button2_text = button2_text;
+    if (button2_link !== undefined) updateData.button2_link = button2_link;
 
-    const { data: slide, error } = await supabase
+    const { data, error } = await supabase
       .from("hero_slides")
       .update(updateData)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) throw error;
+
+    // Handle array response from update().select()
+    const slide = Array.isArray(data) ? data[0] : data;
+    if (!slide) {
+      return res.status(404).json({ error: "Slide not found after update" });
+    }
 
     const apiSlide = dbSlideToApi(slide);
     res.json(apiSlide);
@@ -144,14 +209,19 @@ export async function deleteHeroSlide(req: any, res: any) {
       return res.status(404).json({ error: "Slide not found" });
     }
 
-    const { data: deletedSlide, error: deleteError } = await supabase
+    const { data, error: deleteError } = await supabase
       .from("hero_slides")
       .delete()
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (deleteError) throw deleteError;
+
+    // Handle array response from delete().select()
+    const deletedSlide = Array.isArray(data) ? data[0] : data;
+    if (!deletedSlide) {
+      return res.status(404).json({ error: "Slide not found" });
+    }
 
     const apiSlide = dbSlideToApi(deletedSlide);
     res.json(apiSlide);

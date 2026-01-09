@@ -48,7 +48,7 @@ export default function Admin() {
       const hash = window.location.hash.substring(1);
       if (
         hash &&
-        ["dashboard", "orders", "products", "collections"].includes(hash)
+        ["dashboard", "orders", "products", "collections", "hero-slides"].includes(hash)
       ) {
         setActiveTab(hash);
       }

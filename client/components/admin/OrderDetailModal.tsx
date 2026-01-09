@@ -188,14 +188,14 @@ export default function OrderDetailModal({
               </div>
             </div>
 
-            {/* Total */}
+            {/* Total Quantity */}
             <div className="bg-accent/10 rounded-lg p-3 border border-accent/20">
               <div className="flex items-center justify-between">
                 <p className="text-xs font-semibold text-foreground uppercase">
-                  Total
+                  Qty Total
                 </p>
                 <p className="text-xl font-futura font-bold text-accent">
-                  {order.total.toFixed(2)}€
+                  {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                 </p>
               </div>
             </div>

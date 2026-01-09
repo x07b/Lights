@@ -205,7 +205,17 @@ export default function HeroSlidesManager() {
           <Button
             onClick={() => {
               setEditingId("new");
-              setEditData({ image: "", alt: "", order: slides.length || 0 });
+              setEditData({
+                image: "",
+                alt: "",
+                order: slides.length || 0,
+                title: "Slide Title",
+                description: "Slide description",
+                button1_text: "Découvrir",
+                button1_link: "/products",
+                button2_text: "En savoir plus",
+                button2_link: "/about",
+              });
             }}
             className="flex items-center gap-2"
           >

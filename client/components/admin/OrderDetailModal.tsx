@@ -163,10 +163,10 @@ export default function OrderDetailModal({
 
             {/* Order Items */}
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 Articles ({order.items.length})
               </p>
-              <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+              <div className="space-y-1.5 max-h-32 overflow-y-auto pr-1">
                 {order.items.map((item) => (
                   <div
                     key={item.id}

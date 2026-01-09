@@ -366,18 +366,13 @@ export default function OrdersManager() {
                     </div>
                   </div>
 
-                  {/* Status Change Dropdown - Always visible */}
+                  {/* Status Change Dropdown - Always visible and active */}
                   <select
                     value={order.status}
                     onChange={(e) =>
                       handleStatusChange(order.id, e.target.value)
                     }
-                    disabled={order.status === "livré" || order.status === "annulé"}
-                    className={`w-full px-3 py-2 border border-border rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent ${
-                      order.status === "livré" || order.status === "annulé"
-                        ? "bg-muted text-muted-foreground cursor-not-allowed opacity-60"
-                        : "bg-white"
-                    }`}
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent bg-white"
                   >
                     <option value="en attente">En attente</option>
                     <option value="en cours">En cours</option>

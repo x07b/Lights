@@ -60,27 +60,27 @@ export default function OrderDetailModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-slide-up">
+      <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto animate-slide-up">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-border p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-gradient-to-r from-accent to-accent/80 text-white p-4 flex items-center justify-between rounded-t-xl">
           <div>
-            <p className="text-xs text-muted-foreground font-semibold mb-1">
+            <p className="text-xs text-white/80 font-semibold mb-1">
               CODE PANIER
             </p>
-            <p className="text-2xl font-futura font-bold text-accent">
+            <p className="text-xl font-futura font-bold">
               {order.panierCode}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-muted-foreground" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 space-y-6">
+        <div className="p-5 space-y-4">
           {/* Status Section */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold text-foreground uppercase">

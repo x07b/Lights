@@ -29,93 +29,101 @@ const RedirectProduct = () => {
   return <Navigate to="/products" replace />;
 };
 
+const AppRoutes = () => {
+  useVisitorTracking();
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <Index />
+          </Layout>
+        }
+      />
+      <Route
+        path="/products"
+        element={
+          <Layout>
+            <Products />
+          </Layout>
+        }
+      />
+      <Route
+        path="/collections"
+        element={
+          <Layout>
+            <Collections />
+          </Layout>
+        }
+      />
+      <Route
+        path="/collections/:slug"
+        element={
+          <Layout>
+            <Collections />
+          </Layout>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <Layout>
+            <About />
+          </Layout>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <Layout>
+            <Contact />
+          </Layout>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Layout>
+            <Cart />
+          </Layout>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <Layout>
+            <Checkout />
+          </Layout>
+        }
+      />
+      <Route path="/product" element={<RedirectProduct />} />
+      <Route
+        path="/product/:slug"
+        element={
+          <Layout>
+            <ProductDetail />
+          </Layout>
+        }
+      />
+      <Route path="/admin" element={<Admin />} />
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <NotFound />
+          </Layout>
+        }
+      />
+    </Routes>
+  );
+};
+
 const App = () => (
   <CartProvider>
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Index />
-            </Layout>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <Layout>
-              <Products />
-            </Layout>
-          }
-        />
-        <Route
-          path="/collections"
-          element={
-            <Layout>
-              <Collections />
-            </Layout>
-          }
-        />
-        <Route
-          path="/collections/:slug"
-          element={
-            <Layout>
-              <Collections />
-            </Layout>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <Layout>
-              <About />
-            </Layout>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <Layout>
-              <Contact />
-            </Layout>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <Layout>
-              <Cart />
-            </Layout>
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <Layout>
-              <Checkout />
-            </Layout>
-          }
-        />
-        <Route path="/product" element={<RedirectProduct />} />
-        <Route
-          path="/product/:slug"
-          element={
-            <Layout>
-              <ProductDetail />
-            </Layout>
-          }
-        />
-        <Route path="/admin" element={<Admin />} />
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <NotFound />
-            </Layout>
-          }
-        />
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   </CartProvider>
 );

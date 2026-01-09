@@ -45,14 +45,6 @@ export function ProductCard({
     toast.success(`${name} ajouté à la demande de devis!`);
   };
 
-  const handleDownloadFile = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (slug) {
-      navigate(`/product/${slug}`);
-      toast.info("Accédez à la fiche technique sur la page produit");
-    }
-  };
-
   const handleCardClick = () => {
     if (slug) {
       navigate(`/product/${slug}`);

@@ -165,6 +165,10 @@ export function createServer() {
     deleteProductDetail,
   );
 
+  // Analytics routes
+  app.post("/api/analytics/track-visitor", trackVisitor);
+  app.get("/api/analytics/visitors", getVisitorStats);
+
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));
 

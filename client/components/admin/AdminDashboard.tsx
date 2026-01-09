@@ -19,7 +19,6 @@ import {
 
 interface DashboardStats {
   totalOrders: number;
-  totalRevenue: number;
   uniqueCustomers: number;
   totalProducts: number;
   ordersbyStatus: {
@@ -31,7 +30,6 @@ interface DashboardStats {
   recentOrders: Array<{
     panierCode: string;
     customerName: string;
-    total: number;
     status: string;
     date: string;
   }>;

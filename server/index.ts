@@ -50,6 +50,11 @@ import {
   updateQuoteRequestStatus,
   deleteQuoteRequest,
 } from "./routes/quotes";
+import {
+  getProductDetails,
+  upsertProductDetails,
+  deleteProductDetail,
+} from "./routes/product-details";
 
 export function createServer() {
   const app = express();

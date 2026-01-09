@@ -24,6 +24,7 @@ import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
 import OrdersManager from "../components/admin/OrdersManager";
 import AdminDashboard from "../components/admin/AdminDashboard";
+import HeroSlidesManager from "../components/admin/HeroSlidesManager";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

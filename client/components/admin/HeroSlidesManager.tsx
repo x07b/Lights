@@ -462,14 +462,20 @@ export default function HeroSlidesManager() {
                     </div>
                     <div className="flex-1">
                       <div className="space-y-2 mb-4">
-                        <p className="text-sm text-muted-foreground">
-                          <strong>Order:</strong> {index + 1}
+                        <p className="text-sm font-medium text-foreground">
+                          {slide.title}
                         </p>
-                        {slide.alt && (
-                          <p className="text-sm text-muted-foreground">
-                            <strong>Alt:</strong> {slide.alt}
-                          </p>
-                        )}
+                        <p className="text-xs text-muted-foreground">
+                          {slide.description}
+                        </p>
+                        <div className="flex gap-2 pt-2">
+                          <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded">
+                            {slide.button1_text}
+                          </span>
+                          <span className="text-xs bg-muted px-2 py-1 rounded">
+                            {slide.button2_text}
+                          </span>
+                        </div>
                       </div>
                       <div className="flex gap-2 flex-wrap">
                         {index > 0 && (

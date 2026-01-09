@@ -209,10 +209,6 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="text-white/60 text-xs font-roboto">Scroll</div>
-      </div>
     </section>
   );
 }

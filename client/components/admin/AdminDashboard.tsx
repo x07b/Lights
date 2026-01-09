@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShoppingCart, Users, TrendingUp, Package } from "lucide-react";
+import { ShoppingCart, Users, TrendingUp, Package, Eye } from "lucide-react";
 import {
   BarChart,
   Bar,

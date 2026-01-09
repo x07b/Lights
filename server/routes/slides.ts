@@ -5,6 +5,12 @@ export interface HeroSlide {
   image: string;
   alt: string;
   order: number;
+  title: string;
+  description: string;
+  button1_text: string;
+  button1_link: string;
+  button2_text: string;
+  button2_link: string;
 }
 
 // Helper function to convert DB slide to API format
@@ -14,6 +20,12 @@ function dbSlideToApi(dbSlide: any): HeroSlide {
     image: dbSlide.image,
     alt: dbSlide.alt || "Hero slide",
     order: dbSlide.order_index || 0,
+    title: dbSlide.title || "Slide Title",
+    description: dbSlide.description || "Slide description",
+    button1_text: dbSlide.button1_text || "Découvrir",
+    button1_link: dbSlide.button1_link || "/products",
+    button2_text: dbSlide.button2_text || "En savoir plus",
+    button2_link: dbSlide.button2_link || "/about",
   };
 }
 
@@ -23,6 +35,12 @@ function apiSlideToDb(apiSlide: Partial<HeroSlide>): any {
   if (apiSlide.image !== undefined) dbSlide.image = apiSlide.image;
   if (apiSlide.alt !== undefined) dbSlide.alt = apiSlide.alt;
   if (apiSlide.order !== undefined) dbSlide.order_index = apiSlide.order;
+  if (apiSlide.title !== undefined) dbSlide.title = apiSlide.title;
+  if (apiSlide.description !== undefined) dbSlide.description = apiSlide.description;
+  if (apiSlide.button1_text !== undefined) dbSlide.button1_text = apiSlide.button1_text;
+  if (apiSlide.button1_link !== undefined) dbSlide.button1_link = apiSlide.button1_link;
+  if (apiSlide.button2_text !== undefined) dbSlide.button2_text = apiSlide.button2_text;
+  if (apiSlide.button2_link !== undefined) dbSlide.button2_link = apiSlide.button2_link;
   return dbSlide;
 }
 

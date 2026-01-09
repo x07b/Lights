@@ -71,13 +71,15 @@ export default function AdminDashboard() {
   const fetchDashboardStats = async () => {
     try {
       setLoading(true);
-      const [ordersResponse, productsResponse] = await Promise.all([
+      const [ordersResponse, productsResponse, visitorsResponse] = await Promise.all([
         fetch("/api/orders"),
         fetch("/api/products"),
+        fetch("/api/analytics/visitors"),
       ]);
 
       const ordersData = await ordersResponse.json();
       const productsData = await productsResponse.json();
+      const visitorsData = await visitorsResponse.json();
 
       const orders = ordersData.orders || [];
       const products = productsData || [];
@@ -109,10 +111,19 @@ export default function AdminDashboard() {
           date: new Date(order.createdAt).toLocaleDateString(),
         }));
 
+      const visitorStats = visitorsData || {
+        totalVisitors: 0,
+        uniqueVisitors: 0,
+        todayVisitors: 0,
+        last7Days: 0,
+        last30Days: 0,
+      };
+
       setStats({
         totalOrders,
         uniqueCustomers,
         totalProducts,
+        visitorStats,
         ordersbyStatus,
         recentOrders,
       });

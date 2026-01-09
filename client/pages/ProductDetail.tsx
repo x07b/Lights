@@ -202,57 +202,88 @@ export default function ProductDetail() {
         )}
 
         {/* Benefits Section */}
-        <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
-          <div className="space-y-8">
-            <div>
-              <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
-                Pourquoi choisir ce produit ?
-              </h2>
-              <div className="h-1 w-20 bg-accent rounded-full" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {benefitsSection ? (
+          <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
+            <div className="space-y-8">
               <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Performance garantie
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Nous garantissons la performance constante de ce luminaire
-                  avec une couverture complète et un support technique réactif.
-                  Votre investissement est protégé.
-                </p>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  {benefitsSection.title}
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
               </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Solution économique
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Réduisez vos coûts énergétiques tout en profitant d'une
-                  qualité d'éclairage supérieure. Amortissement rapide et
-                  rentabilité garantie.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Respect de l'environnement
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Solution écologique et durable, recyclable et certifiée.
-                  Contribuez à la préservation de l'environnement sans
-                  compromis.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-futura text-xl font-bold text-foreground mb-3">
-                  Support expert
-                </h3>
-                <p className="font-roboto text-muted-foreground leading-relaxed">
-                  Équipe d'experts disponible pour assistance, conseil et
-                  maintenance. Satisfaction client garantie à 100%.
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {benefitsSection.content
+                  .split("\n\n")
+                  .filter((item: string) => item.trim())
+                  .map((item: string, index: number) => {
+                    const [title, ...descLines] = item.split("\n");
+                    return (
+                      <div key={index}>
+                        <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                          {title}
+                        </h3>
+                        <p className="font-roboto text-muted-foreground leading-relaxed">
+                          {descLines.join(" ")}
+                        </p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section className="mb-16 sm:mb-20 bg-gradient-to-br from-accent/5 to-accent/10 rounded-lg p-8 sm:p-12">
+            <div className="space-y-8">
+              <div>
+                <h2 className="font-futura text-3xl font-bold text-foreground mb-2">
+                  Pourquoi choisir ce produit ?
+                </h2>
+                <div className="h-1 w-20 bg-accent rounded-full" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Performance garantie
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Nous garantissons la performance constante de ce luminaire
+                    avec une couverture complète et un support technique réactif.
+                    Votre investissement est protégé.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Solution économique
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Réduisez vos coûts énergétiques tout en profitant d'une
+                    qualité d'éclairage supérieure. Amortissement rapide et
+                    rentabilité garantie.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Respect de l'environnement
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Solution écologique et durable, recyclable et certifiée.
+                    Contribuez à la préservation de l'environnement sans
+                    compromis.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-futura text-xl font-bold text-foreground mb-3">
+                    Support expert
+                  </h3>
+                  <p className="font-roboto text-muted-foreground leading-relaxed">
+                    Équipe d'experts disponible pour assistance, conseil et
+                    maintenance. Satisfaction client garantie à 100%.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Applications Section */}
         <section className="mb-16 sm:mb-20">

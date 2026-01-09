@@ -204,7 +204,7 @@ export function HeroSection() {
                 ? "bg-accent w-8"
                 : "bg-white/50 hover:bg-white/75 w-2"
             }`}
-            aria-label={`Go to slide ${index + 1}`}
+            aria-label={`Aller à la diapositive ${index + 1}`}
           />
         ))}
       </div>

@@ -8,7 +8,7 @@ import {
 
 export interface DetailSection {
   title: string;
-  content: string | string[];
+  content: string | string[] | any;
 }
 
 interface ProductDetailsPanelProps {

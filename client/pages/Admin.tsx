@@ -57,7 +57,32 @@ export default function Admin() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  const handleLogin = () => {
+  const checkForNewOrders = async () => {
+    try {
+      const response = await fetch("/api/orders");
+      const data = await response.json();
+      const orders = data.orders || [];
+
+      // Check for pending orders
+      const pendingOrders = orders.filter(
+        (order: any) => order.status === "en attente"
+      );
+
+      if (pendingOrders.length > 0) {
+        toast.success(
+          `${pendingOrders.length} commande(s) en attente de traitement!`,
+          {
+            description: "Consultez l'onglet Commandes pour les détails",
+            duration: 5000,
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error checking for new orders:", error);
+    }
+  };
+
+  const handleLogin = async () => {
     // Simple password check - in production, use proper authentication
     const defaultPassword = "admin123";
     if (inputPassword === defaultPassword) {
@@ -65,6 +90,9 @@ export default function Admin() {
       localStorage.setItem("admin-auth", "true");
       setLoginError("");
       setInputPassword("");
+
+      // Check for new orders after login
+      await checkForNewOrders();
     } else {
       setLoginError("Invalid password");
     }

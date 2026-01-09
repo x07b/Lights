@@ -262,13 +262,13 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Order Status List */}
-        <Card className="border-0 hover:shadow-xl transition-all duration-300">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-futura">
-              Statut des Commandes
+        <Card className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
+          <CardHeader className="pb-3 border-b border-secondary">
+            <CardTitle className="text-lg font-futura font-bold text-foreground">
+              Détail par Statut
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-1">
-              Détail par statut
+            <p className="text-xs text-muted-foreground mt-2">
+              Nombre et progression
             </p>
           </CardHeader>
           <CardContent>

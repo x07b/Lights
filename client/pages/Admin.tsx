@@ -102,7 +102,7 @@ export default function Admin() {
       // Check for new orders after login
       await checkForNewOrders();
     } else {
-      setLoginError("Invalid password");
+      setLoginError("Mot de passe invalide");
     }
   };
 
@@ -116,15 +116,15 @@ export default function Admin() {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center px-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Admin Login</CardTitle>
+            <CardTitle>Connexion Admin</CardTitle>
             <CardDescription>
-              Enter the admin password to continue
+              Entrez le mot de passe administrateur pour continuer
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <input
               type="password"
-              placeholder="Enter admin password"
+              placeholder="Entrez le mot de passe administrateur"
               value={inputPassword}
               onChange={(e) => {
                 setInputPassword(e.target.value);
@@ -135,13 +135,13 @@ export default function Admin() {
             />
             {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
             <Button onClick={handleLogin} className="w-full">
-              Login
+              Connexion
             </Button>
             <Link
               to="/"
               className="block text-center text-sm text-muted-foreground hover:text-foreground"
             >
-              Back to home
+              Retour à l'accueil
             </Link>
           </CardContent>
         </Card>

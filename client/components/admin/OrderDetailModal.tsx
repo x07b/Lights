@@ -170,7 +170,7 @@ export default function OrderDetailModal({
                 {order.items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between gap-2 p-2.5 bg-secondary/60 rounded text-xs"
+                    className="flex items-center justify-between gap-2 p-2 bg-secondary/60 rounded text-xs"
                   >
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-foreground truncate">

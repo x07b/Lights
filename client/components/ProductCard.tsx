@@ -47,7 +47,10 @@ export function ProductCard({
 
   const handleDownloadFile = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toast.success("Fichier technique téléchargé!");
+    if (slug) {
+      navigate(`/product/${slug}`);
+      toast.info("Accédez à la fiche technique sur la page produit");
+    }
   };
 
   const handleCardClick = () => {

@@ -247,6 +247,29 @@ export default function AdminDashboard() {
             </p>
           </CardContent>
         </Card>
+
+        {/* Visitors */}
+        <Card className="border-0 bg-gradient-to-br from-green-50 via-white to-green-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-green-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Visiteurs
+            </CardTitle>
+            <div className="p-2.5 bg-green-400/15 rounded-lg">
+              <Eye className="h-4 w-4 text-green-600" />
+            </div>
+          </CardHeader>
+          <CardContent className="relative z-10">
+            <div className="text-3xl lg:text-4xl font-bold text-green-600 mb-2">
+              {stats.visitorStats.uniqueVisitors}
+            </div>
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              {stats.visitorStats.todayVisitors > 0
+                ? `${stats.visitorStats.todayVisitors} aujourd'hui`
+                : "Aucun visiteur"}
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Charts Section */}

@@ -26,12 +26,6 @@ export function ProductCard({
   price = 0,
 }: ProductCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showQuoteModal, setShowQuoteModal] = useState(false);
-  const [quoteFormData, setQuoteFormData] = useState({
-    clientName: "",
-    clientEmail: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { addItem } = useCart();
 

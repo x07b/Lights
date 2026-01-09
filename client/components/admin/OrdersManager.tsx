@@ -274,10 +274,10 @@ export default function OrdersManager() {
           filteredOrders.map((order) => (
             <Card key={order.id} className="hover:shadow-md transition-shadow">
               <CardContent className="pt-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    {/* Panier Code */}
-                    <div className="mb-4">
+                <div className="space-y-4">
+                  {/* Header Row - Panier Code and Status */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground font-semibold">
                         CODE PANIER
                       </p>
@@ -286,36 +286,9 @@ export default function OrdersManager() {
                       </p>
                     </div>
 
-                    {/* Customer and Articles Info - Side by side */}
-                    <div className="grid grid-cols-2 gap-6 mb-4">
-                      <div>
-                        <p className="text-xs text-muted-foreground font-semibold mb-2">
-                          CLIENT
-                        </p>
-                        <p className="font-semibold text-foreground text-sm">
-                          {order.customer.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {order.customer.email}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-xs text-muted-foreground font-semibold mb-2">
-                          ARTICLES
-                        </p>
-                        <p className="font-semibold text-foreground text-sm">
-                          {order.items.length} article(s)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex flex-col gap-2">
                     {/* Status Badge */}
                     <div
-                      className={`px-4 py-2 rounded-lg font-semibold text-white text-center text-sm ${
+                      className={`px-4 py-2 rounded-lg font-semibold text-white text-center text-sm flex-shrink-0 ${
                         order.status === "en attente"
                           ? "bg-yellow-500"
                           : order.status === "en cours"
@@ -327,7 +300,34 @@ export default function OrdersManager() {
                     >
                       {order.status}
                     </div>
+                  </div>
 
+                  {/* Customer and Articles Info */}
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold mb-2">
+                        CLIENT
+                      </p>
+                      <p className="font-semibold text-foreground text-sm">
+                        {order.customer.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {order.customer.email}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold mb-2">
+                        ARTICLES
+                      </p>
+                      <p className="font-semibold text-foreground text-sm">
+                        {order.items.length} article(s)
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions - Vertical Stack */}
+                  <div className="pt-2 border-t border-border flex flex-col gap-2">
                     {/* View Detail Button */}
                     <Button
                       variant="outline"
@@ -336,7 +336,7 @@ export default function OrdersManager() {
                         setSelectedOrder(order);
                         setShowDetail(true);
                       }}
-                      className="flex items-center gap-2"
+                      className="flex items-center justify-center gap-2"
                     >
                       <Eye className="w-4 h-4" />
                       Détails
@@ -347,21 +347,10 @@ export default function OrdersManager() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleEdit(order)}
-                      className="flex items-center gap-2"
+                      className="flex items-center justify-center gap-2"
                     >
                       <Edit2 className="w-4 h-4" />
                       Modifier
-                    </Button>
-
-                    {/* Delete Button */}
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDelete(order.id)}
-                      className="flex items-center gap-2"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Supprimer
                     </Button>
 
                     {/* Status Change Dropdown */}
@@ -379,6 +368,17 @@ export default function OrdersManager() {
                         <option value="annulé">Annulé</option>
                       </select>
                     )}
+
+                    {/* Delete Button */}
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(order.id)}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Supprimer
+                    </Button>
                   </div>
                 </div>
               </CardContent>

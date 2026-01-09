@@ -244,6 +244,59 @@
     @apply animate-[fadeIn_0.2s_ease-out];
   }
 
+  /* Slide In Left Animation */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-left {
+    @apply animate-[slideInLeft_0.6s_ease-out];
+  }
+
+  /* Slide In Right Animation */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    @apply animate-[slideInRight_0.6s_ease-out];
+  }
+
+  /* Bounce Scale Animation */
+  @keyframes bounceScale {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-bounce-scale {
+    @apply animate-[bounceScale_0.4s_ease-in-out];
+  }
+
+  /* Smooth Hover Effects */
+  button,
+  a {
+    @apply transition-all duration-300 ease-out;
+  }
+
   /* Product Details Panel Animations */
   @keyframes slideInRight {
     from {

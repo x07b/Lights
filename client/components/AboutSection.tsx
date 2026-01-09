@@ -2,9 +2,12 @@ import { CheckCircle } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-br from-background via-background to-accent/5 min-h-screen md:min-h-auto flex items-center">
+    <section className="py-12 md:py-20 bg-gradient-to-br from-background via-background to-accent/5">
       <div className="container mx-auto px-4 w-full">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div
+          className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center animate-fade-in"
+          style={{ animation: "fade-in 0.8s ease-out forwards" }}
+        >
           {/* Image */}
           <div className="order-2 md:order-1">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-80 md:h-96">
@@ -12,6 +15,8 @@ export function AboutSection() {
                 src="https://cdn.builder.io/api/v1/image/assets%2F4bd5a48984ac41abb50f4c9c327d1d89%2F912ded31f1c040bbb8e059f551179c76?format=webp&width=800"
                 alt="Luxence brand banner"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>

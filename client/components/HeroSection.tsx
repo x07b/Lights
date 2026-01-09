@@ -104,7 +104,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full h-screen min-h-screen overflow-hidden">
+    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden group">
       {/* Background Image Carousel */}
       {slides.map((slide, index) => (
         <div
@@ -119,6 +119,8 @@ export function HeroSection() {
             src={slide.image}
             alt={slide.alt}
             className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
           />
           {/* Dark overlay for text readability */}
           <div className="absolute inset-0 bg-black/40" />
@@ -177,7 +179,7 @@ export function HeroSection() {
       {/* Navigation Buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-6 h-6" />
@@ -185,7 +187,7 @@ export function HeroSection() {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100"
         aria-label="Next slide"
       >
         <ChevronRight className="w-6 h-6" />
@@ -205,11 +207,6 @@ export function HeroSection() {
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="text-white/60 text-xs font-roboto">Scroll</div>
       </div>
     </section>
   );

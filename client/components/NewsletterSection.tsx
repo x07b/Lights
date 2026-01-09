@@ -13,9 +13,12 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-secondary">
+    <section className="py-12 md:py-16 bg-secondary">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center">
+        <div
+          className="max-w-2xl mx-auto text-center animate-fade-in opacity-0"
+          style={{ animation: "fade-in 0.8s ease-out forwards" }}
+        >
           <h2 className="text-3xl md:text-5xl font-futura font-bold text-primary mb-4">
             Rejoignez l'univers Luxence
           </h2>

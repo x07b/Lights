@@ -132,16 +132,16 @@ export function createServer() {
   app.get("/api/contact/messages", getContactMessages);
   app.put("/api/contact/messages/:id/read", markMessageAsRead);
 
-  // Orders routes
+  // Orders routes (specific routes before generic :id route)
   app.post("/api/orders", createOrder);
   app.get("/api/orders", getOrders);
+  app.get("/api/orders/search", searchOrders);
+  app.get("/api/orders/status/:status", getOrdersByStatus);
   app.get("/api/orders/panier/:panierCode", getOrderByPanierCode);
   app.get("/api/orders/:id", getOrderById);
-  app.get("/api/orders/search", searchOrders);
   app.put("/api/orders/:id/status", updateOrderStatus);
   app.put("/api/orders/:id", updateOrder);
   app.delete("/api/orders/:id", deleteOrder);
-  app.get("/api/orders/status/:status", getOrdersByStatus);
 
   // Hero slides routes
   app.get("/api/slides", getHeroSlides);

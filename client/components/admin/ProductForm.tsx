@@ -522,6 +522,72 @@ export default function ProductForm({
         </div>
       </div>
 
+      {/* Product Details Sections */}
+      {product && (
+        <div className="border-t border-border pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <label className="block text-sm font-medium">
+              Détails du produit
+            </label>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addDetailSection}
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add Section
+            </Button>
+          </div>
+
+          {isLoadingDetails ? (
+            <p className="text-sm text-muted-foreground">Loading sections...</p>
+          ) : detailSections.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No detail sections yet. Add one to get started.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {detailSections.map((section, index) => (
+                <div
+                  key={index}
+                  className="border border-border rounded-lg p-4 space-y-3 bg-muted/20"
+                >
+                  <input
+                    type="text"
+                    value={section.title}
+                    onChange={(e) =>
+                      updateDetailSection(index, "title", e.target.value)
+                    }
+                    placeholder="Section title (e.g., Description du produit)"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm font-medium"
+                  />
+                  <textarea
+                    value={section.content}
+                    onChange={(e) =>
+                      updateDetailSection(index, "content", e.target.value)
+                    }
+                    placeholder="Section content (supports plain text, paste tables, or any content)"
+                    rows={4}
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm font-mono"
+                  />
+                  {detailSections.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeDetailSection(index)}
+                      className="flex items-center gap-2 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Remove Section
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Form Actions */}
       <div className="flex gap-3 pt-4 border-t border-border">
         <Button type="submit" disabled={isUploading} className="flex-1">

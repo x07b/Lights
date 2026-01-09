@@ -161,20 +161,13 @@ export function ProductCard({
           )}
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2 mt-auto pt-2">
+          <div className="mt-auto pt-2">
             <button
               onClick={handleRequestQuote}
               title="Demande de devis"
-              className="flex-1 px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg text-sm"
+              className="w-full px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center gap-1.5 font-futura font-semibold bg-accent hover:bg-accent/90 active:scale-95 text-white shadow-md hover:shadow-lg text-sm"
             >
               Demande devis
-            </button>
-            <button
-              onClick={handleDownloadFile}
-              title="Télécharger fichier technique"
-              className="px-3 py-2 rounded-lg transition-all duration-300 flex items-center justify-center bg-white hover:bg-gray-50 text-foreground hover:text-accent border border-gray-200 shadow-sm hover:shadow-md active:scale-95"
-            >
-              <Download className="w-4 h-4" />
             </button>
           </div>
         </div>

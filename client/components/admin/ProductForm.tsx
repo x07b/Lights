@@ -65,6 +65,28 @@ export default function ProductForm({
     fetchCollections();
   }, []);
 
+  // Fetch product details sections when editing
+  useEffect(() => {
+    if (product?.id) {
+      const fetchDetails = async () => {
+        try {
+          setIsLoadingDetails(true);
+          const response = await fetch(`/api/products/${product.id}/details`);
+          if (response.ok) {
+            const data = await response.json();
+            setDetailSections(data);
+          }
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+        } finally {
+          setIsLoadingDetails(false);
+        }
+      };
+
+      fetchDetails();
+    }
+  }, [product?.id]);
+
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement

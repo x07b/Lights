@@ -29,6 +29,12 @@ export function HeroSection() {
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
       alt: "Luxence Brand Banner 1",
       order: 0,
+      title: "Illuminez vos espaces",
+      description: "Des luminaires élégants pour sublimer vos intérieurs.",
+      button1_text: "Découvrir",
+      button1_link: "/products",
+      button2_text: "En savoir plus",
+      button2_link: "/about",
     },
     {
       id: "2",
@@ -36,6 +42,12 @@ export function HeroSection() {
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
       alt: "Luxence Brand Banner 2",
       order: 1,
+      title: "Luxe et Innovation",
+      description: "Découvrez notre collection premium de luminaires.",
+      button1_text: "Voir la collection",
+      button1_link: "/products",
+      button2_text: "En savoir plus",
+      button2_link: "/about",
     },
   ];
 

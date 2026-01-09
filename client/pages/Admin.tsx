@@ -191,6 +191,12 @@ export default function Admin() {
             href="#collections"
             isOpen={isSidebarOpen}
           />
+          <NavItem
+            icon={<Image className="w-5 h-5" />}
+            label="Hero Slides"
+            href="#hero-slides"
+            isOpen={isSidebarOpen}
+          />
         </nav>
 
         {/* Toggle Button */}

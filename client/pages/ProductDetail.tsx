@@ -101,71 +101,16 @@ export default function ProductDetail() {
     );
   }
 
-  const detailSections = [
-    {
-      title: "Description du produit",
-      content: product.description,
-    },
-    {
-      title: "Données techniques",
-      content: [
-        "Puissance : 10W à 50W selon modèle",
-        "Tension d'alimentation : 220V-240V AC",
-        "Fréquence : 50-60 Hz",
-        "Indice de protection : IP54",
-        "Température de couleur : 3000K - 6500K",
-        "Efficacité lumineuse : 130-150 lm/W",
-        "Durée de vie : 50 000 heures",
-        "Angle de diffusion : 120°",
-      ],
-    },
-    {
-      title: "Informations sur l'emballage",
-      content: [
-        "Dimensions de l'emballage : 25 x 25 x 10 cm",
-        "Poids brut : 500g",
-        "Matériel d'emballage : Carton recyclé avec mousse de protection",
-        "Contenu : Luminaire, câbles de connexion, matériel de montage, manuel d'installation",
-        "Emballage écologique et 100% recyclable",
-      ],
-    },
-    {
-      title: "Documents et certificats",
-      content: [
-        "Certification CE - Directive 2014/30/UE",
-        "Certification RoHS - Conformité toxicité",
-        "Certification FCC pour les modèles compatibles WiFi",
-        "Marquage énergétique UE",
-        "Déclaration de conformité disponible",
-        "Manuel d'installation multilingue",
-        "Schéma de connexion électrique",
-      ],
-    },
-    {
-      title: "Images et graphiques du produit",
-      content: [
-        "Vue de face du luminaire",
-        "Vue de profil avec dimensions",
-        "Vue démontée des composants",
-        "Diagramme de montage étape par étape",
-        "Interface de contrôle (si applicable)",
-        "Options de finition disponibles",
-        "Comparaison de luminosité avec autres modèles",
-      ],
-    },
-    {
-      title: "Images d'application",
-      content: [
-        "Installation en environnement professionnel (bureaux)",
-        "Utilisation en espaces résidentiels (salon, cuisine)",
-        "Installations commerciales (boutiques, galeries)",
-        "Ambiance lumineuse en conditions de faible éclairage",
-        "Montage mural et au plafond",
-        "Configurations multi-luminaires",
-        "Différents rendus de couleur et température",
-      ],
-    },
-  ];
+  // Use fetched detail sections or provide defaults
+  const displaySections: DetailSection[] =
+    detailSections.length > 0
+      ? detailSections
+      : [
+          {
+            title: "Description du produit",
+            content: product?.description || "",
+          },
+        ];
 
   return (
     <div className="min-h-screen bg-white">

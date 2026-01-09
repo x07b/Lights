@@ -17,12 +17,15 @@ import {
   ShoppingCart,
   Menu,
   X,
+  Image,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import ProductsManager from "../components/admin/ProductsManager";
 import CollectionsManager from "../components/admin/CollectionsManager";
 import OrdersManager from "../components/admin/OrdersManager";
 import AdminDashboard from "../components/admin/AdminDashboard";
+import HeroSlidesManager from "../components/admin/HeroSlidesManager";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +49,13 @@ export default function Admin() {
       const hash = window.location.hash.substring(1);
       if (
         hash &&
-        ["dashboard", "orders", "products", "collections"].includes(hash)
+        [
+          "dashboard",
+          "orders",
+          "products",
+          "collections",
+          "hero-slides",
+        ].includes(hash)
       ) {
         setActiveTab(hash);
       }
@@ -56,7 +65,32 @@ export default function Admin() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  const handleLogin = () => {
+  const checkForNewOrders = async () => {
+    try {
+      const response = await fetch("/api/orders");
+      const data = await response.json();
+      const orders = data.orders || [];
+
+      // Check for pending orders
+      const pendingOrders = orders.filter(
+        (order: any) => order.status === "en attente",
+      );
+
+      if (pendingOrders.length > 0) {
+        toast.success(
+          `${pendingOrders.length} commande(s) en attente de traitement!`,
+          {
+            description: "Consultez l'onglet Commandes pour les détails",
+            duration: 5000,
+          },
+        );
+      }
+    } catch (error) {
+      console.error("Error checking for new orders:", error);
+    }
+  };
+
+  const handleLogin = async () => {
     // Simple password check - in production, use proper authentication
     const defaultPassword = "admin123";
     if (inputPassword === defaultPassword) {
@@ -64,6 +98,9 @@ export default function Admin() {
       localStorage.setItem("admin-auth", "true");
       setLoginError("");
       setInputPassword("");
+
+      // Check for new orders after login
+      await checkForNewOrders();
     } else {
       setLoginError("Invalid password");
     }
@@ -160,6 +197,12 @@ export default function Admin() {
             href="#collections"
             isOpen={isSidebarOpen}
           />
+          <NavItem
+            icon={<Image className="w-5 h-5" />}
+            label="Hero Slides"
+            href="#hero-slides"
+            isOpen={isSidebarOpen}
+          />
         </nav>
 
         {/* Toggle Button */}
@@ -224,6 +267,10 @@ export default function Admin() {
 
               <TabsContent value="collections" className="space-y-4">
                 <CollectionsManager />
+              </TabsContent>
+
+              <TabsContent value="hero-slides" className="space-y-4">
+                <HeroSlidesManager />
               </TabsContent>
             </Tabs>
           </div>

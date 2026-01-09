@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus, Upload, FileText } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Trash2, Plus, Upload, FileText, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
 
 interface Collection {
   id: string;
   name: string;
+}
+
+interface DetailSection {
+  id?: string;
+  title: string;
+  content: string;
+  order?: number;
 }
 
 interface ProductFormProps {
@@ -23,6 +37,9 @@ export default function ProductForm({
   const [uploadProgress, setUploadProgress] = useState<{
     [key: string]: number;
   }>({});
+  const [detailSections, setDetailSections] = useState<DetailSection[]>([]);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",
@@ -47,6 +64,28 @@ export default function ProductForm({
 
     fetchCollections();
   }, []);
+
+  // Fetch product details sections when editing
+  useEffect(() => {
+    if (product?.id) {
+      const fetchDetails = async () => {
+        try {
+          setIsLoadingDetails(true);
+          const response = await fetch(`/api/products/${product.id}/details`);
+          if (response.ok) {
+            const data = await response.json();
+            setDetailSections(data);
+          }
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+        } finally {
+          setIsLoadingDetails(false);
+        }
+      };
+
+      fetchDetails();
+    }
+  }, [product?.id]);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -194,7 +233,35 @@ export default function ProductForm({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const addDetailSection = () => {
+    setDetailSections((prev) => [
+      ...prev,
+      { title: "", content: "", order: prev.length },
+    ]);
+  };
+
+  const updateDetailSection = (
+    index: number,
+    field: "title" | "content",
+    value: string,
+  ) => {
+    setDetailSections((prev) => {
+      const newSections = [...prev];
+      newSections[index] = {
+        ...newSections[index],
+        [field]: value,
+      };
+      return newSections;
+    });
+  };
+
+  const removeDetailSection = (index: number) => {
+    setDetailSections((prev) =>
+      prev.filter((_, i) => i !== index).map((s, i) => ({ ...s, order: i })),
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const filteredImages = formData.images.filter((img) => img.trim());
@@ -202,11 +269,12 @@ export default function ProductForm({
       (spec) => spec.label && spec.value,
     );
 
+    // Call onSave with product data (this will handle the product creation/update)
     onSave({
       ...formData,
-      price: parseFloat(formData.price),
       images: filteredImages,
       specifications: filteredSpecs,
+      detailSections,
     });
   };
 
@@ -453,6 +521,72 @@ export default function ProductForm({
           ))}
         </div>
       </div>
+
+      {/* Product Details Sections */}
+      {product && (
+        <div className="border-t border-border pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <label className="block text-sm font-medium">
+              Détails du produit
+            </label>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={addDetailSection}
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add Section
+            </Button>
+          </div>
+
+          {isLoadingDetails ? (
+            <p className="text-sm text-muted-foreground">Loading sections...</p>
+          ) : detailSections.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No detail sections yet. Add one to get started.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {detailSections.map((section, index) => (
+                <div
+                  key={index}
+                  className="border border-border rounded-lg p-4 space-y-3 bg-muted/20"
+                >
+                  <input
+                    type="text"
+                    value={section.title}
+                    onChange={(e) =>
+                      updateDetailSection(index, "title", e.target.value)
+                    }
+                    placeholder="Section title (e.g., Description du produit)"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm font-medium"
+                  />
+                  <textarea
+                    value={section.content}
+                    onChange={(e) =>
+                      updateDetailSection(index, "content", e.target.value)
+                    }
+                    placeholder="Section content (supports plain text, paste tables, or any content)"
+                    rows={4}
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm font-mono"
+                  />
+                  {detailSections.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeDetailSection(index)}
+                      className="flex items-center gap-2 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Remove Section
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Form Actions */}
       <div className="flex gap-3 pt-4 border-t border-border">

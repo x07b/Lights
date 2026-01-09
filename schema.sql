@@ -137,7 +137,27 @@ CREATE INDEX IF NOT EXISTS idx_contact_messages_created_at ON contact_messages(c
 CREATE INDEX IF NOT EXISTS idx_contact_messages_email ON contact_messages(email);
 
 -- ============================================
--- 8. HERO SLIDES TABLE (optional, for homepage carousel)
+-- 8. QUOTE REQUESTS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS quote_requests (
+  id TEXT PRIMARY KEY,
+  client_name TEXT NOT NULL,
+  client_email TEXT NOT NULL,
+  product_id TEXT NOT NULL,
+  product_name TEXT NOT NULL,
+  message TEXT DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'read', 'responded')),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_quote_requests_status ON quote_requests(status);
+CREATE INDEX IF NOT EXISTS idx_quote_requests_created_at ON quote_requests(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_quote_requests_email ON quote_requests(client_email);
+
+-- ============================================
+-- 9. HERO SLIDES TABLE (optional, for homepage carousel)
 -- ============================================
 CREATE TABLE IF NOT EXISTS hero_slides (
   id TEXT PRIMARY KEY,
@@ -190,6 +210,12 @@ CREATE TRIGGER update_contact_messages_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
+DROP TRIGGER IF EXISTS update_quote_requests_updated_at ON quote_requests;
+CREATE TRIGGER update_quote_requests_updated_at
+  BEFORE UPDATE ON quote_requests
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
 DROP TRIGGER IF EXISTS update_hero_slides_updated_at ON hero_slides;
 CREATE TRIGGER update_hero_slides_updated_at
   BEFORE UPDATE ON hero_slides
@@ -207,6 +233,7 @@ ALTER TABLE product_specifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quote_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE hero_slides ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for collections (products are public)
@@ -240,7 +267,7 @@ CREATE POLICY "Hero slides are viewable by everyone"
 -- For now, the service_role key (used in the backend API) bypasses RLS, so all operations
 -- will work. In production, you should create proper admin policies based on your authentication.
 
--- Note: Orders and contact_messages are managed via your backend API using the service_role key,
+-- Note: Orders, contact_messages, and quote_requests are managed via your backend API using the service_role key,
 -- which bypasses RLS. If you want to allow client-side access later, you'll need to configure
 -- additional policies based on your authentication system.
 

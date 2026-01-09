@@ -19,7 +19,6 @@ import {
 
 interface DashboardStats {
   totalOrders: number;
-  totalRevenue: number;
   uniqueCustomers: number;
   totalProducts: number;
   ordersbyStatus: {
@@ -31,7 +30,6 @@ interface DashboardStats {
   recentOrders: Array<{
     panierCode: string;
     customerName: string;
-    total: number;
     status: string;
     date: string;
   }>;
@@ -40,7 +38,6 @@ interface DashboardStats {
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
-    totalRevenue: 0,
     uniqueCustomers: 0,
     totalProducts: 0,
     ordersbyStatus: {
@@ -73,10 +70,6 @@ export default function AdminDashboard() {
 
       // Calculate statistics
       const totalOrders = orders.length;
-      const totalRevenue = orders.reduce(
-        (sum: number, order: any) => sum + order.total,
-        0,
-      );
       const uniqueCustomers = new Set(
         orders.map((order: any) => order.customer.email),
       ).size;
@@ -98,14 +91,12 @@ export default function AdminDashboard() {
         .map((order: any) => ({
           panierCode: order.panierCode,
           customerName: order.customer.name,
-          total: order.total,
           status: order.status,
           date: new Date(order.createdAt).toLocaleDateString(),
         }));
 
       setStats({
         totalOrders,
-        totalRevenue,
         uniqueCustomers,
         totalProducts,
         ordersbyStatus,
@@ -150,8 +141,6 @@ export default function AdminDashboard() {
     { name: "Livré", value: stats.ordersbyStatus.livre, color: "#22c55e" },
     { name: "Annulé", value: stats.ordersbyStatus.annule, color: "#ef4444" },
   ];
-
-  const revenueData = [{ name: "Revenu Total", value: stats.totalRevenue }];
 
   return (
     <div className="space-y-8">

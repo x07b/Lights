@@ -8,7 +8,7 @@ import {
 
 export interface DetailSection {
   title: string;
-  content: string | string[];
+  content: string | string[] | any;
 }
 
 interface ProductDetailsPanelProps {
@@ -72,6 +72,11 @@ export function ProductDetailsPanel({
                       </li>
                     ))}
                   </ul>
+                ) : typeof section.content === "string" &&
+                  section.content.includes("\n") ? (
+                  <div className="whitespace-pre-wrap font-roboto text-sm text-muted-foreground leading-relaxed prose prose-sm max-w-none">
+                    {section.content}
+                  </div>
                 ) : (
                   <p className="font-roboto text-sm text-muted-foreground leading-relaxed">
                     {section.content}

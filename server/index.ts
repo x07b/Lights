@@ -43,6 +43,18 @@ import {
   updateHeroSlide,
   deleteHeroSlide,
 } from "./routes/slides";
+import {
+  createQuoteRequest,
+  getQuoteRequests,
+  getQuoteRequestById,
+  updateQuoteRequestStatus,
+  deleteQuoteRequest,
+} from "./routes/quotes";
+import {
+  getProductDetails,
+  upsertProductDetails,
+  deleteProductDetail,
+} from "./routes/product-details";
 
 export function createServer() {
   const app = express();
@@ -136,6 +148,21 @@ export function createServer() {
   app.post("/api/slides", createHeroSlide);
   app.put("/api/slides/:id", updateHeroSlide);
   app.delete("/api/slides/:id", deleteHeroSlide);
+
+  // Quote requests routes
+  app.post("/api/quotes", createQuoteRequest);
+  app.get("/api/quotes", getQuoteRequests);
+  app.get("/api/quotes/:id", getQuoteRequestById);
+  app.put("/api/quotes/:id/status", updateQuoteRequestStatus);
+  app.delete("/api/quotes/:id", deleteQuoteRequest);
+
+  // Product details routes
+  app.get("/api/products/:productId/details", getProductDetails);
+  app.put("/api/products/:productId/details", upsertProductDetails);
+  app.delete(
+    "/api/products/:productId/details/:sectionId",
+    deleteProductDetail,
+  );
 
   // Serve static files from public directory (after API routes)
   app.use(express.static(path.join(process.cwd(), "public")));

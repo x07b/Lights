@@ -2,28 +2,61 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
+interface Slide {
+  id: string;
+  image: string;
+  alt: string;
+  order: number;
+}
+
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [slides, setSlides] = useState<Slide[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const slides = [
+  // Default slides for fallback
+  const defaultSlides = [
     {
-      id: 1,
+      id: "1",
       image:
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F80f49dcbcff144e48bb99a3e868cbfec?format=webp&width=800",
       alt: "Luxence Brand Banner 1",
+      order: 0,
     },
     {
-      id: 2,
+      id: "2",
       image:
         "https://cdn.builder.io/api/v1/image/assets%2F11b105e941ff40af8cd2ef0003fa406d%2F46093dda2072493bb83a5549bcecfaf9?format=webp&width=800",
       alt: "Luxence Brand Banner 2",
+      order: 1,
     },
   ];
 
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const response = await fetch("/api/slides");
+        if (response.ok) {
+          const data = await response.json();
+          setSlides(data.sort((a: Slide, b: Slide) => a.order - b.order));
+        } else {
+          setSlides(defaultSlides);
+        }
+      } catch (error) {
+        console.error("Error fetching hero slides:", error);
+        setSlides(defaultSlides);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSlides();
+  }, []);
+
   // Auto-play carousel
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (!isAutoPlay || slides.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -39,12 +72,14 @@ export function HeroSection() {
   };
 
   const nextSlide = () => {
+    if (slides.length === 0) return;
     setCurrentSlide((prev) => (prev + 1) % slides.length);
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);
   };
 
   const prevSlide = () => {
+    if (slides.length === 0) return;
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);

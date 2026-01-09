@@ -21,6 +21,13 @@ interface DashboardStats {
   totalOrders: number;
   uniqueCustomers: number;
   totalProducts: number;
+  visitorStats: {
+    totalVisitors: number;
+    uniqueVisitors: number;
+    todayVisitors: number;
+    last7Days: number;
+    last30Days: number;
+  };
   ordersbyStatus: {
     enAttente: number;
     enCours: number;

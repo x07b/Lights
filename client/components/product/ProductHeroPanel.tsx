@@ -1,6 +1,7 @@
-import { Mail } from "lucide-react";
+import { Mail, Download } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
+import { useState, useEffect } from "react";
 
 interface ProductHeroPanelProps {
   id: string;

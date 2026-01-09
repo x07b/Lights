@@ -65,16 +65,32 @@ export default function ProductsManager() {
 
   const handleSave = async (productData: any) => {
     try {
+      // Extract detail sections from productData
+      const { detailSections, ...productPayload } = productData;
+
+      // Save product
       const response = await fetch(
         editingId ? `/api/products/${editingId}` : "/api/products",
         {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productData),
+          body: JSON.stringify(productPayload),
         },
       );
 
       if (response.ok) {
+        const savedProduct = await response.json();
+        const productId = editingId || savedProduct.id;
+
+        // Save detail sections if provided
+        if (detailSections && detailSections.length > 0) {
+          await fetch(`/api/products/${productId}/details`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sections: detailSections }),
+          });
+        }
+
         await fetchProducts();
         setIsAddingNew(false);
         setEditingId(null);

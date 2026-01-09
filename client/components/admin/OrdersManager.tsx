@@ -273,22 +273,47 @@ export default function OrdersManager() {
         ) : (
           filteredOrders.map((order) => (
             <Card key={order.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  {/* Header Row - Panier Code and Status */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <p className="text-xs text-muted-foreground font-semibold">
-                        CODE PANIER
+              <CardContent className="pt-6 pb-6">
+                <div className="space-y-5">
+                  {/* Code Panier Header */}
+                  <div>
+                    <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide mb-1.5">
+                      Code Panier
+                    </p>
+                    <p className="text-xl font-futura font-bold text-accent">
+                      {order.panierCode}
+                    </p>
+                  </div>
+
+                  {/* Client and Articles - Compact Row */}
+                  <div className="grid grid-cols-2 gap-6 py-4 border-y border-border">
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide mb-2">
+                        Client
                       </p>
-                      <p className="text-lg font-futura font-bold text-accent">
-                        {order.panierCode}
+                      <p className="font-semibold text-foreground">
+                        {order.customer.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {order.customer.email}
                       </p>
                     </div>
 
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide mb-2">
+                        Articles
+                      </p>
+                      <p className="font-semibold text-foreground">
+                        {order.items.length} article(s)
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Status and Actions Row */}
+                  <div className="flex items-center gap-3">
                     {/* Status Badge */}
                     <div
-                      className={`px-4 py-2 rounded-lg font-semibold text-white text-center text-sm flex-shrink-0 ${
+                      className={`px-3 py-1.5 rounded-full font-semibold text-xs text-white flex-shrink-0 ${
                         order.status === "en attente"
                           ? "bg-yellow-500"
                           : order.status === "en cours"
@@ -300,86 +325,65 @@ export default function OrdersManager() {
                     >
                       {order.status}
                     </div>
-                  </div>
 
-                  {/* Customer and Articles Info */}
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <p className="text-xs text-muted-foreground font-semibold mb-2">
-                        CLIENT
-                      </p>
-                      <p className="font-semibold text-foreground text-sm">
-                        {order.customer.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {order.customer.email}
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-xs text-muted-foreground font-semibold mb-2">
-                        ARTICLES
-                      </p>
-                      <p className="font-semibold text-foreground text-sm">
-                        {order.items.length} article(s)
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Actions - Vertical Stack */}
-                  <div className="pt-2 border-t border-border flex flex-col gap-2">
-                    {/* View Detail Button */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedOrder(order);
-                        setShowDetail(true);
-                      }}
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <Eye className="w-4 h-4" />
-                      Détails
-                    </Button>
-
-                    {/* Edit Button */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleEdit(order)}
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                      Modifier
-                    </Button>
-
-                    {/* Status Change Dropdown */}
-                    {order.status !== "livré" && order.status !== "annulé" && (
-                      <select
-                        value={order.status}
-                        onChange={(e) =>
-                          handleStatusChange(order.id, e.target.value)
-                        }
-                        className="px-3 py-2 border border-border rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent"
+                    {/* Action Buttons - Horizontal */}
+                    <div className="flex gap-2 flex-1">
+                      {/* View Detail Button */}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setShowDetail(true);
+                        }}
+                        className="flex-1 h-8 text-xs"
                       >
-                        <option value="en attente">En attente</option>
-                        <option value="en cours">En cours</option>
-                        <option value="livré">Livré</option>
-                        <option value="annulé">Annulé</option>
-                      </select>
-                    )}
+                        <Eye className="w-3.5 h-3.5 mr-1.5" />
+                        Détails
+                      </Button>
 
-                    {/* Delete Button */}
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDelete(order.id)}
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Supprimer
-                    </Button>
+                      {/* Edit Button */}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(order)}
+                        className="flex-1 h-8 text-xs"
+                      >
+                        <Edit2 className="w-3.5 h-3.5 mr-1.5" />
+                        Modifier
+                      </Button>
+
+                      {/* Delete Button */}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(order.id)}
+                        className="flex-1 h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+                        Supprimer
+                      </Button>
+                    </div>
                   </div>
+
+                  {/* Status Change Dropdown - Always visible */}
+                  <select
+                    value={order.status}
+                    onChange={(e) =>
+                      handleStatusChange(order.id, e.target.value)
+                    }
+                    disabled={order.status === "livré" || order.status === "annulé"}
+                    className={`w-full px-3 py-2 border border-border rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent ${
+                      order.status === "livré" || order.status === "annulé"
+                        ? "bg-muted text-muted-foreground cursor-not-allowed opacity-60"
+                        : "bg-white"
+                    }`}
+                  >
+                    <option value="en attente">En attente</option>
+                    <option value="en cours">En cours</option>
+                    <option value="livré">Livré</option>
+                    <option value="annulé">Annulé</option>
+                  </select>
                 </div>
               </CardContent>
             </Card>

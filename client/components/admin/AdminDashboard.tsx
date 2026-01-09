@@ -64,9 +64,22 @@ export default function AdminDashboard() {
     recentOrders: [],
   });
   const [loading, setLoading] = useState(true);
+  const previousOrderCountRef = useRef<number>(0);
+  const notificationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetchDashboardStats();
+
+    // Set up periodic refresh every 30 seconds to check for new orders
+    notificationIntervalRef.current = setInterval(() => {
+      fetchDashboardStats();
+    }, 30000);
+
+    return () => {
+      if (notificationIntervalRef.current) {
+        clearInterval(notificationIntervalRef.current);
+      }
+    };
   }, []);
 
   const fetchDashboardStats = async () => {

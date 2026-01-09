@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShoppingCart, Users, TrendingUp, Package, Eye } from "lucide-react";
+import { toast } from "sonner";
 import {
   BarChart,
   Bar,

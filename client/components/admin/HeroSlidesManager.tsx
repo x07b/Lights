@@ -229,7 +229,7 @@ export default function HeroSlidesManager() {
         <Card className="bg-accent/5 border-accent">
           <CardHeader>
             <CardTitle>
-              {editingId === "new" ? "Add New Slide" : "Edit Slide"}
+              {editingId === "new" ? "Ajouter une nouvelle diapositive" : "Modifier la diapositive"}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

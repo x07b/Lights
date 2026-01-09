@@ -46,7 +46,7 @@ export function ProductCard({
 
   const handleCardClick = () => {
     if (slug) {
-      navigate(`/product/${slug}`);
+      window.location.href = `/product/${slug}`;
     }
   };
 

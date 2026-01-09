@@ -157,68 +157,68 @@ export default function AdminDashboard() {
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Orders */}
-        <Card className="border-0 bg-gradient-to-br from-orange-50 to-orange-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-accent/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Commandes Totales
+        <Card className="border-0 bg-gradient-to-br from-orange-50 via-white to-orange-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-accent/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Commandes
             </CardTitle>
-            <div className="p-2 bg-accent/20 rounded-lg">
-              <ShoppingCart className="h-5 w-5 text-accent" />
+            <div className="p-2.5 bg-accent/15 rounded-lg">
+              <ShoppingCart className="h-4 w-4 text-accent" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-accent mb-2">
               {stats.totalOrders}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
-              {stats.totalOrders > 0
-                ? `Commandes en attente: ${stats.totalOrders}`
-                : "Aucune commande"}
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              {stats.ordersbyStatus.enAttente > 0
+                ? `${stats.ordersbyStatus.enAttente} en attente`
+                : "Toutes traitées"}
             </p>
           </CardContent>
         </Card>
 
         {/* Unique Customers */}
-        <Card className="border-0 bg-gradient-to-br from-blue-50 to-blue-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Clients Uniques
+        <Card className="border-0 bg-gradient-to-br from-blue-50 via-white to-blue-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Clients
             </CardTitle>
-            <div className="p-2 bg-blue-400/20 rounded-lg">
-              <Users className="h-5 w-5 text-blue-600" />
+            <div className="p-2.5 bg-blue-400/15 rounded-lg">
+              <Users className="h-4 w-4 text-blue-600" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
               {stats.uniqueCustomers}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
               {stats.uniqueCustomers > 0 && stats.totalOrders > 0
-                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% du total`
+                ? `${((stats.uniqueCustomers / stats.totalOrders) * 100).toFixed(1)}% conversions`
                 : "Aucun client"}
             </p>
           </CardContent>
         </Card>
 
         {/* Total Products */}
-        <Card className="border-0 bg-gradient-to-br from-purple-50 to-purple-100/50 hover:shadow-xl transition-all duration-300 overflow-hidden group">
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-purple-400/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-medium text-slate-700">
-              Produits
+        <Card className="border-0 bg-gradient-to-br from-purple-50 via-white to-purple-50/50 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-purple-400/5 rounded-full group-hover:scale-110 transition-transform duration-500" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+            <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">
+              Catalogue
             </CardTitle>
-            <div className="p-2 bg-purple-400/20 rounded-lg">
-              <Package className="h-5 w-5 text-purple-600" />
+            <div className="p-2.5 bg-purple-400/15 rounded-lg">
+              <Package className="h-4 w-4 text-purple-600" />
             </div>
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-4xl font-bold text-foreground">
+            <div className="text-3xl lg:text-4xl font-bold text-purple-600 mb-2">
               {stats.totalProducts}
             </div>
-            <p className="text-xs text-muted-foreground mt-3 font-roboto">
-              Dans le catalogue
+            <p className="text-xs text-muted-foreground font-roboto leading-relaxed">
+              Produits actifs
             </p>
           </CardContent>
         </Card>

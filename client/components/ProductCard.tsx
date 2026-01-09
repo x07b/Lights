@@ -101,7 +101,7 @@ export function ProductCard({
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={nextSlide}
+              onClick={handleNextImage}
               className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-accent text-foreground hover:text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110"
               title="Next image"
             >

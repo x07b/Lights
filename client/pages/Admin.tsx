@@ -49,7 +49,13 @@ export default function Admin() {
       const hash = window.location.hash.substring(1);
       if (
         hash &&
-        ["dashboard", "orders", "products", "collections", "hero-slides"].includes(hash)
+        [
+          "dashboard",
+          "orders",
+          "products",
+          "collections",
+          "hero-slides",
+        ].includes(hash)
       ) {
         setActiveTab(hash);
       }
@@ -67,7 +73,7 @@ export default function Admin() {
 
       // Check for pending orders
       const pendingOrders = orders.filter(
-        (order: any) => order.status === "en attente"
+        (order: any) => order.status === "en attente",
       );
 
       if (pendingOrders.length > 0) {
@@ -76,7 +82,7 @@ export default function Admin() {
           {
             description: "Consultez l'onglet Commandes pour les détails",
             duration: 5000,
-          }
+          },
         );
       }
     } catch (error) {

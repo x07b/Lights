@@ -91,9 +91,7 @@ export default function HeroSlidesManager() {
     try {
       const isEditing = editingId && editingId !== "new";
       const method = isEditing ? "PUT" : "POST";
-      const url = isEditing
-        ? `/api/slides/${editingId}`
-        : "/api/slides";
+      const url = isEditing ? `/api/slides/${editingId}` : "/api/slides";
 
       const response = await fetch(url, {
         method,
@@ -214,7 +212,9 @@ export default function HeroSlidesManager() {
       {editingId && (
         <Card className="bg-accent/5 border-accent">
           <CardHeader>
-            <CardTitle>{editingId === "new" ? "Add New Slide" : "Edit Slide"}</CardTitle>
+            <CardTitle>
+              {editingId === "new" ? "Add New Slide" : "Edit Slide"}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
@@ -306,14 +306,19 @@ export default function HeroSlidesManager() {
         {slides.length === 0 ? (
           <Card>
             <CardContent className="pt-6 text-center">
-              <p className="text-muted-foreground">No slides yet. Add one to get started.</p>
+              <p className="text-muted-foreground">
+                No slides yet. Add one to get started.
+              </p>
             </CardContent>
           </Card>
         ) : (
           slides
             .sort((a, b) => a.order - b.order)
             .map((slide, index) => (
-              <Card key={slide.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={slide.id}
+                className="hover:shadow-md transition-shadow"
+              >
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">

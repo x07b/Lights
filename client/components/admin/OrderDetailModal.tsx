@@ -87,7 +87,7 @@ export default function OrderDetailModal({
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-4 space-y-4">
+          <div className="p-3 space-y-3">
             {/* Status Section */}
             <div className="bg-secondary/50 rounded-lg p-3">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">

@@ -60,9 +60,7 @@ export async function getVisitorStats(req: any, res: any) {
     }
 
     // Count unique IP addresses
-    const uniqueIPs = new Set(
-      visitorData?.map((v: any) => v.ip_address) || [],
-    );
+    const uniqueIPs = new Set(visitorData?.map((v: any) => v.ip_address) || []);
 
     // Get today's visitors
     const today = new Date();
@@ -72,9 +70,7 @@ export async function getVisitorStats(req: any, res: any) {
       .select("ip_address", { count: "exact" })
       .gte("visited_at", today.toISOString());
 
-    const todayUnique = new Set(
-      todayData?.map((v: any) => v.ip_address) || [],
-    );
+    const todayUnique = new Set(todayData?.map((v: any) => v.ip_address) || []);
 
     // Get last 7 days
     const sevenDaysAgo = new Date();
@@ -84,9 +80,7 @@ export async function getVisitorStats(req: any, res: any) {
       .select("ip_address", { count: "exact" })
       .gte("visited_at", sevenDaysAgo.toISOString());
 
-    const sevenUnique = new Set(
-      sevenData?.map((v: any) => v.ip_address) || [],
-    );
+    const sevenUnique = new Set(sevenData?.map((v: any) => v.ip_address) || []);
 
     res.json({
       totalVisitors: visitorData?.length || 0,

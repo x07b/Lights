@@ -85,11 +85,12 @@ export default function AdminDashboard() {
   const fetchDashboardStats = async () => {
     try {
       setLoading(true);
-      const [ordersResponse, productsResponse, visitorsResponse] = await Promise.all([
-        fetch("/api/orders"),
-        fetch("/api/products"),
-        fetch("/api/analytics/visitors"),
-      ]);
+      const [ordersResponse, productsResponse, visitorsResponse] =
+        await Promise.all([
+          fetch("/api/orders"),
+          fetch("/api/products"),
+          fetch("/api/analytics/visitors"),
+        ]);
 
       const ordersData = await ordersResponse.json();
       const productsData = await productsResponse.json();
@@ -144,8 +145,12 @@ export default function AdminDashboard() {
 
       // Check for new pending orders and notify
       const currentPendingCount = ordersbyStatus.enAttente;
-      if (previousOrderCountRef.current > 0 && currentPendingCount > previousOrderCountRef.current) {
-        const newOrdersCount = currentPendingCount - previousOrderCountRef.current;
+      if (
+        previousOrderCountRef.current > 0 &&
+        currentPendingCount > previousOrderCountRef.current
+      ) {
+        const newOrdersCount =
+          currentPendingCount - previousOrderCountRef.current;
         toast.success(
           `🎉 ${newOrdersCount} nouvelle(s) commande(s) en attente!`,
           {

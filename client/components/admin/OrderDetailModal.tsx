@@ -99,7 +99,9 @@ export default function OrderDetailModal({
                     order.status,
                   )}`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${getStatusDotColor(order.status)}`} />
+                  <span
+                    className={`w-2 h-2 rounded-full ${getStatusDotColor(order.status)}`}
+                  />
                   {order.status}
                 </span>
 
@@ -126,7 +128,9 @@ export default function OrderDetailModal({
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Nom:</span>
-                  <span className="font-medium text-foreground">{order.customer.name}</span>
+                  <span className="font-medium text-foreground">
+                    {order.customer.name}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Email:</span>
@@ -136,11 +140,15 @@ export default function OrderDetailModal({
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Téléphone:</span>
-                  <span className="font-medium text-foreground">{order.customer.phone}</span>
+                  <span className="font-medium text-foreground">
+                    {order.customer.phone}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Ville:</span>
-                  <span className="font-medium text-foreground">{order.customer.city}</span>
+                  <span className="font-medium text-foreground">
+                    {order.customer.city}
+                  </span>
                 </div>
                 <div className="pt-1.5 border-t border-border">
                   <p className="text-muted-foreground mb-1">Adresse:</p>
@@ -165,8 +173,12 @@ export default function OrderDetailModal({
                     className="flex items-center justify-between gap-2 p-2.5 bg-secondary/60 rounded text-xs"
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground truncate">{item.name}</p>
-                      <p className="text-muted-foreground text-xs">Qty: {item.quantity}</p>
+                      <p className="font-medium text-foreground truncate">
+                        {item.name}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Qty: {item.quantity}
+                      </p>
                     </div>
                     <p className="font-semibold text-foreground flex-shrink-0">
                       {(item.price * item.quantity).toFixed(2)}€
@@ -179,7 +191,9 @@ export default function OrderDetailModal({
             {/* Total */}
             <div className="bg-accent/10 rounded-lg p-3 border border-accent/20">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold text-foreground uppercase">Total</p>
+                <p className="text-xs font-semibold text-foreground uppercase">
+                  Total
+                </p>
                 <p className="text-xl font-futura font-bold text-accent">
                   {order.total.toFixed(2)}€
                 </p>

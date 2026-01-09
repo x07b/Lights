@@ -187,7 +187,6 @@ export function ProductCard({
           </div>
         </div>
       </div>
-
     </>
   );
 }

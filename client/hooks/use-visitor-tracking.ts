@@ -14,7 +14,9 @@ export function useVisitorTracking() {
         });
       } catch (error) {
         // Silently fail if tracking doesn't work
-        console.debug("Visitor tracking failed (this is normal if table doesn't exist)");
+        console.debug(
+          "Visitor tracking failed (this is normal if table doesn't exist)",
+        );
       }
     };
 

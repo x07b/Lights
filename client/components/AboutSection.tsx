@@ -2,7 +2,7 @@ import { CheckCircle } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-br from-background via-background to-accent/5 min-h-screen md:min-h-auto flex items-center">
+    <section className="py-12 md:py-20 bg-gradient-to-br from-background via-background to-accent/5">
       <div className="container mx-auto px-4 w-full">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image */}

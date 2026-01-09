@@ -132,7 +132,17 @@ export async function createHeroSlide(req: any, res: any) {
 export async function updateHeroSlide(req: any, res: any) {
   try {
     const { id } = req.params;
-    const { image, alt, order } = req.body;
+    const {
+      image,
+      alt,
+      order,
+      title,
+      description,
+      button1_text,
+      button1_link,
+      button2_text,
+      button2_link,
+    } = req.body;
 
     // Check if slide exists
     const { data: existingSlide, error: checkError } = await supabase
@@ -150,6 +160,12 @@ export async function updateHeroSlide(req: any, res: any) {
     if (image !== undefined) updateData.image = image;
     if (alt !== undefined) updateData.alt = alt;
     if (order !== undefined) updateData.order_index = order;
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (button1_text !== undefined) updateData.button1_text = button1_text;
+    if (button1_link !== undefined) updateData.button1_link = button1_link;
+    if (button2_text !== undefined) updateData.button2_text = button2_text;
+    if (button2_link !== undefined) updateData.button2_link = button2_link;
 
     const { data, error } = await supabase
       .from("hero_slides")

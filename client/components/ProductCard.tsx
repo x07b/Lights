@@ -39,44 +39,16 @@ export function ProductCard({
   const productImages = images.length > 0 ? images : image ? [image] : [];
   const currentImage = productImages[currentImageIndex] || image;
 
-  const handleRequestQuote = async (e: React.MouseEvent) => {
+  const handleRequestQuote = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setShowQuoteModal(true);
-  };
-
-  const handleSubmitQuote = async () => {
-    if (!quoteFormData.clientName.trim() || !quoteFormData.clientEmail.trim()) {
-      toast.error("Veuillez remplir tous les champs");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/quotes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          clientName: quoteFormData.clientName,
-          clientEmail: quoteFormData.clientEmail,
-          productId: id,
-          productName: name,
-          message: `Demande de devis pour ${name}`,
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Demande de devis envoyée avec succès!");
-        setShowQuoteModal(false);
-        setQuoteFormData({ clientName: "", clientEmail: "" });
-      } else {
-        toast.error("Erreur lors de l'envoi de la demande");
-      }
-    } catch (error) {
-      console.error("Error requesting quote:", error);
-      toast.error("Une erreur est survenue");
-    } finally {
-      setIsSubmitting(false);
-    }
+    addItem({
+      id,
+      name,
+      price: price || 0,
+      quantity: 1,
+      slug: slug || "",
+    });
+    toast.success(`${name} ajouté à la demande de devis!`);
   };
 
   const handleDownloadFile = (e: React.MouseEvent) => {

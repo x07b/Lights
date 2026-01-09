@@ -48,29 +48,15 @@ export function ProductDetailsPanel({
   return (
     <section className="product-details-panel py-16 md:py-24 px-4 bg-white">
       <div className="max-w-4xl mx-auto">
-        {/* Section Header with Download Button */}
+        {/* Section Header */}
         <div className="mb-12 space-y-3">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">
-                {sectionSubtitle}
-              </p>
-              <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
-                {sectionTitle}
-              </h2>
-              <div className="h-1 w-20 bg-accent rounded-full" />
-            </div>
-            {pdfFile && (
-              <button
-                onClick={handleDownloadPDF}
-                className="flex-shrink-0 px-6 py-3 border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95 whitespace-nowrap"
-                title="Télécharger la fiche technique"
-              >
-                <FileText className="w-5 h-5" />
-                <span>Fiche technique</span>
-              </button>
-            )}
-          </div>
+          <p className="text-accent font-roboto text-xs uppercase tracking-widest font-bold">
+            {sectionSubtitle}
+          </p>
+          <h2 className="font-futura text-4xl md:text-5xl font-bold text-foreground">
+            {sectionTitle}
+          </h2>
+          <div className="h-1 w-20 bg-accent rounded-full" />
         </div>
 
         {/* Accordion Sections */}

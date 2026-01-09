@@ -104,7 +104,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
+    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden group">
       {/* Background Image Carousel */}
       {slides.map((slide, index) => (
         <div

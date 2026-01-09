@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
 

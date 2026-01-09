@@ -72,12 +72,14 @@ export function HeroSection() {
   };
 
   const nextSlide = () => {
+    if (slides.length === 0) return;
     setCurrentSlide((prev) => (prev + 1) % slides.length);
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);
   };
 
   const prevSlide = () => {
+    if (slides.length === 0) return;
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);

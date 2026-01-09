@@ -7,10 +7,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Trash2, Plus, Upload, FileText, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
 
 interface Collection {
   id: string;
   name: string;
+}
+
+interface DetailSection {
+  id?: string;
+  title: string;
+  content: string;
+  order?: number;
 }
 
 interface ProductFormProps {
@@ -29,6 +37,9 @@ export default function ProductForm({
   const [uploadProgress, setUploadProgress] = useState<{
     [key: string]: number;
   }>({});
+  const [detailSections, setDetailSections] = useState<DetailSection[]>([]);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+
   const [formData, setFormData] = useState({
     name: product?.name || "",
     description: product?.description || "",

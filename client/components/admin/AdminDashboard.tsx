@@ -38,7 +38,6 @@ interface DashboardStats {
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
-    totalRevenue: 0,
     uniqueCustomers: 0,
     totalProducts: 0,
     ordersbyStatus: {

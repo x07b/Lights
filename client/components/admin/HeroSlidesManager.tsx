@@ -281,7 +281,7 @@ export default function HeroSlidesManager() {
             <div className="flex gap-2 pt-4 border-t border-border">
               <Button
                 onClick={handleSaveSlide}
-                disabled={isUploading}
+                disabled={isUploading || !editData.image}
                 className="flex-1"
               >
                 {isUploading ? "Uploading..." : "Save Slide"}
@@ -293,6 +293,7 @@ export default function HeroSlidesManager() {
                   setEditData({});
                 }}
                 className="flex-1"
+                disabled={isUploading}
               >
                 Cancel
               </Button>

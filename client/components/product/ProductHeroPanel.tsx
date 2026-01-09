@@ -80,17 +80,6 @@ export function ProductHeroPanel({
           <Mail className="w-5 h-5" />
           Demande de devis
         </button>
-
-        {/* Download PDF - Secondary */}
-        {pdfFile && (
-          <button
-            onClick={handleDownloadPDF}
-            className="w-full border-2 border-accent text-accent hover:bg-accent hover:text-white font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
-          >
-            <FileText className="w-5 h-5" />
-            Fiche technique
-          </button>
-        )}
       </div>
 
       {/* Info Text */}

@@ -47,6 +47,13 @@ export default function AdminDashboard() {
     totalOrders: 0,
     uniqueCustomers: 0,
     totalProducts: 0,
+    visitorStats: {
+      totalVisitors: 0,
+      uniqueVisitors: 0,
+      todayVisitors: 0,
+      last7Days: 0,
+      last30Days: 0,
+    },
     ordersbyStatus: {
       enAttente: 0,
       enCours: 0,

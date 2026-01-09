@@ -1,4 +1,4 @@
-import { FileText, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "@/contexts/CartContext";
 
@@ -8,8 +8,6 @@ interface ProductHeroPanelProps {
   name: string;
   description: string;
   price: number;
-  pdfFile?: string;
-  pdfFilename?: string;
   slug: string;
 }
 
@@ -19,8 +17,6 @@ export function ProductHeroPanel({
   name,
   description,
   price,
-  pdfFile,
-  pdfFilename,
   slug,
 }: ProductHeroPanelProps) {
   const { addItem } = useCart();
@@ -34,20 +30,6 @@ export function ProductHeroPanel({
       slug,
     });
     toast.success(`${name} ajouté à la demande de devis!`);
-  };
-
-  const handleDownloadPDF = () => {
-    if (!pdfFile) {
-      toast.error("Fiche technique non disponible");
-      return;
-    }
-
-    const link = document.createElement("a");
-    link.href = pdfFile;
-    link.download = pdfFilename || "fiche-technique.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (

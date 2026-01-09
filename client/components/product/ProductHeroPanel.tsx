@@ -98,6 +98,15 @@ export function ProductHeroPanel({
           <Mail className="w-5 h-5" />
           Demande de devis
         </button>
+
+        {/* Download Technical Sheet Button - Secondary */}
+        <button
+          onClick={handleDownloadFile}
+          className="w-full bg-white hover:bg-gray-50 text-foreground hover:text-accent border-2 border-foreground hover:border-accent font-roboto font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg active:scale-95"
+        >
+          <Download className="w-5 h-5" />
+          Télécharger fiche technique
+        </button>
       </div>
 
       {/* Info Text */}

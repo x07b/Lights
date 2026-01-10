@@ -1,6 +1,4 @@
 import { X } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 interface OrderDetailModalProps {
   order: {
@@ -64,16 +62,18 @@ export default function OrderDetailModal({
     }
   };
 
+  const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full max-h-[85vh] overflow-hidden flex flex-col animate-slide-up">
+      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col animate-slide-up">
         {/* Header */}
-        <div className="bg-gradient-to-r from-accent to-accent/80 text-white px-5 py-4 flex items-center justify-between flex-shrink-0">
+        <div className="bg-gradient-to-r from-accent to-accent/80 text-white px-6 py-4 flex items-center justify-between flex-shrink-0">
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/80 font-semibold uppercase tracking-wide mb-0.5">
+            <p className="text-xs text-white/80 font-semibold uppercase tracking-wide mb-1">
               Commande
             </p>
-            <p className="text-lg font-futura font-bold truncate">
+            <p className="text-xl font-futura font-bold truncate">
               {order.panierCode}
             </p>
           </div>
@@ -87,15 +87,15 @@ export default function OrderDetailModal({
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-4 space-y-4">
+          <div className="p-6 space-y-6">
             {/* Status Section */}
-            <div className="bg-secondary/50 rounded-lg p-3">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+            <div className="bg-secondary/50 rounded-lg p-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                 Statut
               </p>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold ${getStatusColor(
+                  className={`inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold ${getStatusColor(
                     order.status,
                   )}`}
                 >
@@ -109,7 +109,7 @@ export default function OrderDetailModal({
                   <select
                     value={order.status}
                     onChange={(e) => onStatusChange(order.id, e.target.value)}
-                    className="px-2 py-1 border border-border rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-accent bg-white"
+                    className="px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent bg-white"
                   >
                     <option value="en attente">En attente</option>
                     <option value="en cours">En cours</option>
@@ -120,41 +120,51 @@ export default function OrderDetailModal({
               </div>
             </div>
 
-            {/* Customer Information */}
-            <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">
-                Informations Client
-              </p>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Nom:</span>
-                  <span className="font-medium text-foreground">
-                    {order.customer.name}
-                  </span>
+            {/* Two Column Layout */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Customer Information */}
+              <div>
+                <p className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3 pb-3 border-b border-border">
+                  Informations Client
+                </p>
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <p className="text-muted-foreground text-xs mb-1">Nom</p>
+                    <p className="font-medium text-foreground">
+                      {order.customer.name}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs mb-1">Email</p>
+                    <p className="font-medium text-foreground break-words">
+                      {order.customer.email}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs mb-1">Téléphone</p>
+                    <p className="font-medium text-foreground">
+                      {order.customer.phone}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs mb-1">Ville</p>
+                    <p className="font-medium text-foreground">
+                      {order.customer.city}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Email:</span>
-                  <span className="font-medium text-foreground text-right max-w-[150px] break-words">
-                    {order.customer.email}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Téléphone:</span>
-                  <span className="font-medium text-foreground">
-                    {order.customer.phone}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Ville:</span>
-                  <span className="font-medium text-foreground">
-                    {order.customer.city}
-                  </span>
-                </div>
-                <div className="pt-1.5 border-t border-border">
-                  <p className="text-muted-foreground mb-1">Adresse:</p>
-                  <p className="font-medium text-foreground text-xs">
+              </div>
+
+              {/* Address Information */}
+              <div>
+                <p className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3 pb-3 border-b border-border">
+                  Adresse
+                </p>
+                <div className="space-y-2 text-sm">
+                  <p className="font-medium text-foreground">
                     {order.customer.address}
-                    <br />
+                  </p>
+                  <p className="font-medium text-foreground">
                     {order.customer.postalCode}
                   </p>
                 </div>
@@ -163,45 +173,45 @@ export default function OrderDetailModal({
 
             {/* Order Items */}
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2.5">
+              <p className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3 pb-3 border-b border-border">
                 Articles ({order.items.length})
               </p>
-              <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+              <div className="space-y-2">
                 {order.items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between gap-2 p-2.5 bg-secondary/60 rounded text-xs"
+                    className="flex items-center justify-between gap-4 p-3 bg-secondary/60 rounded-lg"
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground truncate">
+                      <p className="font-medium text-foreground">
                         {item.name}
                       </p>
-                      <p className="text-muted-foreground text-xs">
-                        Qty: {item.quantity}
-                      </p>
                     </div>
-                    <p className="font-semibold text-foreground flex-shrink-0">
-                      {(item.price * item.quantity).toFixed(2)}€
-                    </p>
+                    <div className="flex items-center gap-2 text-sm flex-shrink-0">
+                      <span className="text-muted-foreground">Qty:</span>
+                      <span className="font-semibold text-foreground w-8 text-center">
+                        {item.quantity}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Total */}
-            <div className="bg-accent/10 rounded-lg p-3 border border-accent/20">
+            {/* Total Quantity */}
+            <div className="bg-accent/10 rounded-lg p-4 border border-accent/20">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold text-foreground uppercase">
-                  Total
+                <p className="text-sm font-semibold text-foreground uppercase">
+                  Qty Total
                 </p>
-                <p className="text-xl font-futura font-bold text-accent">
-                  {order.total.toFixed(2)}€
+                <p className="text-2xl font-futura font-bold text-accent">
+                  {totalQty}
                 </p>
               </div>
             </div>
 
             {/* Dates */}
-            <div className="text-xs space-y-1.5 pt-2 border-t border-border">
+            <div className="text-xs space-y-2 pt-4 border-t border-border">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Créée:</span>
                 <span className="font-medium text-foreground">

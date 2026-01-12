@@ -4,7 +4,7 @@ import {
   wrapResponse,
   setupCORS,
   parseQueryString,
-} from "./helpers";
+} from "./helpers.js";
 import {
   createOrder,
   getOrders,
@@ -15,7 +15,7 @@ import {
   getOrdersByStatus,
   updateOrder,
   deleteOrder,
-} from "../server/routes/orders";
+} from "../server/routes/orders.js";
 
 export const config = {
   runtime: "nodejs",

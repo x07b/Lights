@@ -4,14 +4,14 @@ import {
   wrapResponse,
   setupCORS,
   parseQueryString,
-} from "./helpers";
+} from "./helpers.js";
 import {
   getCollections,
   getCollectionById,
   createCollection,
   updateCollection,
   deleteCollection,
-} from "../server/routes/collections";
+} from "../server/routes/collections.js";
 
 export const config = {
   runtime: "nodejs",

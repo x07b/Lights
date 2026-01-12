@@ -4,7 +4,7 @@ import {
   wrapResponse,
   setupCORS,
   parseQueryString,
-} from "./helpers";
+} from "./helpers.js";
 import {
   getProducts,
   getProductById,
@@ -13,7 +13,7 @@ import {
   deleteProduct,
   addProductImage,
   removeProductImage,
-} from "../server/routes/products";
+} from "../server/routes/products.js";
 
 export const config = {
   runtime: "nodejs",

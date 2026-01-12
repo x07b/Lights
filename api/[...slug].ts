@@ -3,7 +3,7 @@
  * This wraps the Express server using serverless-http
  */
 import serverless from "serverless-http";
-import { createServer } from "../server";
+import { createServer } from "../server/index.js";
 
 // Create the Express app once (module-level caching)
 const app = createServer();

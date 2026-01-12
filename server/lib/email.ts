@@ -36,7 +36,7 @@ export async function sendEmail({
 
     const client = getResendClient();
     const response = await client.emails.send({
-      from: "notifications@luxence.fr",
+      from: SENDER_EMAIL,
       to,
       subject,
       html,

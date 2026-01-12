@@ -1,15 +1,17 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 let supabaseClient: SupabaseClient | null = null;
+let initError: Error | null = null;
 
 function initSupabaseClient(): SupabaseClient {
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
-    throw new Error(
-      "Missing Supabase environment variables. Please set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your .env file"
+    initError = new Error(
+      "Missing Supabase environment variables. Please set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your environment",
     );
+    throw initError;
   }
 
   // Create Supabase client with service role key for admin operations
@@ -23,7 +25,11 @@ function initSupabaseClient(): SupabaseClient {
 }
 
 // Lazy initialization - only creates client when accessed
+// If init fails, subsequent calls will throw with a clear error message
 function getSupabase(): SupabaseClient {
+  if (initError) {
+    throw initError;
+  }
   if (!supabaseClient) {
     supabaseClient = initSupabaseClient();
   }

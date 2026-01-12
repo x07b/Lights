@@ -27,15 +27,10 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     name: dbProduct.name,
     description: dbProduct.description,
     price: dbProduct.price || 0,
+    // Sort images by order_index first, then map to URLs (more efficient O(n log n) vs O(n²))
     images: images
-      .map((img) => img.image_url)
-      .sort((a, b) => {
-        const aIndex =
-          images.find((img) => img.image_url === a)?.order_index || 0;
-        const bIndex =
-          images.find((img) => img.image_url === b)?.order_index || 0;
-        return aIndex - bIndex;
-      }),
+      .sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
+      .map((img) => img.image_url),
     category: dbProduct.category,
     slug: dbProduct.slug,
     pdfFile: dbProduct.pdf_file || null,
@@ -524,10 +519,16 @@ export async function addProductImage(req: any, res: any) {
 export async function removeProductImage(req: any, res: any) {
   try {
     const { id } = req.params;
-    const { imageUrl } = req.body;
+    // Accept imageUrl from either query parameter or request body for better compatibility
+    const imageUrl = req.query.imageUrl || req.body?.imageUrl;
 
     if (!imageUrl) {
-      res.status(400).json({ error: "Image URL required" });
+      res
+        .status(400)
+        .json({
+          error:
+            "Image URL required. Use query parameter ?imageUrl=... or body property imageUrl",
+        });
       return;
     }
 

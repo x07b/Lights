@@ -2,11 +2,17 @@ import { supabase } from "../lib/supabase";
 
 export async function trackVisitor(req: any, res: any) {
   try {
-    // Get client IP or use session ID
-    const clientIp =
-      (req.headers["x-forwarded-for"] as string)?.split(",")[0].trim() ||
-      req.socket.remoteAddress ||
-      "unknown";
+    // Get client IP safely - handle different header formats
+    let clientIp = "unknown";
+    const xff = req.headers["x-forwarded-for"];
+    if (xff) {
+      // x-forwarded-for can be a string or array
+      const ips = Array.isArray(xff) ? xff : (xff as string).split(",");
+      clientIp = (ips[0] || "").trim();
+    }
+    if (!clientIp || clientIp === "unknown") {
+      clientIp = req.socket.remoteAddress || "unknown";
+    }
 
     const timestamp = new Date().toISOString();
     const userAgent = req.headers["user-agent"] || "unknown";

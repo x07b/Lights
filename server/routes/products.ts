@@ -27,15 +27,10 @@ function dbProductToApi(dbProduct: any, images: any[], specs: any[]): Product {
     name: dbProduct.name,
     description: dbProduct.description,
     price: dbProduct.price || 0,
+    // Sort images by order_index first, then map to URLs (more efficient O(n log n) vs O(n²))
     images: images
-      .map((img) => img.image_url)
-      .sort((a, b) => {
-        const aIndex =
-          images.find((img) => img.image_url === a)?.order_index || 0;
-        const bIndex =
-          images.find((img) => img.image_url === b)?.order_index || 0;
-        return aIndex - bIndex;
-      }),
+      .sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
+      .map((img) => img.image_url),
     category: dbProduct.category,
     slug: dbProduct.slug,
     pdfFile: dbProduct.pdf_file || null,

@@ -1,7 +1,8 @@
 import { Resend } from "resend";
 
-// Admin email address
+// Configuration
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "itsazizsaidi@gmail.com";
+const SENDER_EMAIL = process.env.SENDER_EMAIL || "notifications@luxence.fr";
 
 // Lazy initialize Resend client only when needed
 let resend: Resend | null = null;

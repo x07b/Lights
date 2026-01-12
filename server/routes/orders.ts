@@ -137,25 +137,39 @@ export async function createOrder(req: any, res: any) {
       price: item.price,
     }));
 
-    // Send confirmation email to customer
-    await sendOrderConfirmationEmail(
-      validatedData.customer.email,
-      validatedData.customer.name,
-      panierCode,
-      emailItems,
-      validatedData.total,
-    );
+    // Send confirmation emails (non-blocking with error handling)
+    // Emails are sent asynchronously and failures don't block order confirmation
+    Promise.all([
+      sendOrderConfirmationEmail(
+        validatedData.customer.email,
+        validatedData.customer.name,
+        panierCode,
+        emailItems,
+        validatedData.total,
+      ).catch((error) => {
+        console.error(
+          `Failed to send customer confirmation email for order ${orderId}:`,
+          error
+        );
+      }),
+      sendOrderAdminNotificationEmail(
+        validatedData.customer.name,
+        validatedData.customer.email,
+        panierCode,
+        emailItems,
+        validatedData.total,
+      ).catch((error) => {
+        console.error(
+          `Failed to send admin notification email for order ${orderId}:`,
+          error
+        );
+      }),
+    ]).catch((error) => {
+      console.error("Email sending error:", error);
+    });
 
-    // Send notification email to admin
-    await sendOrderAdminNotificationEmail(
-      validatedData.customer.name,
-      validatedData.customer.email,
-      panierCode,
-      emailItems,
-      validatedData.total,
-    );
-
-    // Return success response with panier code
+    // Return success response immediately with panier code
+    // Email delivery is not guaranteed at this point, but order is confirmed
     res.status(201).json({
       success: true,
       message: "Commande créée avec succès",

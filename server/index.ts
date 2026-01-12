@@ -71,15 +71,19 @@ export function createServer() {
     res.json({ message: ping });
   });
 
-  // Debug endpoint to test Supabase connection
+  // Debug endpoint to test Supabase connection (development only)
+  // WARNING: This endpoint should be protected or removed in production
   app.get("/api/debug", async (_req, res) => {
     try {
+      const isDev = process.env.NODE_ENV !== "production";
+
       const hasSupabaseUrl = !!process.env.SUPABASE_URL;
       const hasSupabaseKey = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
 
       if (!hasSupabaseUrl || !hasSupabaseKey) {
         return res.status(500).json({
-          error: "Missing Supabase environment variables",
+          status: "error",
+          message: "Missing Supabase environment variables",
           hasUrl: hasSupabaseUrl,
           hasKey: hasSupabaseKey,
         });
@@ -90,19 +94,31 @@ export function createServer() {
         .from("products")
         .select("count", { count: "exact" });
 
-      res.json({
-        status: "ok",
-        supabaseUrl: process.env.SUPABASE_URL,
-        hasKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-        dbStatus: status,
-        dbError: error ? error.message : null,
-        dbErrorCode: error?.code || null,
-        productCount: data,
-      });
+      // In production, don't expose detailed error info
+      const responseData: any = {
+        status: error ? "error" : "ok",
+        dbConnected: !error,
+      };
+
+      if (isDev) {
+        responseData.dbStatus = status;
+        responseData.dbError = error ? error.message : null;
+        responseData.dbErrorCode = error?.code || null;
+        responseData.productCount = data;
+      } else {
+        responseData.message = error
+          ? "Database connection failed"
+          : "Database connected";
+      }
+
+      res.status(error ? 500 : 200).json(responseData);
     } catch (error: any) {
+      console.error("Debug endpoint error:", error);
+      const isDev = process.env.NODE_ENV !== "production";
       res.status(500).json({
-        error: error.message,
-        stack: error.stack,
+        status: "error",
+        message: "Debug check failed",
+        ...(isDev && { error: error.message }),
       });
     }
   });

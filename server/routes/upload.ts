@@ -41,7 +41,7 @@ export async function uploadFile(req: any, res: any) {
     ];
 
     const isValidContentType = allowedMimes.some((mime) =>
-      contentType.startsWith(mime)
+      contentType.startsWith(mime),
     );
 
     if (!isValidContentType) {

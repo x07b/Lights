@@ -523,7 +523,12 @@ export async function removeProductImage(req: any, res: any) {
     const imageUrl = req.query.imageUrl || req.body?.imageUrl;
 
     if (!imageUrl) {
-      res.status(400).json({ error: "Image URL required. Use query parameter ?imageUrl=... or body property imageUrl" });
+      res
+        .status(400)
+        .json({
+          error:
+            "Image URL required. Use query parameter ?imageUrl=... or body property imageUrl",
+        });
       return;
     }
 

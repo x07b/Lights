@@ -9,7 +9,7 @@ function initSupabaseClient(): SupabaseClient {
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     initError = new Error(
-      "Missing Supabase environment variables. Please set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your environment"
+      "Missing Supabase environment variables. Please set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in your environment",
     );
     throw initError;
   }

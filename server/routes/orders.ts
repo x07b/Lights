@@ -149,7 +149,7 @@ export async function createOrder(req: any, res: any) {
       ).catch((error) => {
         console.error(
           `Failed to send customer confirmation email for order ${orderId}:`,
-          error
+          error,
         );
       }),
       sendOrderAdminNotificationEmail(
@@ -161,7 +161,7 @@ export async function createOrder(req: any, res: any) {
       ).catch((error) => {
         console.error(
           `Failed to send admin notification email for order ${orderId}:`,
-          error
+          error,
         );
       }),
     ]).catch((error) => {

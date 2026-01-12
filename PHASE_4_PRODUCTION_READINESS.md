@@ -11,6 +11,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 ### ✅ Phase 1: Debugging & Stability (COMPLETE)
 
 #### Runtime & Build Errors
+
 - [x] No runtime errors in server startup
 - [x] No TypeScript compilation errors
 - [x] All imports resolve correctly
@@ -19,6 +20,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] All dependencies installed and compatible
 
 #### API Routes & HTTP Methods
+
 - [x] All routes properly registered in `server/index.ts`
 - [x] Correct HTTP methods for each endpoint
 - [x] Route parameter ordering correct
@@ -27,6 +29,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] 405 Method Not Allowed properly handled
 
 #### Environment & Configuration
+
 - [x] Supabase env vars handled safely (lazy init, no throws)
 - [x] Email service optional with graceful degradation
 - [x] Environment validation at startup
@@ -34,6 +37,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] Debug endpoint sanitized (no secret leaks)
 
 #### File Uploads & Async
+
 - [x] File uploads use async (non-blocking)
 - [x] File validation works correctly
 - [x] MIME type to extension mapping
@@ -42,6 +46,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] All async operations properly awaited
 
 #### Node.js / Vercel Compatibility
+
 - [x] Server doesn't throw at module import
 - [x] Serverless handler properly initialized
 - [x] Environment variables work in Vercel/Netlify
@@ -53,6 +58,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 ### ✅ Phase 2: Order Flow (COMPLETE)
 
 #### Cart Functionality
+
 - [x] Products add to cart correctly
 - [x] Cart persists in localStorage
 - [x] Cart survives page refresh
@@ -61,6 +67,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] Cart can be cleared
 
 #### Order Creation
+
 - [x] Form validation works
 - [x] Order created in database
 - [x] Panier code generated (unique)
@@ -70,6 +77,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] No duplicate orders on double-submit
 
 #### Order Confirmation
+
 - [x] "Commande confirmée !" message displays
 - [x] Panier code visible to user
 - [x] Cart cleared after order
@@ -77,6 +85,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] Confirmation data matches order
 
 #### Data Integrity
+
 - [x] Order contains all customer data
 - [x] Prices and quantities accurate
 - [x] Totals match cart totals
@@ -88,6 +97,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 ### ✅ Phase 3: Email System (COMPLETE)
 
 #### Email Sending
+
 - [x] Customer confirmation email sends
 - [x] Admin notification email sends
 - [x] Emails contain order details
@@ -96,6 +106,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] Email templates render correctly
 
 #### Configuration
+
 - [x] Resend API key configured
 - [x] Admin email configurable
 - [x] Sender email configurable
@@ -103,12 +114,14 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] No hardcoded secrets
 
 #### Error Handling
+
 - [x] Order succeeds even if email fails
 - [x] Email failures logged
 - [x] No user-facing errors
 - [x] Graceful degradation
 
 #### Security
+
 - [x] XSS prevention via escapeHtml()
 - [x] API keys in environment only
 - [x] No secrets in logs
@@ -119,6 +132,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 ### ✅ Additional Quality Checks
 
 #### Code Quality
+
 - [x] TypeScript types where applicable
 - [x] Error messages are user-friendly
 - [x] Comments explain complex logic
@@ -127,6 +141,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] No console.log debugging left
 
 #### Performance
+
 - [x] Database queries optimized
 - [x] Image sorting O(n log n) not O(n²)
 - [x] File uploads non-blocking
@@ -134,6 +149,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] API responses < 1 second typical
 
 #### Security
+
 - [x] No SQL injection vulnerabilities
 - [x] No XSS vulnerabilities
 - [x] Input validation on all endpoints
@@ -142,6 +158,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 - [x] API keys not logged
 
 #### Documentation
+
 - [x] ENV_SETUP.md complete
 - [x] EMAIL_SETUP.md complete
 - [x] PHASE_1_FIXES_SUMMARY.md complete
@@ -156,6 +173,7 @@ All 4 phases are **COMPLETE**. The application is **ready for production deploym
 ### 24 Hours Before Launch
 
 #### Environment Variables
+
 ```bash
 # ✅ Verify all required variables are set
 SUPABASE_URL=https://project.supabase.co
@@ -166,6 +184,7 @@ NODE_ENV=production
 ```
 
 #### Database
+
 - [x] All tables created and migrated
 - [x] Indexes created for performance
 - [x] Foreign key relationships set up
@@ -173,6 +192,7 @@ NODE_ENV=production
 - [x] Row-level security (RLS) configured if needed
 
 #### Email Service
+
 - [x] Resend domain verified
 - [x] SPF/DKIM records added to DNS
 - [x] Test email sends successfully
@@ -180,6 +200,7 @@ NODE_ENV=production
 - [x] Sender email verified
 
 #### Code
+
 - [x] All tests passing: `pnpm test`
 - [x] Build successful: `pnpm build`
 - [x] No TypeScript errors: `pnpm typecheck`
@@ -188,6 +209,7 @@ NODE_ENV=production
 - [x] No console.log statements
 
 #### Deployment Platform
+
 - [x] Vercel/Netlify project created
 - [x] Git repository connected
 - [x] Environment variables added
@@ -202,6 +224,7 @@ NODE_ENV=production
 ### Option 1: Vercel (Recommended)
 
 #### Setup
+
 1. **Create Account:** https://vercel.com
 2. **Import Project:**
    - Connect GitHub/GitLab repository
@@ -215,6 +238,7 @@ NODE_ENV=production
    - Vercel automatically deploys
 
 #### Commands
+
 ```bash
 # Install Vercel CLI
 npm install -g vercel
@@ -230,6 +254,7 @@ vercel logs
 ```
 
 #### Configuration
+
 - **Framework:** Vite (auto-detected)
 - **Build Command:** `npm run build`
 - **Output Directory:** `dist`
@@ -240,6 +265,7 @@ vercel logs
 ### Option 2: Netlify
 
 #### Setup
+
 1. **Create Account:** https://netlify.com
 2. **Import Project:**
    - Connect GitHub/GitLab
@@ -255,7 +281,9 @@ vercel logs
    - Netlify automatically deploys
 
 #### Configuration File
+
 **netlify.toml:**
+
 ```toml
 [build]
   command = "pnpm build"
@@ -280,6 +308,7 @@ vercel logs
 ### Option 3: Docker (Self-Hosted)
 
 #### Dockerfile
+
 ```dockerfile
 FROM node:20-alpine
 
@@ -307,6 +336,7 @@ CMD ["pnpm", "start"]
 ```
 
 #### Build & Run
+
 ```bash
 # Build image
 docker build -t luxence:latest .
@@ -339,6 +369,7 @@ curl -X POST https://yourdomain.com/api/orders \
 ```
 
 **Expected Results:**
+
 - [ ] `/api/ping` returns `{ message: "ping" }`
 - [ ] `/api/debug` shows database connected
 - [ ] Order creation returns panier code
@@ -347,16 +378,19 @@ curl -X POST https://yourdomain.com/api/orders \
 ### Day 1: Monitoring Setup
 
 #### Uptime Monitoring
+
 - [ ] Enable Vercel/Netlify analytics
 - [ ] Set up monitoring alerts (email/SMS)
 - [ ] Monitor error rates
 
 #### Error Tracking
+
 - [ ] Check function logs for errors
 - [ ] Monitor Resend email delivery
 - [ ] Check database activity in Supabase
 
 #### Performance
+
 - [ ] Check page load times
 - [ ] Monitor API response times
 - [ ] Review build size
@@ -364,12 +398,14 @@ curl -X POST https://yourdomain.com/api/orders \
 ### Week 1: Full Testing
 
 #### User Testing
+
 - [ ] Test complete checkout flow
 - [ ] Verify email delivery (check spam)
 - [ ] Test on mobile devices
 - [ ] Test with different browsers
 
 #### Production Monitoring
+
 - [ ] Daily email delivery checks
 - [ ] Monitor error rates
 - [ ] Check order creation success rate
@@ -380,6 +416,7 @@ curl -X POST https://yourdomain.com/api/orders \
 ## Performance Optimization
 
 ### Database
+
 ```sql
 -- Create indexes for common queries
 CREATE INDEX idx_orders_panier_code ON orders(panier_code);
@@ -390,21 +427,24 @@ CREATE INDEX idx_product_images_product_id ON product_images(product_id);
 ```
 
 ### API Response Caching
+
 ```typescript
 // Cache product list (5 minutes)
-app.get('/api/products', (req, res) => {
-  res.set('Cache-Control', 'public, max-age=300');
+app.get("/api/products", (req, res) => {
+  res.set("Cache-Control", "public, max-age=300");
   // ... endpoint code
 });
 ```
 
 ### Image Optimization
+
 - [ ] Use WebP format for images
 - [ ] Add responsive image sizes
 - [ ] Implement lazy loading
 - [ ] Use CDN for image serving
 
 ### Frontend Optimization
+
 - [ ] Minimize bundle size
 - [ ] Code splitting by route
 - [ ] Lazy load components
@@ -415,6 +455,7 @@ app.get('/api/products', (req, res) => {
 ## Security Hardening
 
 ### API Security
+
 - [ ] Enable HTTPS only
 - [ ] Set CORS whitelist (if needed)
 - [ ] Add rate limiting
@@ -422,24 +463,27 @@ app.get('/api/products', (req, res) => {
 - [ ] Sanitize database queries
 
 ### Database Security
+
 - [ ] Enable row-level security (RLS) in Supabase
 - [ ] Create service account (not admin)
 - [ ] Regular backups enabled
 - [ ] Monitor access logs
 
 ### Secrets Management
+
 - [ ] Never commit `.env` files
 - [ ] Use environment variables only
 - [ ] Rotate API keys periodically
 - [ ] Monitor for exposed secrets
 
 ### Headers
+
 ```typescript
 // Add security headers
 app.use((req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
   next();
 });
 ```
@@ -449,8 +493,9 @@ app.use((req, res, next) => {
 ## Monitoring & Alerts
 
 ### Vercel Monitoring
+
 1. **Go to:** Project Settings → Monitoring
-2. **Enable:** 
+2. **Enable:**
    - Web Vitals
    - Edge Function Logs
    - Database Logs
@@ -460,6 +505,7 @@ app.use((req, res, next) => {
    - Performance degradation
 
 ### Netlify Monitoring
+
 1. **Go to:** Analytics → Overview
 2. **Monitor:**
    - Build status
@@ -471,7 +517,9 @@ app.use((req, res, next) => {
    - Performance issues
 
 ### Application Monitoring
+
 **Log to external service (optional):**
+
 ```typescript
 // Example: Send errors to external service
 if (error) {
@@ -487,6 +535,7 @@ if (error) {
 ### If Issues Occur
 
 1. **Revert to previous version:**
+
    ```bash
    vercel rollback  # Vercel
    # OR redeploy previous commit
@@ -514,22 +563,26 @@ if (error) {
 ## Ongoing Maintenance
 
 ### Daily
+
 - [ ] Monitor error logs
 - [ ] Check order creation success rate
 - [ ] Verify email delivery
 
 ### Weekly
+
 - [ ] Review performance metrics
 - [ ] Check database storage usage
 - [ ] Verify backups are working
 
 ### Monthly
+
 - [ ] Update dependencies: `pnpm update`
 - [ ] Security audit of code
 - [ ] Review API usage patterns
 - [ ] Optimize slow queries
 
 ### Quarterly
+
 - [ ] Review and rotate API keys
 - [ ] Update documentation
 - [ ] Performance optimization
@@ -542,24 +595,28 @@ if (error) {
 ### Common Issues
 
 **Issue: Orders not creating**
+
 1. Check Supabase connection: `curl /api/debug`
 2. Check environment variables
 3. Review function logs for errors
 4. Check database tables exist
 
 **Issue: Emails not sending**
+
 1. Check `RESEND_API_KEY` is set
 2. Check Resend dashboard for errors
 3. Verify sender domain
 4. Check spam folder
 
 **Issue: Site not loading**
+
 1. Check deployment status
 2. Clear browser cache
 3. Check domain DNS
 4. Review build logs
 
 ### Escalation
+
 - **Vercel Issues:** https://vercel.com/support
 - **Netlify Issues:** https://netlify.com/support
 - **Supabase Issues:** https://supabase.com/docs
@@ -598,6 +655,7 @@ if (error) {
 ## Success Metrics
 
 ### Technical
+
 - [x] **Uptime:** > 99.5%
 - [x] **API Response Time:** < 1 second (p95)
 - [x] **Database Query Time:** < 500ms (p95)
@@ -605,12 +663,14 @@ if (error) {
 - [x] **Error Rate:** < 0.1%
 
 ### User Experience
+
 - [ ] **Page Load Time:** < 3 seconds
 - [ ] **Order Confirmation:** < 5 seconds from submit
 - [ ] **Email Delivery:** < 2 minutes
 - [ ] **User Satisfaction:** > 4.5/5 stars
 
 ### Business
+
 - [ ] **Conversion Rate:** Track baseline
 - [ ] **Cart Abandonment:** < 70%
 - [ ] **Customer Retention:** Track repeat orders
@@ -652,6 +712,7 @@ if (error) {
 ### Ready for Production
 
 The application is **fully tested and ready for production deployment** with:
+
 - Zero runtime errors
 - Complete order flow validation
 - Email confirmation system
@@ -660,4 +721,3 @@ The application is **fully tested and ready for production deployment** with:
 - Monitoring and alerting setup
 
 **Next Step:** Deploy to Vercel, Netlify, or your hosting platform!
-

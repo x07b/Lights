@@ -132,7 +132,7 @@ const App = () => (
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error(
-    'Root element with id="root" not found in HTML. Please ensure index.html contains <div id="root"></div>'
+    'Root element with id="root" not found in HTML. Please ensure index.html contains <div id="root"></div>',
   );
 }
 

@@ -17,6 +17,7 @@ The application uses **Resend** for production email delivery. This guide covers
 **Subject:** `Confirmation de Commande - {PANIER_CODE}`
 
 **Contents:**
+
 - Greeting with customer name
 - Order confirmation message
 - Panier code (highlighted)
@@ -41,6 +42,7 @@ The application uses **Resend** for production email delivery. This guide covers
 **Subject:** `[NOUVELLE COMMANDE] {PANIER_CODE} - {CUSTOMER_NAME}`
 
 **Contents:**
+
 - New order notification header
 - Panier code (highlighted)
 - Customer information:
@@ -93,6 +95,7 @@ The application uses **Resend** for production email delivery. This guide covers
 2. Or use the test domain Resend provides
 
 **Current Sender:**
+
 ```
 notifications@luxence.fr
 ```
@@ -102,12 +105,14 @@ notifications@luxence.fr
 ### Step 3: Configure Environment Variables
 
 **Local Development (.env file):**
+
 ```env
 RESEND_API_KEY=re_your_api_key_here
 ADMIN_EMAIL=admin@luxence.fr
 ```
 
 **Vercel:**
+
 1. Go to Project Settings → Environment Variables
 2. Add:
    - Key: `RESEND_API_KEY`
@@ -116,6 +121,7 @@ ADMIN_EMAIL=admin@luxence.fr
 3. Redeploy
 
 **Netlify:**
+
 1. Go to Site Settings → Build & Deploy → Environment
 2. Add:
    - Key: `RESEND_API_KEY`
@@ -150,6 +156,7 @@ curl -X POST http://localhost:8080/api/orders \
 ```
 
 **Check Results:**
+
 - [ ] Response returns `success: true` with `panierCode`
 - [ ] Customer receives email to their inbox (may take 30-60 seconds)
 - [ ] Admin receives email to configured `ADMIN_EMAIL`
@@ -193,6 +200,7 @@ To change the sender email from `notifications@luxence.fr`:
 ### Customizing Admin Email
 
 Set via environment variable:
+
 ```env
 ADMIN_EMAIL=orders@yourbusiness.com
 ```
@@ -206,6 +214,7 @@ ADMIN_EMAIL=orders@yourbusiness.com
 **File:** `server/lib/email.ts` → `sendOrderConfirmationEmail` (lines 56-121)
 
 **Key Sections:**
+
 - **Greeting:** Line 66 - `Bonjour ${escapeHtml(customerName)},`
 - **Main message:** Lines 67-69
 - **Panier code display:** Lines 71-75
@@ -229,6 +238,7 @@ background-color: #your-brand-color;
 ### Adding New Email Templates
 
 1. Create new function in `server/lib/email.ts`:
+
    ```typescript
    export async function sendYourEmailName(
      to: string,
@@ -251,6 +261,7 @@ background-color: #your-brand-color;
 ### Email Not Sending
 
 **Check 1: API Key**
+
 ```bash
 # Verify API key is set
 echo $RESEND_API_KEY
@@ -258,17 +269,20 @@ echo $RESEND_API_KEY
 ```
 
 **Check 2: Sender Domain Verification**
+
 1. Go to Resend dashboard
 2. Check if `notifications@luxence.fr` is verified
 3. If not, verify the domain or use a verified test address
 
 **Check 3: Environment Variables**
+
 ```bash
 # In Vercel/Netlify, check deployment logs
 # Look for any error messages from Resend
 ```
 
 **Check 4: Network Access**
+
 - Ensure server can access `api.resend.com`
 - Check firewall/proxy rules
 
@@ -277,6 +291,7 @@ echo $RESEND_API_KEY
 **Issue:** `"RESEND_API_KEY environment variable is not set"`
 
 **Solution:**
+
 1. Verify `.env` file has the key (development)
 2. Verify Netlify/Vercel environment variables set
 3. Restart dev server or redeploy
@@ -286,6 +301,7 @@ echo $RESEND_API_KEY
 **Issue:** Customer emails go to spam folder
 
 **Solutions:**
+
 1. **Verify SPF/DKIM** in Resend dashboard
 2. **Use branded domain** instead of `notifications@luxence.fr`
 3. **Add unsubscribe link** to emails (optional):
@@ -300,6 +316,7 @@ echo $RESEND_API_KEY
 **Note:** This is normal for first-time sends. Resend might take 30-60 seconds.
 
 **Optimization:**
+
 1. Check Resend logs for queue delays
 2. Monitor API rate limits
 3. Consider upgrading Resend plan if high volume
@@ -348,11 +365,13 @@ echo $RESEND_API_KEY
 ### Application Logging
 
 **Check logs in:**
+
 - Local: `npm run dev` output
 - Vercel: Deployment logs → Function logs
 - Netlify: Logs → Functions
 
 **Example Error Log:**
+
 ```
 Error sending email to customer: Invalid API key
 Email sent successfully: order-12345
@@ -372,10 +391,10 @@ If you prefer a different email provider:
 **Example with Nodemailer:**
 
 ```typescript
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
@@ -386,7 +405,7 @@ export async function sendEmail({ to, subject, html }: SendEmailParams) {
   return new Promise(async (resolve) => {
     try {
       await transporter.sendMail({
-        from: process.env.SENDER_EMAIL || 'noreply@luxence.fr',
+        from: process.env.SENDER_EMAIL || "noreply@luxence.fr",
         to,
         subject,
         html,
@@ -404,7 +423,9 @@ export async function sendEmail({ to, subject, html }: SendEmailParams) {
 ## Email Security
 
 ### XSS Prevention
+
 All user-provided data is HTML-escaped using `escapeHtml()` function:
+
 ```typescript
 function escapeHtml(text: string): string {
   const map: Record<string, string> = {
@@ -419,6 +440,7 @@ function escapeHtml(text: string): string {
 ```
 
 ### Best Practices
+
 - ✅ Never expose API keys in emails or frontend
 - ✅ Always escape user input in email templates
 - ✅ Use HTTPS for tracking links
@@ -430,11 +452,13 @@ function escapeHtml(text: string): string {
 ## Cost Estimation
 
 **Resend Pricing:**
+
 - Free tier: 100 emails/day
 - $20/month: 100,000 emails/month
 - Pay-as-you-go: $0.10 per 1,000 emails
 
 **Example Costs:**
+
 - 100 orders/month = ~$0.20 (2 emails per order)
 - 1,000 orders/month = ~$2.00
 - 10,000 orders/month = ~$20.00
@@ -446,4 +470,3 @@ function escapeHtml(text: string): string {
 - **Resend Docs:** https://resend.com/docs
 - **API Reference:** https://resend.com/docs/api-reference
 - **Status Page:** https://status.resend.com
-

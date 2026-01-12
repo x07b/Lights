@@ -65,7 +65,7 @@ export function createServer() {
 
   if (!envValidation.valid) {
     console.error(
-      "Server initialization failed due to invalid environment configuration."
+      "Server initialization failed due to invalid environment configuration.",
     );
     console.error("Please fix the errors above and restart the server.");
     // In production, we might want to fail hard here

@@ -45,14 +45,17 @@ export function validateEnv(): {
     ENV_CONFIG.requiredForProduction.forEach((varName) => {
       if (!process.env[varName]) {
         warnings.push(
-          `Missing ${varName} in production mode. Email features will not work.`
+          `Missing ${varName} in production mode. Email features will not work.`,
         );
       }
     });
   }
 
   // Validate format of specific variables
-  if (process.env.SUPABASE_URL && !process.env.SUPABASE_URL.startsWith("https://")) {
+  if (
+    process.env.SUPABASE_URL &&
+    !process.env.SUPABASE_URL.startsWith("https://")
+  ) {
     errors.push("SUPABASE_URL must be a valid HTTPS URL");
   }
 
@@ -73,7 +76,9 @@ export function validateEnv(): {
 /**
  * Log validation results
  */
-export function logValidationResults(validation: ReturnType<typeof validateEnv>) {
+export function logValidationResults(
+  validation: ReturnType<typeof validateEnv>,
+) {
   if (validation.errors.length > 0) {
     console.error("❌ Configuration errors:");
     validation.errors.forEach((err) => console.error(`   - ${err}`));
@@ -98,7 +103,7 @@ export function assertValidEnv() {
 
   if (!validation.valid) {
     throw new Error(
-      `Invalid environment configuration. ${validation.errors.length} error(s) found. See logs above.`
+      `Invalid environment configuration. ${validation.errors.length} error(s) found. See logs above.`,
     );
   }
 }

@@ -17,6 +17,7 @@ Email confirmation system is **fully implemented** and ready for production. Thi
 **Trigger:** Automatically sent when order is created
 
 **Content:**
+
 - Personalized greeting with customer name
 - Order confirmation message in French
 - Panier code displayed prominently
@@ -29,6 +30,7 @@ Email confirmation system is **fully implemented** and ready for production. Thi
 - Assurance message about call verification
 
 **Template Quality:**
+
 - ✅ Professional HTML formatting
 - ✅ XSS protection via `escapeHtml()`
 - ✅ Responsive design (works on mobile)
@@ -46,6 +48,7 @@ Email confirmation system is **fully implemented** and ready for production. Thi
 **Recipients:** `ADMIN_EMAIL` environment variable (default: itsazizsaidi@gmail.com)
 
 **Content:**
+
 - New order alert with icon (🔔)
 - Panier code (highlighted for easy reference)
 - Customer information:
@@ -56,6 +59,7 @@ Email confirmation system is **fully implemented** and ready for production. Thi
 - Professional formatting
 
 **Features:**
+
 - ✅ Urgent notification styling
 - ✅ Customer details easily scannable
 - ✅ Clickable email address
@@ -68,12 +72,14 @@ Email confirmation system is **fully implemented** and ready for production. Thi
 **Provider:** Resend (production-ready)
 
 **Configuration Files:**
+
 - `server/lib/email.ts` - Core email functions
 - `ENV_SETUP.md` - Environment configuration
 - `EMAIL_SETUP.md` - Complete setup guide
 - `server/routes/orders.ts` - Integration with order creation
 
 **Environment Variables:**
+
 ```env
 RESEND_API_KEY=re_your_api_key_here     # Required for production
 ADMIN_EMAIL=admin@luxence.fr             # Where admin notifications go
@@ -100,6 +106,7 @@ res.json({ success: true, panierCode: "..." });
 ```
 
 **Benefits:**
+
 - ✅ Order confirmation never delayed by email
 - ✅ Graceful degradation if email service down
 - ✅ Errors logged for debugging
@@ -110,17 +117,25 @@ res.json({ success: true, panierCode: "..." });
 #### 5. **Security Features** ✅
 
 **XSS Prevention:**
+
 - All user input escaped with `escapeHtml()` function
 - Protects against: `<script>`, `&lt;`, quotes, etc.
 
 ```typescript
 function escapeHtml(text: string): string {
-  const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+  const map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  };
   return text.replace(/[&<>"']/g, (m) => map[m]);
 }
 ```
 
 **Security Best Practices:**
+
 - ✅ API keys stored in environment variables
 - ✅ No secrets in code or version control
 - ✅ Email addresses validated before sending
@@ -164,6 +179,7 @@ function escapeHtml(text: string): string {
 ### Step 2: Add Environment Variables
 
 **Local Development (.env):**
+
 ```env
 RESEND_API_KEY=re_your_key_here
 ADMIN_EMAIL=admin@luxence.fr
@@ -171,6 +187,7 @@ SENDER_EMAIL=notifications@luxence.fr
 ```
 
 **Production (Vercel/Netlify):**
+
 1. Add environment variables in deployment platform
 2. Restart/redeploy application
 3. Variables available to all functions
@@ -187,6 +204,7 @@ SENDER_EMAIL=notifications@luxence.fr
 ### Step 4: Test Email Sending
 
 Create an order via the checkout flow:
+
 1. Add product to cart
 2. Go to `/checkout`
 3. Fill form with test email
@@ -225,6 +243,7 @@ curl -X POST http://localhost:8080/api/orders \
 ```
 
 **Expected Results:**
+
 - [ ] Order created with panier code
 - [ ] Customer receives email in 30-60 seconds
 - [ ] Admin receives email in 30-60 seconds
@@ -242,6 +261,7 @@ console.error("Failed to send email:", error);
 ```
 
 Check logs in:
+
 - **Local:** Terminal output from `npm run dev`
 - **Vercel:** Deployment → Function Logs
 - **Netlify:** Logs → Functions tab
@@ -253,6 +273,7 @@ Check logs in:
 ### Change Email Subject
 
 **Customer Email:**
+
 ```typescript
 // Current: `Confirmation de Commande - ${panierCode}`
 // Change to:
@@ -260,6 +281,7 @@ subject: `Votre commande #${panierCode} est confirmée`,
 ```
 
 **Admin Email:**
+
 ```typescript
 // Current: `[NOUVELLE COMMANDE] ${panierCode} - ${escapeHtml(customerName)}`
 // Change to:
@@ -271,6 +293,7 @@ subject: `New Order Received: ${panierCode}`,
 ### Change Email Body Text
 
 All text is defined in the HTML template strings. Search and replace:
+
 - "Bonjour" → "Hello"
 - "Merci pour votre commande" → "Thank you for your order"
 - "Code Panier" → "Order Code"
@@ -280,6 +303,7 @@ All text is defined in the HTML template strings. Search and replace:
 ### Change Sender Email
 
 Update environment variable:
+
 ```env
 SENDER_EMAIL=noreply@yourdomain.com
 ```
@@ -293,6 +317,7 @@ SENDER_EMAIL=noreply@yourdomain.com
 ### Resend Dashboard
 
 Visit https://resend.com and check:
+
 - **Email deliverability:** % of emails successfully delivered
 - **Bounce rate:** Should be < 1%
 - **Complaint rate:** Should be < 0.1%
@@ -302,6 +327,7 @@ Visit https://resend.com and check:
 ### Application Metrics
 
 Monitor in logs:
+
 - Email sending success rate
 - Time to deliver (should be < 1 minute)
 - Errors and failures
@@ -310,6 +336,7 @@ Monitor in logs:
 ### Error Tracking
 
 Log important metrics:
+
 ```typescript
 // After successful order
 console.log("Order created:", orderId, "panier_code:", panierCode);
@@ -351,6 +378,7 @@ console.error("Email failed:", error.message);
 **Cause:** Environment variable not configured
 
 **Solution:**
+
 1. Check `.env` file (local development)
 2. Check platform environment variables (Vercel/Netlify)
 3. Restart dev server: `npm run dev`
@@ -383,6 +411,7 @@ console.error("Email failed:", error.message);
 **Cause:** SPF/DKIM not configured
 
 **Solution:**
+
 1. Add SPF record: `v=spf1 include:resend.com ~all`
 2. Add DKIM record (from Resend dashboard)
 3. Wait 24-48 hours for DNS propagation
@@ -393,6 +422,7 @@ console.error("Email failed:", error.message);
 **Likely cause:** ADMIN_EMAIL configured incorrectly
 
 **Solution:**
+
 1. Check environment variable: `echo $ADMIN_EMAIL`
 2. Verify email address is valid
 3. Check spam folder
@@ -466,9 +496,9 @@ To use a different email service (SendGrid, AWS SES, Mailgun, etc.):
 ## Next Steps
 
 → **Phase 4:** Production readiness
+
 - Final verification checklist
 - Deployment guide
 - Performance optimization
 - Security audit
 - Monitoring setup
-

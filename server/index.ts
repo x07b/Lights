@@ -59,6 +59,22 @@ import {
 import { trackVisitor, getVisitorStats } from "./routes/analytics";
 
 export function createServer() {
+  // Validate environment configuration at server startup
+  const envValidation = validateEnv();
+  logValidationResults(envValidation);
+
+  if (!envValidation.valid) {
+    console.error(
+      "Server initialization failed due to invalid environment configuration."
+    );
+    console.error("Please fix the errors above and restart the server.");
+    // In production, we might want to fail hard here
+    // For development, we'll log but continue
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Invalid environment configuration");
+    }
+  }
+
   const app = express();
 
   // Middleware

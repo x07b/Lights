@@ -39,19 +39,40 @@ export default function ProductDetail() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(`/api/products/${slug}`);
+        
         if (response.ok) {
-          const data = await response.json();
-          setProduct(data);
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            setProduct(data);
 
-          // Fetch detail sections
-          const detailResponse = await fetch(
-            `/api/products/${data.id}/details`,
-          );
-          if (detailResponse.ok) {
-            const details = await detailResponse.json();
-            setDetailSections(details);
+            // Fetch detail sections
+            try {
+              const detailResponse = await fetch(
+                `/api/products/${data.id}/details`,
+              );
+              if (detailResponse.ok) {
+                const detailContentType = detailResponse.headers.get("content-type");
+                if (detailContentType && detailContentType.includes("application/json")) {
+                  const details = await detailResponse.json();
+                  setDetailSections(details);
+                }
+              }
+            } catch (detailError) {
+              console.error("Error fetching product details:", detailError);
+            }
+          } else {
+            console.error("Invalid content type:", contentType);
+            setProduct(null);
+            setDetailSections([]);
           }
         } else {
+          // Handle non-200 responses
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const errorData = await response.json();
+            console.error("Error fetching product:", errorData);
+          }
           setProduct(null);
           setDetailSections([]);
         }
@@ -64,7 +85,9 @@ export default function ProductDetail() {
       }
     };
 
-    fetchProduct();
+    if (slug) {
+      fetchProduct();
+    }
   }, [slug]);
 
   if (loading) {

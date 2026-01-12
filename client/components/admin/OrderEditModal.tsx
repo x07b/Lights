@@ -76,8 +76,17 @@ export default function OrderEditModal({
         toast.success("Commande mise à jour avec succès");
         onSave();
       } else {
-        const data = await response.json();
-        toast.error(data.message || "Erreur lors de la mise à jour");
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          try {
+            const data = await response.json();
+            toast.error(data.error || data.message || "Erreur lors de la mise à jour");
+          } catch (parseError) {
+            toast.error(`Erreur ${response.status}: ${response.statusText}`);
+          }
+        } else {
+          toast.error(`Erreur ${response.status}: ${response.statusText}`);
+        }
       }
     } catch (error) {
       console.error("Error updating order:", error);

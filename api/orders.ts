@@ -4,6 +4,7 @@ import {
   wrapResponse,
   setupCORS,
   parseQueryString,
+  parsePathParams,
 } from "./helpers.js";
 import {
   createOrder,
@@ -45,15 +46,29 @@ export default async (
     // Parse request body
     req.body = await parseBody(req);
 
+    // Parse path parameters (e.g., /api/orders/[orderId])
+    const pathParams = parsePathParams(req);
+    
     // Parse query string
     req.query = parseQueryString(req);
-    const { panierCode, id, status, search, query } = req.query;
+    const queryPanierCode = req.query.panierCode;
+    const queryId = req.query.id;
+    const queryStatus = req.query.status;
+    const querySearch = req.query.search;
+    const queryQuery = req.query.query;
+    
+    // Use path param if available, otherwise use query param
+    const id = pathParams.id || queryId;
+    const panierCode = queryPanierCode;
+    const status = queryStatus;
+    const search = querySearch || queryQuery;
+    
     req.params = {};
 
-    // Route based on method and query parameters
+    // Route based on method and parameters
     if (req.method === "GET") {
       // GET /api/orders - get all orders
-      if (!panierCode && !id && !status && !search && !query) {
+      if (!panierCode && !id && !status && !search) {
         return getOrders(req as any, wrappedRes as any);
       }
 
@@ -63,7 +78,7 @@ export default async (
         return getOrderByPanierCode(req as any, wrappedRes as any);
       }
 
-      // GET /api/orders?id=... - get order by ID
+      // GET /api/orders/:id or GET /api/orders?id=... - get order by ID
       if (id) {
         req.params = { id: id as string };
         return getOrderById(req as any, wrappedRes as any);
@@ -76,12 +91,12 @@ export default async (
       }
 
       // GET /api/orders?search=... - search orders
-      if (search || query) {
-        req.query = { query: (search || query) as string };
+      if (search) {
+        req.query = { query: search as string };
         return searchOrders(req as any, wrappedRes as any);
       }
 
-      return wrappedRes.status(400).json({ error: "Invalid query parameters" });
+      return wrappedRes.status(404).json({ error: "Order not found" });
     }
 
     if (req.method === "POST") {
@@ -90,7 +105,7 @@ export default async (
     }
 
     if (req.method === "PUT") {
-      // PUT /api/orders?id=... - update order
+      // PUT /api/orders/:id or PUT /api/orders?id=... - update order
       if (id) {
         req.params = { id: id as string };
 
@@ -106,7 +121,7 @@ export default async (
     }
 
     if (req.method === "DELETE") {
-      // DELETE /api/orders?id=... - delete order
+      // DELETE /api/orders/:id or DELETE /api/orders?id=... - delete order
       if (id) {
         req.params = { id: id as string };
         return deleteOrder(req as any, wrappedRes as any);

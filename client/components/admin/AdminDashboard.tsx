@@ -92,9 +92,39 @@ export default function AdminDashboard() {
           fetch("/api/analytics/visitors"),
         ]);
 
-      const ordersData = await ordersResponse.json();
-      const productsData = await productsResponse.json();
-      const visitorsData = await visitorsResponse.json();
+      // Parse JSON with error handling
+      let ordersData: any = { orders: [] };
+      let productsData: any = [];
+      let visitorsData: any = {
+        totalVisitors: 0,
+        uniqueVisitors: 0,
+        todayVisitors: 0,
+        last7Days: 0,
+        last30Days: 0,
+      };
+
+      if (ordersResponse.ok) {
+        const contentType = ordersResponse.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          ordersData = await ordersResponse.json();
+        }
+      }
+
+      if (productsResponse.ok) {
+        const contentType = productsResponse.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          productsData = await productsResponse.json();
+        }
+      }
+
+      if (visitorsResponse.ok) {
+        const contentType = visitorsResponse.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          visitorsData = await visitorsResponse.json();
+        }
+      } else {
+        console.error("Failed to fetch visitors:", visitorsResponse.status, visitorsResponse.statusText);
+      }
 
       const orders = ordersData.orders || [];
       const products = productsData || [];

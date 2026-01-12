@@ -62,3 +62,31 @@ export function parseQueryString(req: IncomingMessage): Record<string, any> {
 
   return params;
 }
+
+export function parsePathParams(req: IncomingMessage & { url?: string }): Record<string, string> {
+  const url = req.url || "";
+  const pathname = url.split("?")[0];
+  const segments = pathname.split("/").filter(Boolean);
+  
+  // For /api/products/[slug], segments would be: ['api', 'products', 'slug']
+  // For /api/orders/[orderId], segments would be: ['api', 'orders', 'orderId']
+  const params: Record<string, string> = {};
+  
+  // Extract the last segment as the ID/slug if we're in a nested route
+  if (segments.length >= 3 && segments[0] === "api") {
+    const resource = segments[1]; // 'products', 'orders', etc.
+    const idOrSlug = segments[2]; // the actual ID or slug
+    
+    if (resource === "products" || resource === "orders" || resource === "collections") {
+      params.id = idOrSlug;
+    }
+  }
+  
+  // Handle deeper nested routes like /api/orders/[orderId]/status
+  if (segments.length >= 4 && segments[0] === "api") {
+    const action = segments[3];
+    params.action = action;
+  }
+  
+  return params;
+}

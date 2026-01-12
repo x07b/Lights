@@ -4,6 +4,7 @@ import {
   wrapResponse,
   setupCORS,
   parseQueryString,
+  parsePathParams,
 } from "./helpers.js";
 import {
   getProducts,
@@ -43,9 +44,18 @@ export default async (
     // Parse request body
     req.body = await parseBody(req);
 
+    // Parse path parameters (e.g., /api/products/[slug])
+    const pathParams = parsePathParams(req);
+    
     // Parse query string
     req.query = parseQueryString(req);
-    const { id, action } = req.query;
+    const queryId = req.query.id;
+    const queryAction = req.query.action;
+    
+    // Use path param if available, otherwise use query param
+    const id = pathParams.id || queryId;
+    const action = pathParams.action || queryAction;
+    
     req.params = {};
 
     // Route based on method and path
@@ -61,7 +71,7 @@ export default async (
         return getProductById(req as any, wrappedRes as any);
       }
 
-      return wrappedRes.status(400).json({ error: "Invalid query parameters" });
+      return wrappedRes.status(404).json({ error: "Product not found" });
     }
 
     if (req.method === "POST") {

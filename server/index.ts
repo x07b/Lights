@@ -2,10 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import { supabase } from "./lib/supabase";
-import { validateEnv, logValidationResults } from "./lib/env-validator";
-import { handleDemo } from "./routes/demo";
-import { uploadFile } from "./routes/upload";
+import { supabase } from "./lib/supabase.js";
+import { validateEnv, logValidationResults } from "./lib/env-validator.js";
+import { handleDemo } from "./routes/demo.js";
+import { uploadFile } from "./routes/upload.js";
 import {
   getProducts,
   getProductById,
@@ -14,19 +14,19 @@ import {
   deleteProduct,
   addProductImage,
   removeProductImage,
-} from "./routes/products";
+} from "./routes/products.js";
 import {
   getCollections,
   getCollectionById,
   createCollection,
   updateCollection,
   deleteCollection,
-} from "./routes/collections";
+} from "./routes/collections.js";
 import {
   handleContact,
   getContactMessages,
   markMessageAsRead,
-} from "./routes/contact";
+} from "./routes/contact.js";
 import {
   createOrder,
   getOrders,
@@ -37,26 +37,26 @@ import {
   getOrdersByStatus,
   updateOrder,
   deleteOrder,
-} from "./routes/orders";
+} from "./routes/orders.js";
 import {
   getHeroSlides,
   createHeroSlide,
   updateHeroSlide,
   deleteHeroSlide,
-} from "./routes/slides";
+} from "./routes/slides.js";
 import {
   createQuoteRequest,
   getQuoteRequests,
   getQuoteRequestById,
   updateQuoteRequestStatus,
   deleteQuoteRequest,
-} from "./routes/quotes";
+} from "./routes/quotes.js";
 import {
   getProductDetails,
   upsertProductDetails,
   deleteProductDetail,
-} from "./routes/product-details";
-import { trackVisitor, getVisitorStats } from "./routes/analytics";
+} from "./routes/product-details.js";
+import { trackVisitor, getVisitorStats } from "./routes/analytics.js";
 
 export function createServer() {
   // Validate environment configuration at server startup

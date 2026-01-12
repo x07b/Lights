@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../lib/supabase.js";
 import {
   sendQuoteRequestConfirmationEmail,
   sendQuoteRequestAdminNotificationEmail,
-} from "../lib/email";
+} from "../lib/email.js";
 
 // Validation schema for quote request
 const quoteRequestSchema = z.object({

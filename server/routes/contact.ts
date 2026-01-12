@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { supabase } from "../lib/supabase";
-import { sendEmail } from "../lib/email";
+import { supabase } from "../lib/supabase.js";
+import { sendEmail } from "../lib/email.js";
 
 // Validation schema for contact form
 const contactFormSchema = z.object({

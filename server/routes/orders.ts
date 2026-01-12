@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../lib/supabase.js";
 import {
   sendOrderConfirmationEmail,
   sendOrderAdminNotificationEmail,
-} from "../lib/email";
+} from "../lib/email.js";
 
 // Validation schemas
 const customerSchema = z.object({

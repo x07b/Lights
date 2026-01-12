@@ -524,10 +524,11 @@ export async function addProductImage(req: any, res: any) {
 export async function removeProductImage(req: any, res: any) {
   try {
     const { id } = req.params;
-    const { imageUrl } = req.body;
+    // Accept imageUrl from either query parameter or request body for better compatibility
+    const imageUrl = req.query.imageUrl || req.body?.imageUrl;
 
     if (!imageUrl) {
-      res.status(400).json({ error: "Image URL required" });
+      res.status(400).json({ error: "Image URL required. Use query parameter ?imageUrl=... or body property imageUrl" });
       return;
     }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 
 interface ProductGalleryProps {
@@ -15,17 +15,47 @@ export function ProductGallery({
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Handle empty or undefined images array
+  const validImages = Array.isArray(images) && images.length > 0 
+    ? images.filter(img => img && typeof img === 'string' && img.trim() !== '')
+    : [];
+
+  // Reset index if images array becomes empty
+  useEffect(() => {
+    if (validImages.length === 0) {
+      setMainImageIndex(0);
+    } else if (mainImageIndex >= validImages.length) {
+      setMainImageIndex(0);
+    }
+  }, [validImages.length, mainImageIndex]);
+
   const handlePrevImage = () => {
-    setMainImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setMainImageIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
 
   const handleNextImage = () => {
-    setMainImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setMainImageIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
   };
 
   const goToImage = (index: number) => {
-    setMainImageIndex(index);
+    if (index >= 0 && index < validImages.length) {
+      setMainImageIndex(index);
+    }
   };
+
+  // Show placeholder if no images
+  if (validImages.length === 0) {
+    return (
+      <div className="product-gallery space-y-3">
+        <div className="flex items-center justify-center bg-gray-100 p-16 animate-fade-in">
+          <div className="text-center text-muted-foreground">
+            <p className="text-lg font-medium">Aucune image disponible</p>
+            <p className="text-sm mt-2">Images du produit en cours de chargement...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -35,7 +65,7 @@ export function ProductGallery({
         <div className="flex items-center justify-center bg-white p-2 animate-fade-in relative group">
           <div className="relative w-full flex justify-center">
             <img
-              src={images[mainImageIndex]}
+              src={validImages[mainImageIndex]}
               alt={productName}
               className="h-auto w-auto object-contain hover:scale-105 transition-transform duration-500 cursor-pointer"
               onClick={() => setIsFullscreen(true)}
@@ -52,14 +82,14 @@ export function ProductGallery({
             </button>
 
             {/* Image Counter */}
-            {images.length > 1 && (
+            {validImages.length > 1 && (
               <div className="absolute bottom-4 left-4 bg-foreground/80 text-white px-3 py-1 rounded-full text-xs font-medium">
-                {mainImageIndex + 1} / {images.length}
+                {mainImageIndex + 1} / {validImages.length}
               </div>
             )}
 
             {/* Navigation Arrows */}
-            {images.length > 1 && (
+            {validImages.length > 1 && (
               <>
                 <button
                   onClick={handlePrevImage}
@@ -81,9 +111,9 @@ export function ProductGallery({
         </div>
 
         {/* Thumbnail Images */}
-        {images.length > 1 && (
+        {validImages.length > 1 && (
           <div className="thumbnail-container flex gap-3 overflow-x-auto pb-2">
-            {images.map((image, index) => (
+            {validImages.map((image, index) => (
               <button
                 key={index}
                 onClick={() => goToImage(index)}
@@ -130,13 +160,13 @@ export function ProductGallery({
           {/* Fullscreen Image */}
           <div className="relative w-full h-full flex items-center justify-center max-w-5xl mx-auto">
             <img
-              src={images[mainImageIndex]}
+              src={validImages[mainImageIndex]}
               alt={productName}
               className="max-w-full max-h-full object-contain"
             />
 
             {/* Navigation Controls in Fullscreen */}
-            {images.length > 1 && (
+            {validImages.length > 1 && (
               <>
                 <button
                   onClick={handlePrevImage}
@@ -153,7 +183,7 @@ export function ProductGallery({
 
                 {/* Fullscreen Counter */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm font-medium">
-                  {mainImageIndex + 1} / {images.length}
+                  {mainImageIndex + 1} / {validImages.length}
                 </div>
               </>
             )}
